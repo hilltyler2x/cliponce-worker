@@ -169,8 +169,15 @@ class CapReached(Exception):
 def post_facebook(item):
     """Facebook Page Reel via the official Reels publishing API (page token with pages_manage_posts)."""
     host = "graph.facebook.com/v21.0"
-    tok = os.environ["FB_PAGE_TOKEN"]
+    tok = os.environ.get("FB_PAGE_TOKEN")
     pid = os.environ.get("FB_PAGE_ID") or "me"
+    if not tok:
+        # One system-user token for everything: get the Page's own token from it.
+        pages = requests.get(f"https://{host}/me/accounts", params={"fields": "id,name,access_token", "access_token": os.environ["IG_TOKEN"]}, timeout=30).json()
+        page = next((p for p in pages.get("data", []) if not os.environ.get("FB_PAGE_ID") or p["id"] == os.environ["FB_PAGE_ID"]), None)
+        if not page:
+            raise SignInProblem(f"Facebook: the token cannot manage any Page yet: {str(pages)[:200]}")
+        tok, pid = page["access_token"], page["id"]
     st = requests.post(f"https://{host}/{pid}/video_reels", data={"upload_phase": "start", "access_token": tok}, timeout=60).json()
     if "video_id" not in st:
         raise RuntimeError(f"Facebook start failed: {st}")
@@ -201,7 +208,7 @@ PLATFORMS = {
     "youtube": (("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"), post_youtube),
     "instagram": (("IG_TOKEN",), post_instagram),
     "threads": (("THREADS_TOKEN",), post_threads),
-    "facebook": (("FB_PAGE_TOKEN",), post_facebook),
+    "facebook": (("IG_TOKEN",) if not os.environ.get("FB_PAGE_TOKEN") else ("FB_PAGE_TOKEN",), post_facebook),
 }
 
 
