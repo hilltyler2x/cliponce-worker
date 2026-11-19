@@ -2,7 +2,7 @@
  "id": "d6c29157-6875-477a-b94d-a71824925d54",
  "url": "https://www.twitch.tv/tayzobandz",
  "status": "running",
- "step": "Cutting clip 2 of 3",
+ "step": "Cutting clip 3 of 3",
  "source": "https://www.twitch.tv/videos/2934041278",
  "creator": "tayzobandz",
  "clips": [
@@ -15,6 +15,16 @@
    "end": 1110,
    "caption": "Insane moment 🎮\n“I'm good. We good. We good bit. Oh, all right. Let's get to it”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
    "why": "Biggest reaction in the stream: “I'm good. We good. We good bit. Oh, all right. Let's get to it”"
+  },
+  {
+   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/d6c29157_tayzobandz_2132.mp4",
+   "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/d6c29157_tayzobandz_2132_cover.jpg",
+   "kind": "Insane moment",
+   "hook": "That'S Why I Used...",
+   "start": 2132,
+   "end": 2164,
+   "caption": "Insane moment 🎮\n“That's why I used to have to sit there because it's in the air.”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
+   "why": "Biggest reaction in the stream: “That's why I used to have to sit there because it's in the air.”"
   }
  ]
 }
