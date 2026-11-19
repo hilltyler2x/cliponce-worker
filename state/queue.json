@@ -329,5 +329,26 @@
     "posted": {},
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_Dahlia_HeadstrongCovertStap_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_Dahlia_HeadstrongCovertStap.mp4"
+  },
+  {
+    "id": "2026-11-19_pc_Asmongold_e311dbdf69",
+    "creator": "Asmongold",
+    "handle": "@zackrawrr",
+    "kind": "Funny",
+    "source": "zackrawrr (live) 2026-11-19 16:08",
+    "caption": "Asmongold did WHAT in GTA 6? 🎥 Asmongold #GTA6 #GTAVI",
+    "title": "Asmongold did what?",
+    "hook": "Asmongold did what?",
+    "namehook": true,
+    "sha1": "e311dbdf69e0f0d629b13b89c762d220da568bd3",
+    "from_pc": true,
+    "created": "2026-11-19",
+    "made_at": 1795122786,
+    "why": "Picked on the PC",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/pc-2026-11-19/2026-11-19_pc_Asmongold_e311dbdf69.mp4",
+    "posted": {
+      "youtube": "skip"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/pc-2026-11-19/2026-11-19_pc_Asmongold_e311dbdf69_cover.jpg"
   }
 ]
