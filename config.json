@@ -20,7 +20,8 @@
   "daily_caps": {
     "youtube": 2,
     "instagram": 2,
-    "threads": 3
+    "threads": 3,
+    "facebook": 3
   },
   "streamers": [],
   "twitch_games": [

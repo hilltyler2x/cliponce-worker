@@ -135,10 +135,42 @@ class CapReached(Exception):
     pass
 
 
+def post_facebook(item):
+    """Facebook Page Reel via the official Reels publishing API (page token with pages_manage_posts)."""
+    host = "graph.facebook.com/v21.0"
+    tok = os.environ["FB_PAGE_TOKEN"]
+    pid = os.environ.get("FB_PAGE_ID") or "me"
+    st = requests.post(f"https://{host}/{pid}/video_reels", data={"upload_phase": "start", "access_token": tok}, timeout=60).json()
+    if "video_id" not in st:
+        raise RuntimeError(f"Facebook start failed: {st}")
+    vid = st["video_id"]
+    up = requests.post(f"https://rupload.facebook.com/video-upload/v21.0/{vid}",
+                       headers={"Authorization": "OAuth " + tok, "file_url": direct_url(item["url"])}, timeout=300).json()
+    if not up.get("success"):
+        raise RuntimeError(f"Facebook upload failed: {up}")
+    fin = requests.post(f"https://{host}/{pid}/video_reels", data={
+        "upload_phase": "finish", "video_id": vid, "video_state": "PUBLISHED",
+        "description": item["caption"], "access_token": tok}, timeout=60).json()
+    if not fin.get("success"):
+        err = str(fin)
+        if "limit" in err.lower():
+            raise CapReached(err[:300])
+        raise RuntimeError(f"Facebook publish failed: {fin}")
+    for _ in range(60):
+        s = requests.get(f"https://{host}/{vid}", params={"fields": "status", "access_token": tok}, timeout=30).json().get("status", {})
+        if s.get("video_status") in ("ready", "published") or (s.get("publishing_phase") or {}).get("status") == "complete":
+            break
+        if s.get("video_status") == "error":
+            raise RuntimeError(f"Facebook processing error: {s}")
+        time.sleep(10)
+    return f"https://www.facebook.com/reel/{vid}"
+
+
 PLATFORMS = {
     "youtube": (("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"), post_youtube),
     "instagram": (("IG_TOKEN",), post_instagram),
     "threads": (("THREADS_TOKEN",), post_threads),
+    "facebook": (("FB_PAGE_TOKEN",), post_facebook),
 }
 
 

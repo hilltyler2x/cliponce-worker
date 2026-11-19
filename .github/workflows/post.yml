@@ -22,6 +22,8 @@ jobs:
       IG_GRAPH_HOST: ${{ secrets.IG_GRAPH_HOST }}
       THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
       THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

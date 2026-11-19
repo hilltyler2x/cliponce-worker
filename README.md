@@ -19,7 +19,8 @@ Platforms without secrets are skipped.
 - `TWITCH_CLIENT_ID`, `TWITCH_CLIENT_SECRET`: free app keys from dev.twitch.tv/console/apps (finds GTA 6 clips and live streams).
 - `YT_CLIENT_ID`, `YT_CLIENT_SECRET`, `YT_REFRESH_TOKEN`: YouTube upload sign-in.
 - `IG_USER_ID`, `IG_TOKEN`, optional `IG_GRAPH_HOST` (`graph.instagram.com` for Instagram Login tokens).
-- `THREADS_USER_ID`, `THREADS_TOKEN`.
+- `THREADS_TOKEN` (optional `THREADS_USER_ID`).
+- `FB_PAGE_TOKEN`: a Facebook Page token with pages_manage_posts, for Page Reels (optional `FB_PAGE_ID`).
 - `YT_COOKIES`: optional, a cookies.txt export, only if YouTube blocks downloads from GitHub.
 
 Originals only: clip channels, compilations, reactions, reuploads and videos that credit another creator are skipped, so we never re-clip someone else's posted clip. Clipping the same moment from the original video or live is fine.
