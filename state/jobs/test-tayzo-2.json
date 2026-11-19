@@ -1,9 +1,6 @@
 {
  "id": "test-tayzo-2",
  "url": "https://www.twitch.tv/tayzobandz",
- "status": "running",
- "step": "Cutting clip 1 of 2",
- "source": "https://www.twitch.tv/videos/2933111231",
- "creator": "tayzobandz",
- "clips": []
+ "status": "failed",
+ "error": "Could not cut any clips from that broadcast."
 }
