@@ -19,6 +19,10 @@ def esc(s):
 
 def build_ass(cues, start, end, header, credit, path):
     """Word-chunk captions (3 to 4 words), a top hook and a small credit line."""
+    # The caption font has no emoji, so drop them from on-screen text (they stay in post captions).
+    noemoji = lambda t: re.sub(r"[^\u0000-\uFFFF]|[\u2600-\u27BF\uFE0F]", "", t or "").strip()
+    header, credit = noemoji(header), noemoji(credit)
+    cues = [(a, b, noemoji(t)) for a, b, t in cues]
     ev = []
     for s, e, text in cues:
         if e <= start or s >= end:
