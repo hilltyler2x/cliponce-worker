@@ -60,6 +60,9 @@ def main():
             continue
         if (c.get("view_count") or 0) < min_views or c["_vph"] < min_vph:
             continue
+        langs = CONFIG.get("twitch_languages", ["en"])
+        if langs and (c.get("language") or "en").split("-")[0] not in langs:
+            continue
         if is_blocked(title) or who.lower() in SKIP_CHANNELS or is_secondhand(title, who):
             continue
         if used.get(who, 0) >= per_streamer:
@@ -69,12 +72,17 @@ def main():
         dur = float(c.get("duration") or 30)
         name = f"{today()}_tw_{safe_name(handle, 24)}_{cid[:20]}"
         try:
+            src = None
             if c.get("video_id") and c.get("vod_offset") is not None:
                 start = max(0, float(c["vod_offset"]) - 6)
                 end = start + min(dur + 12, 58)
                 src_url = f"https://www.twitch.tv/videos/{c['video_id']}"
-                src = render.download_section(src_url, start, end, work / "src" / name)
-            else:
+                try:
+                    # A VOD of a stream that is still live can be very slow; don't let one clip stall the run.
+                    src = render.download_section(src_url, start, end, work / "src" / name, timeout=240)
+                except Exception as e:
+                    log("VOD cut too slow or failed, using the viewer clip of this moment:", str(e)[-200:])
+            if src is None:
                 start, end, src_url = 0, min(dur, 58), c["url"]
                 src = render.download_section(src_url, 0, end, work / "src" / name)
             length = end - start

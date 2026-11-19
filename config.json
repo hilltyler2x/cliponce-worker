@@ -28,7 +28,7 @@
     "Grand Theft Auto VI"
   ],
   "twitch_hours": 36,
-  "twitch_min_views": 80,
+  "twitch_min_views": 250,
   "twitch_per_streamer": 2,
   "live_auto_top": 0,
   "twitch_priority": [
@@ -39,5 +39,8 @@
   ],
   "fresh_hours": 3,
   "fresh_per_run": 2,
-  "twitch_min_views_per_hour": 60
+  "twitch_min_views_per_hour": 120,
+  "twitch_languages": [
+    "en"
+  ]
 }

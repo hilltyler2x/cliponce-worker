@@ -57,13 +57,13 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """ + "\n".join(ev) + "\n", encoding="utf-8")
 
 
-def download_section(url, start, end, dest: Path):
+def download_section(url, start, end, dest: Path, timeout=900):
     """Fetch just [start, end] of the video at up to 1080p."""
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmpl = str(dest.with_suffix("")) + ".%(ext)s"
     run(ytdlp_base() + ["-f", "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/bv*[height<=1080]+ba/b[height<=1080]/b",
                         "--download-sections", f"*{start:.1f}-{end:.1f}", "--force-keyframes-at-cuts",
-                        "--merge-output-format", "mp4", "-o", tmpl, url], timeout=900)
+                        "--merge-output-format", "mp4", "-o", tmpl, url], timeout=timeout)
     got = sorted(dest.parent.glob(dest.stem + ".*"))
     if not got:
         raise RuntimeError("download produced no file")
