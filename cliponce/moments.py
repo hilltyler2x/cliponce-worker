@@ -134,6 +134,8 @@ def caption_for(m, creator, video_title):
     emoji = EMOJI.get(kind, "🎮")
     hook = m.get("title") or best_quote(m["text"], lines=m.get("hot"))
     hook = re.sub(r"^\d+[.)]\s*", "", hook).strip()
-    lines = [f"{kind} in GTA 6 {emoji}", f"“{hook}”" if hook else "", f"🎥 Spotted by @{creator}" if creator else "",
+    from .thumb import name_hook, pretty_name
+    lines = [f"{name_hook(creator, kind, m.get('text', '')[:40]) if creator else kind + ' in GTA 6'} {emoji}", f"“{hook}”" if hook else "",
+             f"🎥 Credit: {pretty_name(creator)}" if creator else "",
              "#GTA6 #GTAVI #GTA6Secrets #Gaming"]
     return "\n".join(l for l in lines if l)

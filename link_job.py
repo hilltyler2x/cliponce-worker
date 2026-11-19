@@ -205,21 +205,21 @@ def main():
                     continue
                 k = kind_for(ctitle + " " + words + " " + title)
                 quote = thumb._dedupe(max((c[2] for c in cues), key=len, default=""))[:90]
-                hook = thumb.video_hook(ctitle, quote, k)
+                pname, hook = thumb.pretty_name(handle), thumb.name_hook(handle, k, name)
                 ass = work / (name + ".ass")
-                render.build_ass(cues, 0, end - start, hook, f"@{handle} on Twitch", ass)
+                render.build_ass(cues, 0, end - start, hook, f"{pname} on Twitch", ass)
                 out = render.render(src, ass, work / (name + ".mp4"), end - start)
                 link = out.name
-                cover = thumb.cover_for(src, work / (name + "_cover.jpg"), ctitle, quote, k, f"@{handle} on Twitch",
-                                        end - start, around=(end - start) / 2 if kind == "clips" or kind == "clip" else min(PRE, end - start))
+                cover = thumb.cover_for(src, work / (name + "_cover.jpg"), ctitle, quote, k, f"{pname} on Twitch",
+                                        end - start, around=(end - start) / 2 if kind == "clips" or kind == "clip" else min(PRE, end - start), hook=hook)
                 poster = cover.name if cover else ""
                 if os.environ.get("GITHUB_ACTIONS"):
                     from cliponce.publish import host
                     link = host(out, "jobs-" + today())
                     if cover:
                         poster = host(cover, "jobs-" + today())
-                cap = "\n".join(x for x in [f"{k} {EMOJI.get(k, '🎮')}", f"“{ctitle or quote}”" if (ctitle or quote) else "",
-                                           f"🎥 Credit: @{handle} on Twitch", "#Twitch #Clips" + (" #GTA6" if GTA6.search(title) else "")] if x)
+                cap = "\n".join(x for x in [f"{hook} {EMOJI.get(k, '🎮')}", f"“{ctitle or quote}”" if (ctitle or quote) else "",
+                                           f"🎥 Credit: {pname} (twitch.tv/{handle.lower()})", "#Twitch #Clips" + (" #GTA6" if GTA6.search(title) else "")] if x)
                 clips.append({"url": link, "thumb": poster, "kind": k, "hook": hook, "start": round(start), "end": round(end), "caption": cap,
                               "why": (f"Viewers clipped this moment: “{ctitle}”" if ctitle else
                                       f"Biggest reaction in the stream: “{quote}”" if quote else "Biggest reaction in the stream")[:140]})

@@ -99,22 +99,23 @@ def main():
                 continue
             kind = kind_for(title + " " + " ".join(x[2] for x in cues))
             quote = max((x[2] for x in cues), key=len, default="")[:90]
+            pname, hook = thumb.pretty_name(who), thumb.name_hook(who, kind, cid)
             ass = work / (name + ".ass")
-            render.build_ass(cues, 0, length, thumb.video_hook(title, quote, kind), f"@{handle} on Twitch", ass)
+            render.build_ass(cues, 0, length, hook, f"{pname} on Twitch", ass)
             out = render.render(src, ass, work / (name + ".mp4"), length)
         except Exception as e:
             log("twitch render failed:", e)
             continue
         quote = max((x[2] for x in cues), key=len, default="")[:90]
-        cap = "\n".join(x for x in [f"{kind} in GTA 6 {EMOJI.get(kind, '🎮')}", f"“{quote}”" if quote else f"“{title}”",
-                                   f"🎥 Credit: @{handle} on Twitch", "#GTA6 #GTAVI #Twitch #Gaming"] if x)
+        cap = "\n".join(x for x in [f"{hook} {EMOJI.get(kind, '🎮')}", f"“{quote}”" if quote else f"“{title}”",
+                                   f"🎥 Credit: {pname} (twitch.tv/{handle.lower()})", "#GTA6 #GTAVI #Twitch #Gaming"] if x)
         meta = {"id": name, "video_id": c.get("video_id"), "source": src_url, "creator": who, "handle": handle,
                 "start": start, "end": end, "kind": kind, "score": c.get("view_count"),
                 "why": f"{c.get('view_count')} views in {c['_age_h']:.1f} h on the Twitch clip of this moment: {title}"[:160],
-                "caption": cap, "title": f"{kind} in GTA 6 | {title}"[:95], "created": today(), "made_at": int(time.time()),
-                "fresh": True, "hook": thumb.hook_text(title, quote, kind).capitalize(), "posted": {}}
-        cover = thumb.cover_for(src, work / (name + "_cover.jpg"), title, quote, kind, f"@{handle} on Twitch",
-                                length, around=(6 + dur / 2) if c.get("video_id") else dur / 2)
+                "caption": cap, "title": hook[:95], "created": today(), "made_at": int(time.time()),
+                "fresh": True, "hook": hook, "posted": {}}
+        cover = thumb.cover_for(src, work / (name + "_cover.jpg"), title, quote, kind, f"{pname} on Twitch",
+                                length, around=(6 + dur / 2) if c.get("video_id") else dur / 2, hook=hook)
         if os.environ.get("GITHUB_ACTIONS"):
             from cliponce.publish import host
             try:

@@ -26,6 +26,34 @@ HOOKS = {"Funny moment": ["I CAN'T BREATHE", "HE DID NOT JUST DO THAT", "CHAT LO
 GENERIC = ["WATCH TILL THE END", "WAIT FOR IT", "CHAT LOST IT HERE"]
 
 
+NAMES = {"kaicenat": "Kai Cenat", "caseoh_": "CaseOh", "caseoh": "CaseOh", "lacy": "Lacy", "tfue": "Tfue",
+         "jasontheween": "Jason The Ween", "ohnepixel": "ohnePixel", "xqc": "xQc", "summit1g": "summit1g",
+         "kingsleague": "Kings League", "stableronaldo": "Stable Ronaldo", "jynxzi": "Jynxzi", "ishowspeed": "IShowSpeed",
+         "adinross": "Adin Ross", "sketch": "Sketch", "plaqueboymax": "PlaqueBoyMax", "fanum": "Fanum", "duke": "Duke Dennis"}
+
+
+def pretty_name(name):
+    """'@KaiCenat' or 'kaicenat' -> 'Kai Cenat'. Plain names only, never an @handle in a title."""
+    raw = (name or "").strip().lstrip("@")
+    if raw.lower() in NAMES:
+        return NAMES[raw.lower()]
+    raw = re.sub(r"_+$", "", raw).replace("_", " ")
+    return " ".join(w[:1].upper() + w[1:] if w.islower() else w for w in raw.split()) or "This streamer"
+
+
+NAME_HOOKS = {"Funny moment": ["{n} did what?", "What did {n} just do?", "{n} was NOT ready"],
+              "Glitch": ["{n} broke GTA 6?", "{n} found a glitch?", "What happened to {n}?"],
+              "Easter egg": ["{n} found what?", "{n} spotted this in GTA 6"],
+              "Hidden secret": ["{n} found what?", "{n} spotted this in GTA 6"],
+              "Insane moment": ["{n} did what?", "{n} can't believe this", "What did {n} just do?"]}
+
+
+def name_hook(name, kind="", seed=""):
+    """Curiosity headline with the creator's plain name, like 'Kai Cenat did what?'."""
+    pool = NAME_HOOKS.get(kind, ["{n} did what?", "What did {n} just do?", "{n} can't believe this"])
+    return pool[sum(map(ord, seed or name or "")) % len(pool)].format(n=pretty_name(name))
+
+
 def _dedupe(t):
     """'let me see. let me see. let me see' -> 'let me see'"""
     parts = [x.strip() for x in re.split(r"[.!?]+", t) if x.strip()]
@@ -190,9 +218,9 @@ def make_cover(video, out, hook, credit, length, around=None, source_vertical=Fa
     return out
 
 
-def cover_for(video, out, title, quote, kind, credit, length, around=None):
+def cover_for(video, out, title, quote, kind, credit, length, around=None, hook=None):
     try:
-        return make_cover(video, out, hook_text(title, quote, kind), credit, length, around)
+        return make_cover(video, out, (hook or hook_text(title, quote, kind)).upper(), credit, length, around)
     except Exception as e:
         log("cover failed:", e)
         return None

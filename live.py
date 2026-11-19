@@ -141,10 +141,6 @@ def cut(rec, t, name, header, credit, work):
     run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", raw])
     length = min(PRE + POST, 60)
     cues = transcribe(raw)
-    quote = max((c[2] for c in cues), key=len, default="")[:90]
-    if quote:
-        from cliponce import thumb
-        header = thumb.video_hook("", quote, header)
     ass = work / (name + ".ass")
     render.build_ass(cues, 0, length, header, credit, ass)
     out = work / (name + ".mp4")
@@ -184,7 +180,9 @@ def watch(streamer, deadline):
         time.sleep(POST + 2)
         name = f"{today()}_live_{safe_name(handle, 24)}_{int(now)}"
         try:
-            res = cut(rec, now, name, reason, f"@{handle} live", work)
+            from cliponce import thumb
+            pname, hook = thumb.pretty_name(channel or handle), thumb.name_hook(channel or handle, kind, name)
+            res = cut(rec, now, name, hook, f"{pname} live on Twitch", work)
         except Exception as e:
             log("clip failed:", e)
             continue
@@ -192,10 +190,10 @@ def watch(streamer, deadline):
             continue
         out, cues = res
         quote = max((c[2] for c in cues), key=len, default="")[:90]
-        cap = "\n".join(x for x in [f"{reason} on @{handle}'s stream 🔴", f"“{quote}”" if quote else "",
-                                   f"🎥 Credit: @{handle}", "#GTA6 #Live #Clips" if "gta" in title.lower() else "#Live #Clips"] if x)
+        cap = "\n".join(x for x in [f"{hook} 🔴", f"“{quote}”" if quote else "",
+                                   f"🎥 Credit: {pname} (twitch.tv/{handle.lower()})", "#GTA6 #Live #Clips" if "gta" in title.lower() else "#Live #Clips"] if x)
         meta = {"id": name, "kind": reason, "creator": channel, "handle": handle, "source": url, "caption": cap,
-                "title": f"{reason} on {channel}'s stream"[:95], "why": f"{n} chat messages in 10 s vs usual {med}",
+                "title": hook[:95], "hook": hook, "why": f"{n} chat messages in 10 s vs usual {med}",
                 "created": today(), "posted": {} if streamer.get("post", True) else {"youtube": "skip", "instagram": "skip", "threads": "skip", "facebook": "skip"}}
         if os.environ.get("GITHUB_ACTIONS"):
             from cliponce.publish import host

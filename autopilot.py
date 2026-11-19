@@ -30,7 +30,7 @@ def main():
             try:
                 src = render.download_section(full["webpage_url"], m["start"], m["end"], work / "src" / name)
                 ass = work / (name + ".ass")
-                render.build_ass(cues, m["start"], m["end"], thumb.video_hook("", moments.best_quote(m["text"], 90, lines=m.get("hot")), m["kind"]), f"@{handle}", ass)
+                render.build_ass(cues, m["start"], m["end"], thumb.name_hook(creator, m["kind"], name), thumb.pretty_name(creator), ass)
                 out = render.render(src, ass, work / (name + ".mp4"), m["end"] - m["start"])
             except Exception as e:
                 log("render failed:", e)
@@ -39,7 +39,7 @@ def main():
             meta = {"id": name, "file": str(out.relative_to(OUT.parent)), "video_id": vid, "source": full["webpage_url"],
                     "creator": creator, "handle": handle, "start": m["start"], "end": m["end"], "kind": m["kind"],
                     "score": round(m["score"], 1), "why": moments.best_quote(m["text"], 160, lines=m.get("hot")), "caption": cap,
-                    "title": (cap.split("\n")[0] + (" | " + m["title"] if m.get("title") else ""))[:95],
+                    "title": thumb.name_hook(creator, m["kind"], name)[:95],
                     "created": today(), "posted": {}}
             if os.environ.get("GITHUB_ACTIONS"):
                 from cliponce.publish import host
