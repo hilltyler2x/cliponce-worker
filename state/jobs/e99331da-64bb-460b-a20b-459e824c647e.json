@@ -1,37 +1,37 @@
 {
- "id": "e99331da-64bb-460b-a20b-459e824c647e",
- "url": "https://www.twitch.tv/tayzobandz",
- "status": "done",
- "source": "https://www.twitch.tv/videos/2933111231",
- "creator": "tayzobandz",
- "title": "THE LAST RIDE!! THANK YOU GTA V! YOU'LL BE MISSED😭 JOIN UP POSITIVE VIBES ONLY!!!",
- "clips": [
-  {
-   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13942.mp4",
-   "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13942_cover.jpg",
-   "kind": "Funny moment",
-   "start": 13942,
-   "end": 13974,
-   "caption": "Funny moment 😂\n“i do mean😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips",
-   "why": "3 views on a viewer clip: i do mean😂"
-  },
-  {
-   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13592.mp4",
-   "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13592_cover.jpg",
-   "kind": "Insane moment",
-   "start": 13592,
-   "end": 13624,
-   "caption": "Insane moment 🎮\n“trying see sum”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips",
-   "why": "3 views on a viewer clip: trying see sum"
-  },
-  {
-   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_12500.mp4",
-   "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_12500_cover.jpg",
-   "kind": "Funny moment",
-   "start": 12500,
-   "end": 12532,
-   "caption": "Funny moment 😂\n“just a yapper😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips",
-   "why": "3 views on a viewer clip: just a yapper😂"
-  }
- ]
+  "id": "e99331da-64bb-460b-a20b-459e824c647e",
+  "url": "https://www.twitch.tv/tayzobandz",
+  "status": "done",
+  "source": "https://www.twitch.tv/videos/2933111231",
+  "creator": "tayzobandz",
+  "title": "THE LAST RIDE!! THANK YOU GTA V! YOU'LL BE MISSED😭 JOIN UP POSITIVE VIBES ONLY!!!",
+  "clips": [
+    {
+      "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13942.mp4",
+      "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13942_cover.jpg",
+      "kind": "Funny moment",
+      "start": 13942,
+      "end": 13974,
+      "caption": "Funny moment 😂\n“i do mean😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips",
+      "why": "3 views on a viewer clip: i do mean😂"
+    },
+    {
+      "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13592.mp4",
+      "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_13592_cover.jpg",
+      "kind": "Insane moment",
+      "start": 13592,
+      "end": 13624,
+      "caption": "Insane moment 🎮\n“trying see sum”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips",
+      "why": "3 views on a viewer clip: trying see sum"
+    },
+    {
+      "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_12500.mp4",
+      "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/e99331da_tayzobandz_12500_cover.jpg",
+      "kind": "Funny moment",
+      "start": 12500,
+      "end": 12532,
+      "caption": "Funny moment 😂\n“just a yapper😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips",
+      "why": "3 views on a viewer clip: just a yapper😂"
+    }
+  ]
 }
