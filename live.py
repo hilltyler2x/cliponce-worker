@@ -106,14 +106,25 @@ def score(msgs):
     return len(msgs), clip, max(kinds, key=kinds.get), max(kinds.values())
 
 
+_model = None
+
+
 def transcribe(path):
+    """Whisper captions as (start, end, text). Audio is decoded by ffmpeg so PyAV versions don't matter."""
+    global _model
     try:
+        import numpy as np
         from faster_whisper import WhisperModel
-    except Exception:
+        raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(path), "-ac", "1", "-ar", "16000", "-f", "s16le", "-"],
+                             capture_output=True, check=True).stdout
+        audio = np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
+        if _model is None:
+            _model = WhisperModel("base.en", device="cpu", compute_type="int8")
+        segs, _ = _model.transcribe(audio, vad_filter=True)
+        return [(s.start, s.end, s.text.strip()) for s in segs]
+    except Exception as e:
+        log("captions skipped:", e)
         return []
-    m = WhisperModel("base.en", device="cpu", compute_type="int8")
-    segs, _ = m.transcribe(str(path), vad_filter=True)
-    return [(s.start, s.end, s.text.strip()) for s in segs]
 
 
 def cut(rec, t, name, header, credit, work):
