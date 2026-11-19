@@ -124,8 +124,14 @@
     "made_at": 1795103254,
     "fresh": true,
     "hook": "Bro want the ban...",
-    "posted": {},
+    "posted": {
+      "youtube": "skip",
+      "instagram": "skip",
+      "threads": "skip",
+      "facebook": "skip"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_ohnePixel_AggressiveTardyDrago_cover.jpg",
-    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_ohnePixel_AggressiveTardyDrago.mp4"
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_ohnePixel_AggressiveTardyDrago.mp4",
+    "held": true
   }
 ]

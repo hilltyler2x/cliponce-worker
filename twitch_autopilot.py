@@ -4,6 +4,8 @@ import datetime as dt, json, os, sys, time
 from cliponce.common import OUT, CONFIG, load, save, today, safe_name, log, is_blocked, is_secondhand, SKIP_CHANNELS
 from cliponce import render, twitch, thumb
 from cliponce.moments import kind_of, score_text, EMOJI
+import re
+RISKY = re.compile(r"want the ban|get(ting)? banned|bann?able|tos|dancer|dancing for|twerk|thong|bikini|boobs?|cleavage|sexy|hooker|escort|prostitut", re.I)
 from live import transcribe
 
 HYPE_KIND = [("😂", "Funny moment"), ("🤣", "Funny moment"), ("💀", "Funny moment"), ("lmao", "Funny moment"), ("yap", "Funny moment"), ("lol", "Funny moment"), ("funny", "Funny moment"), ("bro", "Funny moment"), ("dead", "Funny moment"),
@@ -63,7 +65,11 @@ def main():
         langs = CONFIG.get("twitch_languages", ["en"])
         if langs and (c.get("language") or "en").split("-")[0] not in langs:
             continue
-        if is_blocked(title) or who.lower() in SKIP_CHANNELS or is_secondhand(title, who):
+        if is_blocked(title) or RISKY.search(title) or who.lower() in SKIP_CHANNELS or is_secondhand(title, who):
+            continue
+        # Stay well away from a part of a stream we already held back (same VOD, within 30 minutes).
+        if c.get("video_id") and any(h.get("video_id") == c["video_id"] and abs((h.get("start") or 0) - (c.get("vod_offset") or 0)) < 1800
+                                     for h in queue if h.get("held")):
             continue
         if used.get(who, 0) >= per_streamer:
             continue
@@ -87,6 +93,10 @@ def main():
                 src = render.download_section(src_url, 0, end, work / "src" / name)
             length = end - start
             cues = transcribe(src)
+            said = " ".join(x[2] for x in cues)
+            if is_blocked(said) or RISKY.search(said):
+                log("skipped, adult or unsafe talk in the clip:", title)
+                continue
             kind = kind_for(title + " " + " ".join(x[2] for x in cues))
             ass = work / (name + ".ass")
             render.build_ass(cues, 0, length, f"{kind} in GTA 6", f"🎥 @{handle} on Twitch", ass)
