@@ -59,8 +59,8 @@ input:focus{border-color:var(--sun1)}
 .ac video{width:100%;aspect-ratio:9/16;border-radius:12px;background:#000;border:1px solid var(--hair);object-fit:cover}
 .ac b{color:var(--text);font-size:13px}
 .ac .tags{display:flex;gap:6px;flex-wrap:wrap}
-.ac .tags span{font:500 10.5px var(--mono);padding:3px 7px;border-radius:99px;border:1px solid var(--hair2)}
-.ac .tags span.ok{border-color:rgba(93,242,164,.5);color:var(--ok)}
+.ac .tags span,.ac .tags a{font:500 10.5px var(--mono);padding:3px 7px;border-radius:99px;border:1px solid var(--hair2)}
+.ac .tags .ok{border-color:rgba(93,242,164,.5);color:var(--ok)}
 .ac a{color:var(--sun2);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:560px){nav.top .links{gap:14px}}
 </style>
@@ -128,10 +128,21 @@ input:focus{border-color:var(--sun1)}
   function showAuto(){
     $('autoBox').hidden=false;
     fetch('https://raw.githubusercontent.com/'+WORKER+'/main/state/queue.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
-      list=list.slice(-24).reverse();
-      $('autoNote').textContent=list.length?'Your cloud autopilot runs every day at 9 AM and checks live streamers every 15 minutes, with your PC off. Newest first.':'The cloud autopilot is connected. Clips show up here after its first run.';
-      $('autoList').innerHTML=list.map(function(c){var p=c.posted||{};var tags=['youtube','instagram','threads'].map(function(k){var v=p[k];return '<span class="'+(v&&v!=='skip'?'ok':'')+'">'+k+(v&&v!=='skip'?' \u2713':p[k+'_error']?' !':'')+'</span>'}).join('');
-        return '<div class="ac">'+(c.url?'<video src="'+esc(c.url)+'" controls playsinline preload="none"></video>':'')+'<b>'+esc(c.kind)+'</b><span>'+esc(c.why)+'</span><a href="'+esc(c.source)+'" target="_blank" rel="noopener">@'+esc(c.handle||c.creator)+'</a><div class="tags">'+tags+'</div></div>'}).join('');
+      // Held-back clips (skipped on every platform) never show here.
+      list=list.filter(function(c){var p=c.posted||{};return !(p.youtube==='skip'&&p.instagram==='skip'&&p.threads==='skip')&&!c.held});
+      list.sort(function(a,b){return (b.made_at||0)-(a.made_at||0)||String(b.created||'').localeCompare(String(a.created||''))});
+      list=list.slice(0,24);
+      $('autoNote').textContent=list.length?'Your cloud autopilot checks for fresh GTA 6 moments every 30 minutes, with your PC off. Newest first.':'The cloud autopilot is connected. Clips show up here after its first run.';
+      $('autoList').innerHTML=list.map(function(c){var p=c.posted||{};
+        var done=['youtube','instagram','threads'].filter(function(k){return p[k]&&p[k]!=='skip'});
+        var tags=done.length?done.map(function(k){var v=p[k];return /^https?:/.test(v)?'<a class="ok" href="'+esc(v)+'" target="_blank" rel="noopener">'+k+' \u2713</a>':'<span class="ok">'+k+' \u2713</span>'}).join(''):'<span>Not posted yet</span>';
+        var cap=String(c.caption||'').split('\n');
+        var quote=(cap.filter(function(l){return /^\u201c/.test(l)})[0]||'').replace(/^\u201c|\u201d$/g,'');
+        var hook=c.hook||(quote&&quote.length<=70?quote:'')||cap[0]||c.kind;
+        hook=String(hook).replace(/[^\x20-\u2FFF]/g,'').trim();
+        var poster=c.thumb?' poster="'+esc(c.thumb)+'"':'';
+        var src=esc(c.url)+(c.thumb?'':'#t=2');
+        return '<div class="ac">'+(c.url?'<video src="'+src+'"'+poster+' controls playsinline preload="'+(c.thumb?'none':'metadata')+'"></video>':'')+'<b>'+esc(hook)+'</b><span>'+esc(c.kind)+' from @'+esc(c.handle||c.creator)+'\u2019s stream</span><a href="'+esc(c.source)+'" target="_blank" rel="noopener">Watch the original</a><div class="tags">'+tags+'</div></div>'}).join('');
     }).catch(function(){$('autoNote').textContent='The cloud autopilot is not connected yet. Once it is, its clips and where they were posted show up here.'});
   }
   function showAuth(){$('loading').hidden=true;$('dash').hidden=true;$('authBox').hidden=false}

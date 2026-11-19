@@ -388,12 +388,12 @@ details p{color:var(--dim);padding:0 0 20px;max-width:70ch}
   <!-- HERO -->
   <section class="hero" aria-labelledby="h1">
     <div>
-      <span class="eyebrow">AI clipping for streamers and clippers</span>
-      <h1 id="h1">It watches the stream.<br><span class="grad">You get the clips.</span></h1>
-      <p class="lede">Paste a stream, upload any footage or drop in a whole channel. ClipOnce reads the chat, finds the moments people actually react to, cuts captioned 1080x1920 clips and posts them to every platform for you.</p>
+      <span class="eyebrow">AI clipping for any footage</span>
+      <h1 id="h1">Drop in anything.<br><span class="grad">Get the clips.</span></h1>
+      <p class="lede">Streams, podcasts, gameplay, vlogs, interviews, webinars. Paste a link, drop in a whole channel or upload any footage. ClipOnce reads the chat, finds the moments people actually react to, cuts captioned 1080x1920 clips and posts them to every platform for you.</p>
       <form class="paste" action="/app.html" method="get" role="search" aria-label="Clip a link" style="margin-top:28px">
         <label for="heroLink" class="sr" style="position:absolute;left:-9999px">Video, stream or channel link</label>
-        <input id="heroLink" name="link" type="url" inputmode="url" autocomplete="off" placeholder="Paste a Twitch stream, VOD or channel link">
+        <input id="heroLink" name="link" type="url" inputmode="url" autocomplete="off" placeholder="Paste a link or drop in any video">
         <button class="btn" type="submit">Get clips</button>
       </form>
       <div class="hint"><span><i>&#10003;</i><b>Free</b> to start</span><span><i>&#10003;</i>No card for the free plan</span><span><i>&#10003;</i>Or drop in your own video file</span></div>
@@ -417,7 +417,7 @@ details p{color:var(--dim);padding:0 0 20px;max-width:70ch}
   <div class="strip" aria-label="Works with">
     <span class="l">Clip from</span>
     <span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#9146ff" d="M4.3 2 3 5.4v13.8h4.6V22h2.6l2.8-2.8h3.8L22 14V2H4.3Zm15.9 11.1-2.9 2.9h-4.6L10.2 18.5V16H6.4V3.7h13.8v9.4ZM17.3 7v5.1h-1.7V7h1.7Zm-4.6 0v5.1H11V7h1.7Z"/></svg>Twitch streams and VODs</span>
-    <span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff8a3d" d="M4 4h16v16H4z" opacity=".2"/><path fill="#ef6c1e" d="M10 8.5v7l6-3.5z"/></svg>Your own video files</span>
+    <span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff8a3d" d="M4 4h16v16H4z" opacity=".2"/><path fill="#ef6c1e" d="M10 8.5v7l6-3.5z"/></svg>Any video file you upload</span>
     <span class="l">Post to</span>
     <span>TikTok</span><span>YouTube Shorts</span><span>Instagram Reels</span><span>Threads</span><span>X</span>
   </div>
@@ -658,7 +658,7 @@ details p{color:var(--dim);padding:0 0 20px;max-width:70ch}
       <h2 id="faq-h">Good <span class="grad">questions.</span></h2>
     </div>
     <div class="faq">
-      <details><summary>What links can I clip from?</summary><p>Twitch live streams, past broadcasts, clips and channel links work in the cloud today. You can also upload any video file you own. More platforms are on the way.</p></details>
+      <details><summary>What links can I clip from?</summary><p>Anything with moments worth sharing: streams, podcasts, gameplay, vlogs, interviews, sports, webinars and more. Upload any video file, of any length. Twitch streams, past broadcasts and channel links also work straight from the link today, and more sites are on the way.</p></details>
       <details><summary>How does it pick the moments?</summary><p>It scores every part of the video using chat activity (message speed, emotes, "clip it" calls), audio energy like laughter and shouting, and the transcript. The highest scoring stretches become clips, trimmed so they start before the moment and end after the payoff.</p></details>
       <details><summary>What is a credit?</summary><p>1 credit is 1 minute of source video processed. A 2 hour stream uses 120 credits no matter how many clips come out of it. Posting never costs credits.</p></details>
       <details><summary>Will I be charged today?</summary><p>No. Every paid plan starts with 30 days free. You are only charged after the trial ends, and you can cancel before that in your account page.</p></details>
@@ -674,7 +674,7 @@ details p{color:var(--dim);padding:0 0 20px;max-width:70ch}
     <p>Paste a link and see what ClipOnce finds. It takes less time than reading this page did.</p>
     <form class="paste" action="/app.html" method="get" aria-label="Clip a link">
       <label for="endLink" style="position:absolute;left:-9999px">Video, stream or channel link</label>
-      <input id="endLink" name="link" type="url" inputmode="url" autocomplete="off" placeholder="Paste a Twitch stream, VOD or channel link">
+      <input id="endLink" name="link" type="url" inputmode="url" autocomplete="off" placeholder="Paste a link or drop in any video">
       <button class="btn" type="submit">Get clips</button>
     </form>
   </div>
@@ -693,7 +693,7 @@ details p{color:var(--dim);padding:0 0 20px;max-width:70ch}
   <form action="/app.html" method="get" aria-label="Get clips from a link">
     <a class="up" href="/app.html" aria-label="Upload a video file" title="Upload a file"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg></a>
     <label for="dockLink" style="position:absolute;left:-9999px">Video, stream or channel link</label>
-    <input id="dockLink" name="link" type="url" inputmode="url" autocomplete="off" placeholder="Drop a stream or video link" tabindex="-1">
+    <input id="dockLink" name="link" type="url" inputmode="url" autocomplete="off" placeholder="Drop any video link or upload a file" tabindex="-1">
     <button type="submit" tabindex="-1">Get free clips</button>
   </form>
 </div>
