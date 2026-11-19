@@ -1,10 +1,11 @@
+import urllib.parse
 """Find today's best new GTA 6 videos to clip (no downloads, metadata only)."""
 import json, datetime as dt
 from .common import run, ytdlp_base, log, is_blocked, SKIP_CHANNELS, CONFIG
 
 
 def search(query, n=15):
-    r = run(ytdlp_base() + ["--flat-playlist", "-J", f"ytsearchdate{n}:{query}"], check=False, timeout=180)
+    r = run(ytdlp_base() + ["--flat-playlist", "-J", "--playlist-end", str(n), "https://www.youtube.com/results?sp=CAI%3D&search_query=" + urllib.parse.quote_plus(query)], check=False, timeout=180)
     if r.returncode != 0:
         log("search failed:", r.stderr[-300:])
         return []
