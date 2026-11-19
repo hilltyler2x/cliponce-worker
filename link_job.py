@@ -43,8 +43,21 @@ def meta(url):
     return d
 
 
+def flat(url):
+    r = run(ytdlp_base() + ["-J", "--flat-playlist", "--playlist-end", "30", url], check=False, timeout=180)
+    if r.returncode != 0:
+        return []
+    try:
+        return json.loads(r.stdout).get("entries") or []
+    except Exception:
+        return []
+
+
+LIVE_SECONDS = int(os.environ.get("JOB_LIVE_SECONDS", "900"))
+
+
 def resolve(url):
-    """Return (source info, kind) for a Twitch link."""
+    """Return (source info, kind). kind: clip, vod, live (info has local 'file') or clips (info has 'clips')."""
     if not re.search(r"(^|\.)twitch\.tv", url):
         raise ValueError("Only Twitch links work in the cloud right now.")
     if "/clip/" in url or "clips.twitch.tv" in url:
@@ -52,7 +65,35 @@ def resolve(url):
     if re.search(r"/videos/\d+", url):
         return meta(url), "vod"
     ch = re.search(r"twitch\.tv/([A-Za-z0-9_]+)", url).group(1)
-    return meta(f"https://www.twitch.tv/{ch}/videos?filter=archives&sort=time"), "vod"
+    vods = flat(f"https://www.twitch.tv/{ch}/videos?filter=archives&sort=time")
+    if vods:
+        return meta(vods[0].get("url") or f"https://www.twitch.tv/videos/{vods[0]['id'].lstrip('v')}"), "vod"
+    live = run(ytdlp_base() + ["-J", "--skip-download", f"https://www.twitch.tv/{ch}"], check=False, timeout=120)
+    if live.returncode == 0:
+        info = json.loads(live.stdout)
+        if info.get("is_live"):
+            write("running", step=f"{ch} is live with no saved broadcasts, recording the next {LIVE_SECONDS // 60} minutes", creator=ch)
+            f = OUT / "jobs" / JOB / "live.ts"
+            f.parent.mkdir(parents=True, exist_ok=True)
+            cmd = " ".join(f"'{c}'" for c in ytdlp_base() + ["-f", "best[height<=1080]/best", "-o", "-", f"https://www.twitch.tv/{ch}"])
+            subprocess.run(f"{cmd} | ffmpeg -loglevel error -y -i - -t {LIVE_SECONDS} -c copy '{f}'", shell=True, timeout=LIVE_SECONDS + 300)
+            if f.exists() and f.stat().st_size > 1_000_000:
+                info["file"], info["duration"] = str(f), LIVE_SECONDS
+                return info, "live"
+    clips = [c for c in flat(f"https://www.twitch.tv/{ch}/clips?filter=clips&range=7d") if c.get("url")]
+    clips.sort(key=lambda c: -(c.get("view_count") or 0))
+    if clips:
+        return {"uploader": ch, "title": f"{ch}'s top Twitch moments this week", "webpage_url": f"https://www.twitch.tv/{ch}",
+                "clips": clips[:COUNT]}, "clips"
+    raise RuntimeError(f"{ch} has no saved broadcasts or clips to work from, and is not live right now.")
+
+
+def cut_local(f, start, end, dest):
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    out = dest.with_suffix(".mp4")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{start:.2f}", "-i", f, "-t", f"{end - start:.2f}",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-c:a", "aac", out], timeout=600)
+    return out
 
 
 def clip_markers(info):
@@ -84,7 +125,11 @@ def loud_markers(info, work):
     if dur:
         args += ["--download-sections", f"*{a:.0f}-{dur:.0f}"]
     run(ytdlp_base() + args + [info["webpage_url"]], timeout=3000)
-    f = sorted(work.glob("audio.*"))[0]
+    return peaks(sorted(work.glob("audio.*"))[0], a)
+
+
+def peaks(f, a=0.0):
+    """Reaction spikes in a media file's audio, as (seconds, '', strength)."""
     raw = subprocess.run(["ffmpeg", "-loglevel", "error", "-i", str(f), "-ac", "1", "-ar", "1000", "-f", "s16le", "-"],
                          capture_output=True, check=True).stdout
     s = array.array("h", raw[: len(raw) // 2 * 2])
@@ -118,6 +163,10 @@ def main():
         title = info.get("title") or ""
         if kind == "clip":
             marks = [(min(float(info.get("duration") or 30), MAXLEN) / 2, title, 0)]
+        elif kind == "clips":
+            marks = [(i, c.get("title") or "", c.get("view_count") or 0) for i, c in enumerate(info["clips"])]
+        elif kind == "live":
+            marks = peaks(info["file"])
         else:
             write("running", step=f"Finding the best moments in “{title[:60]}”", source=info.get("webpage_url"), creator=who)
             marks = clip_markers(info)
@@ -131,17 +180,24 @@ def main():
                 break
             tried += 1
             write("running", step=f"Cutting clip {len(clips) + 1} of {COUNT}", source=info.get("webpage_url"), creator=who, clips=clips)
+            src_url = info["webpage_url"]
             if kind == "clip":
                 start, end = 0.0, min(float(info.get("duration") or 30), MAXLEN)
+            elif kind == "clips":
+                c = info["clips"][int(t)]
+                src_url, start, end = c["url"], 0.0, min(float(c.get("duration") or 30), MAXLEN)
             else:
                 start = max(0.0, t - PRE)
                 end = min(start + PRE + POST, float(info.get("duration") or 1e9))
             name = f"{JOB[:8]}_{safe_name(handle, 20)}_{int(start)}"
             try:
-                src = render.download_section(info["webpage_url"], start, end, work / "src" / name)
+                if kind == "clips":
+                    name = f"{JOB[:8]}_{safe_name(handle, 20)}_c{int(t)}"
+                src = (cut_local(info["file"], start, end, work / "src" / name) if kind == "live"
+                       else render.download_section(src_url, start, end, work / "src" / name))
                 cues = transcribe(src)
                 words = " ".join(c[2] for c in cues)
-                if kind != "clip" and not ctitle and strength and strength < 2.2 and score_text(words) < 2:
+                if kind in ("vod", "live") and not ctitle and strength and strength < 2.2 and score_text(words) < 2:
                     log("weak moment, skipping", start)
                     continue
                 k = kind_for(ctitle + " " + words + " " + title)
@@ -156,7 +212,7 @@ def main():
                 cap = "\n".join(x for x in [f"{k} {EMOJI.get(k, '🎮')}", f"“{ctitle or quote}”" if (ctitle or quote) else "",
                                            f"🎥 Credit: @{handle} on Twitch", "#Twitch #Clips" + (" #GTA6" if "gta" in title.lower() else "")] if x)
                 clips.append({"url": link, "kind": k, "start": round(start), "end": round(end), "caption": cap,
-                              "why": (f"{strength} views on viewers' clip: {ctitle}" if ctitle else f"Reaction spike, {strength}x louder than usual")[:140]})
+                              "why": (f"{strength} views on a viewer clip: {ctitle}" if ctitle else f"Reaction spike, {strength}x louder than usual")[:140]})
             except Exception as e:
                 log("clip failed:", e)
         if not clips:
