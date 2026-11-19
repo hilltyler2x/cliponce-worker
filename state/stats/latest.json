@@ -1,0 +1,41 @@
+{
+  "date": "2026-11-19",
+  "taken_at": "2026-11-19T19:47:38Z",
+  "platforms": {
+    "instagram": {
+      "handle": "@dailygta6info",
+      "followers": 0,
+      "posts": 30
+    },
+    "facebook": {
+      "handle": "Dailygta6Info",
+      "followers": 0,
+      "likes": 0
+    },
+    "threads": {
+      "handle": "@dailygta6info",
+      "followers": 0,
+      "views_24h": 28,
+      "likes_24h": 0
+    },
+    "youtube": {
+      "note": "no sign-in saved in the cloud"
+    },
+    "tiktok": {
+      "handle": "@dailygta6info6",
+      "followers": 0,
+      "likes": 9,
+      "posts": 25
+    },
+    "x": {
+      "handle": "@DailyGTA6Info",
+      "note": "X has no free stats API; check analytics on x.com"
+    }
+  },
+  "cloud_posts": {
+    "2026-11-19": {
+      "instagram": 4,
+      "threads": 3
+    }
+  }
+}
