@@ -2,8 +2,8 @@
 
 Credentials come from GitHub Actions secrets (never from the repo):
   YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN
-  IG_USER_ID, IG_TOKEN, (optional) IG_GRAPH_HOST  default graph.facebook.com
-  THREADS_USER_ID, THREADS_TOKEN
+  IG_TOKEN, optional IG_USER_ID (default me), optional IG_GRAPH_HOST (auto from the token)
+  THREADS_TOKEN, optional THREADS_USER_ID (default me)
 A platform whose secrets are missing is skipped, not failed.
 """
 import json, os, time, tempfile
@@ -100,8 +100,10 @@ def _meta_poll(host, cid, token, field="status_code"):
 
 
 def post_instagram(item):
-    host = os.environ.get("IG_GRAPH_HOST", "graph.facebook.com") + "/v21.0"
-    uid, tok = os.environ["IG_USER_ID"], os.environ["IG_TOKEN"]
+    tok = os.environ["IG_TOKEN"]
+    # Instagram Login tokens (start with IG) live on graph.instagram.com; Facebook Login ones on graph.facebook.com.
+    host = (os.environ.get("IG_GRAPH_HOST") or ("graph.instagram.com" if tok.startswith("IG") else "graph.facebook.com")) + "/v21.0"
+    uid = os.environ.get("IG_USER_ID") or "me"
     c = requests.post(f"https://{host}/{uid}/media", data={"media_type": "REELS", "video_url": direct_url(item["url"]),
                       "caption": item["caption"], "share_to_feed": "true", "access_token": tok,
                       **({"cover_url": direct_url(item["thumb"])} if item.get("thumb") else {})}, timeout=60).json()
@@ -116,7 +118,7 @@ def post_instagram(item):
 
 def post_threads(item):
     host = "graph.threads.net/v1.0"
-    uid, tok = os.environ["THREADS_USER_ID"], os.environ["THREADS_TOKEN"]
+    uid, tok = os.environ.get("THREADS_USER_ID") or "me", os.environ["THREADS_TOKEN"]
     text = item["caption"][:490]
     c = requests.post(f"https://{host}/{uid}/threads", data={"media_type": "VIDEO", "video_url": direct_url(item["url"]),
                       "text": text, "access_token": tok}, timeout=60).json()
@@ -135,6 +137,18 @@ class CapReached(Exception):
 
 PLATFORMS = {
     "youtube": (("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"), post_youtube),
-    "instagram": (("IG_USER_ID", "IG_TOKEN"), post_instagram),
-    "threads": (("THREADS_USER_ID", "THREADS_TOKEN"), post_threads),
+    "instagram": (("IG_TOKEN",), post_instagram),
+    "threads": (("THREADS_TOKEN",), post_threads),
 }
+
+
+def refresh_tokens():
+    """Long-lived Instagram and Threads tokens last 60 days; refreshing them daily keeps them alive."""
+    tok = os.environ.get("IG_TOKEN")
+    if tok and tok.startswith("IG"):
+        r = requests.get("https://graph.instagram.com/refresh_access_token", params={"grant_type": "ig_refresh_token", "access_token": tok}, timeout=30)
+        log("instagram token refresh:", r.status_code)
+    tok = os.environ.get("THREADS_TOKEN")
+    if tok:
+        r = requests.get("https://graph.threads.net/refresh_access_token", params={"grant_type": "th_refresh_token", "access_token": tok}, timeout=30)
+        log("threads token refresh:", r.status_code)

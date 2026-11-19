@@ -2,12 +2,17 @@
 Runs every couple of hours; a clip over the cap simply waits for the next day."""
 import sys
 from cliponce.common import CONFIG, load, save, today, log
-from cliponce.publish import PLATFORMS, has, CapReached
+from cliponce.publish import PLATFORMS, has, CapReached, refresh_tokens
 
 
 def main():
     queue = load("queue.json", [])
     counts = load("post_counts.json", {})
+    if not counts.get(today()):
+        try:
+            refresh_tokens()
+        except Exception as e:
+            log("token refresh skipped:", e)
     day = counts.setdefault(today(), {})
     for k in list(counts):
         if k < today() and len(counts) > 14:
