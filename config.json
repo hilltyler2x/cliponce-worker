@@ -42,5 +42,8 @@
   "twitch_min_views_per_hour": 120,
   "twitch_languages": [
     "en"
-  ]
+  ],
+  "platform_start": {
+    "facebook": "2026-11-20T14:30"
+  }
 }

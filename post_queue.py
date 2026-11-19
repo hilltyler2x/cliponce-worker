@@ -1,6 +1,6 @@
 """Post the next queued clip to each platform, within each platform's daily cap.
 Runs every couple of hours; a clip over the cap simply waits for the next day."""
-import sys
+import sys, time
 from cliponce.common import CONFIG, load, save, today, log
 from cliponce.publish import PLATFORMS, has, CapReached, refresh_tokens
 
@@ -22,6 +22,10 @@ def main():
     for plat, (keys, fn) in PLATFORMS.items():
         if not has(*keys):
             log(f"{plat}: no sign-in saved yet, skipping")
+            continue
+        start = CONFIG.get("platform_start", {}).get(plat)
+        if start and time.strftime("%Y-%m-%dT%H:%M", time.gmtime()) < start:
+            log(f"{plat}: paused until {start} UTC (the PC is posting its backlog there)")
             continue
         done = 0
         # Freshest first: a moment is worth most before anyone else posts it.
