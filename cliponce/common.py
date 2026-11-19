@@ -9,7 +9,7 @@ FONTS = ROOT / "fonts"
 CONFIG = json.loads((ROOT / "config.json").read_text(encoding="utf-8"))
 
 # Never touch these, whatever the title says (posting safety rules).
-BLOCK = re.compile(r"\b(leak(s|ed)?|pirat\w*|crack(ed)?|torrent|free download|download free|mod menu|cheat engine|account for sale|giveaway scam)\b", re.I)
+BLOCK = re.compile(r"\b(leak(s|ed)?|pirat\w*|crack(ed)?|torrent|free download|download free|mod menu|cheat engine|account for sale|giveaway scam|strip ?club|stripper|private dance|lap ?dance|nude|naked|nsfw|onlyfans)\b", re.I)
 SKIP_CHANNELS = {c.lower() for c in CONFIG.get("skip_channels", [])}
 
 
