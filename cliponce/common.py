@@ -51,6 +51,20 @@ def is_blocked(*texts):
     return bool(BLOCK.search(t))
 
 
+# Only clip ORIGINAL creator videos. Skip clip / compilation / reupload channels and videos
+# that credit someone else, because re-clipping another clipper's posted clip is lazy stealing.
+CLIPPER_CHANNEL = re.compile(r"(clips?\b|clipz|clipper|clipped|highlights?|compilations?|\bbest of\b|moments\b|tiktoks?\b|shorts\b|reels?\b|daily ?gta|gta ?daily|news ?daily)", re.I)
+CLIPPER_TITLE = re.compile(r"(compilation|\bclips?\b|clipped|best moments|funniest moments of|reupload|re-upload|#shorts|tiktok|reacts? to|reaction)", re.I)
+CREDITS_OTHER = re.compile(r"(credits? ?(to|:|-|goes)|all credit|original (video|clip|creator|stream)|clipped from|\bsource ?:|\bvia @|\bfrom @\w+'?s? (stream|video|channel)|follow (the )?(original )?creator|full (video|stream) (by|from|on) @?\w+|go (follow|subscribe to) @?\w+|\bstreamer ?:)", re.I)
+
+
+def is_secondhand(title="", channel="", description=""):
+    """True when a video looks like someone else's clip, compilation, reaction or reupload."""
+    if CLIPPER_CHANNEL.search(channel or "") or CLIPPER_TITLE.search(title or ""):
+        return True
+    return bool(CREDITS_OTHER.search((description or "")[:1500]))
+
+
 def ytdlp_base():
     base = ["yt-dlp", "--no-warnings", "--no-progress", "--retries", "3"]
     ck = os.environ.get("YT_COOKIES_FILE")

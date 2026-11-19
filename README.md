@@ -19,4 +19,6 @@ Platforms without secrets are skipped.
 - `THREADS_USER_ID`, `THREADS_TOKEN`.
 - `YT_COOKIES`: optional, a cookies.txt export, only if YouTube blocks downloads from GitHub.
 
+Originals only: clip channels, compilations, reactions, reuploads and videos that credit another creator are skipped, so we never re-clip someone else's posted clip. Clipping the same moment from the original video or live is fine.
+
 Safety: titles mentioning leaks, piracy or cracks are skipped, Rockstar's own channel is skipped, and every clip credits its creator on screen and in the caption.

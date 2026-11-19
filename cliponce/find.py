@@ -1,7 +1,7 @@
 import urllib.parse
 """Find today's best new GTA 6 videos to clip (no downloads, metadata only)."""
 import json, datetime as dt
-from .common import run, ytdlp_base, log, is_blocked, SKIP_CHANNELS, CONFIG
+from .common import run, ytdlp_base, log, is_blocked, is_secondhand, SKIP_CHANNELS, CONFIG
 
 
 def search(query, n=15):
@@ -36,8 +36,11 @@ def candidates(seen_ids):
             title, ch = e.get("title") or "", (e.get("channel") or e.get("uploader") or "")
             if is_blocked(title) or ch.lower() in SKIP_CHANNELS:
                 continue
+            if is_secondhand(title, ch):
+                log("skip, not the original creator:", ch, "|", title)
+                continue
             dur = e.get("duration") or 0
-            if dur and (dur < 60 or dur > CONFIG.get("max_video_minutes", 90) * 60):
+            if dur and (dur < CONFIG.get("min_video_seconds", 180) or dur > CONFIG.get("max_video_minutes", 90) * 60):
                 continue
             pool[vid] = e
     ranked = sorted(pool.values(), key=lambda e: -(e.get("view_count") or 0))
@@ -50,6 +53,9 @@ def candidates(seen_ids):
         if up < cutoff or full.get("is_live") or full.get("was_live") and (full.get("duration") or 0) > 4 * 3600:
             continue
         if is_blocked(full.get("title"), full.get("description", "")[:500]):
+            continue
+        if is_secondhand(full.get("title"), full.get("channel") or full.get("uploader"), full.get("description")):
+            log("skip, credits or reposts someone else:", full.get("channel"), "|", full.get("title"))
             continue
         out.append(full)
     out.sort(key=lambda f: -(f.get("view_count") or 0))
