@@ -204,7 +204,7 @@ def main():
                     log("weak moment, skipping", start)
                     continue
                 k = kind_for(ctitle + " " + words + " " + title)
-                quote = max((c[2] for c in cues), key=len, default="")[:90]
+                quote = thumb._dedupe(max((c[2] for c in cues), key=len, default=""))[:90]
                 hook = thumb.video_hook(ctitle, quote, k)
                 ass = work / (name + ".ass")
                 render.build_ass(cues, 0, end - start, hook, f"@{handle} on Twitch", ass)

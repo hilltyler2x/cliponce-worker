@@ -18,28 +18,53 @@ def _font(size):
     return ImageFont.load_default()
 
 
+HOOKS = {"Funny moment": ["I CAN'T BREATHE", "HE DID NOT JUST DO THAT", "CHAT LOST IT HERE"],
+         "Glitch": ["THIS SHOULDN'T WORK", "GTA 6 BROKE HERE", "NOBODY CAN EXPLAIN THIS"],
+         "Easter egg": ["NOBODY NOTICED THIS", "ROCKSTAR HID THIS"],
+         "Hidden secret": ["YOU MISSED THIS", "MOST PLAYERS NEVER SEE THIS"],
+         "Insane moment": ["NO WAY THIS HAPPENED", "WATCH TILL THE END", "WAIT FOR IT"]}
+GENERIC = ["WATCH TILL THE END", "WAIT FOR IT", "CHAT LOST IT HERE"]
+
+
+def _dedupe(t):
+    """'let me see. let me see. let me see' -> 'let me see'"""
+    parts = [x.strip() for x in re.split(r"[.!?]+", t) if x.strip()]
+    out = []
+    for x in parts:
+        if not out or x.lower() != out[-1].lower():
+            out.append(x)
+    return ". ".join(out)
+
+
 def hook_text(title="", quote="", kind=""):
-    """2 to 5 punchy words, no emoji."""
-    clean = lambda t: re.sub(r"[^\w' ?!.,-]", " ", t or "").strip()
-    for cand in (clean(title), clean(quote)):
+    """2 to 5 punchy words, no emoji. A viewer clip title is used as is; a spoken line only when it has a punch word."""
+    clean = lambda t: _dedupe(re.sub(r"[^\w' ?!.,-]", " ", t or "").strip())
+    for cand, need_punch in ((clean(title), False), (clean(quote), True)):
         words = cand.split()
+        if need_punch and not PUNCH.search(cand):
+            continue
         if 2 <= len(words) <= 5:
             return " ".join(words).upper().rstrip(".,")
         if len(words) > 5:
-            # keep the punchiest window of 4 words
             best = max(range(len(words) - 3), key=lambda i: len(PUNCH.findall(" ".join(words[i:i + 4]))))
-            return " ".join(words[best:best + 4]).upper().rstrip(".,") + "..."
-    return {"Funny moment": "I CAN'T BREATHE", "Glitch": "THIS SHOULDN'T WORK", "Easter egg": "NOBODY NOTICED THIS",
-            "Hidden secret": "YOU MISSED THIS", "Insane moment": "NO WAY THIS HAPPENED"}.get(kind, "WAIT FOR IT")
+            if not need_punch or PUNCH.search(" ".join(words[best:best + 4])):
+                return " ".join(words[best:best + 4]).upper().rstrip(".,") + "..."
+    pool = HOOKS.get(kind, GENERIC)
+    return pool[sum(map(ord, quote or title or kind)) % len(pool)]
+
+
+def _cap(t):
+    return " ".join(w if any(ch.isdigit() for ch in w) else w[:1].upper() + w[1:].lower() for w in t.split())
 
 
 def video_hook(title="", quote="", kind=""):
     """Top-of-video headline: the moment's own title when it reads well (3 to 9 words), else a short punchy hook."""
     t = re.sub(r"[^\w' ?!.,-]", " ", title or "").strip()
-    t = re.sub(r"\s+", " ", t)
+    t = _dedupe(re.sub(r"\s+", " ", t))
     if 3 <= len(t.split()) <= 9 and not re.search(r"https?|clip ?\d|^untitled", t, re.I):
-        return t.rstrip(".,")
-    return hook_text(title, quote, kind).title()
+        t = t.rstrip(".,")
+        return t[:1].upper() + t[1:]
+    return _cap(hook_text(title, quote, kind))
 
 
 def _score(img):
