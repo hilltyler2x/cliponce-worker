@@ -280,7 +280,10 @@
     "made_at": 1795120479,
     "fresh": true,
     "hook": "Though. hey chat. how's...",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 18140604439628215",
+      "threads": "threads post 17890592022486487"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_DansGaming_RenownedNeighborlyWa_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_DansGaming_RenownedNeighborlyWa.mp4"
   }
