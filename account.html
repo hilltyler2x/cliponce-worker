@@ -97,6 +97,11 @@ input:focus{border-color:var(--sun1)}
       </div>
       <a class="cta" href="/app.html" style="margin-top:22px">Open the clipper</a>
     </div>
+    <div class="panel" id="earnBox" style="margin-top:18px" hidden>
+      <div class="row"><div><h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Earnings</h3>
+      <p class="note" style="margin-top:6px">ClipOnce subscriptions and DailyGTA6Info page growth. Only you can see this.</p></div>
+      <a class="cta" href="/earnings.html" style="width:auto;margin-top:0;padding:13px 22px">See earnings</a></div>
+    </div>
     <div class="panel" id="autoBox" style="margin-top:18px" hidden>
       <h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Autopilot clips</h3>
       <p class="note" id="autoNote" style="margin-top:6px">Loading...</p>
@@ -154,7 +159,7 @@ input:focus{border-color:var(--sun1)}
     $('planNote').textContent=u.plan==='owner'?'Full access to everything':u.plan==='free'?'Upgrade any time below':'Thanks for subscribing';
     $('reset').textContent=new Date(u.resetsAt).toLocaleDateString(undefined,{month:'short',day:'numeric'});
     $('upgrade').hidden=u.plan!=='free';
-    if(u.plan==='owner')showAuto();
+    if(u.plan==='owner'){$('earnBox').hidden=false;showAuto();}
     document.querySelectorAll('[data-link]').forEach(function(a){a.href=a.dataset.link+'?prefilled_email='+encodeURIComponent(u.email)+'&client_reference_id='+encodeURIComponent(u.id)});
   }
   document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
