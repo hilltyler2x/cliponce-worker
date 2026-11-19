@@ -31,6 +31,9 @@ def main():
     used = {}
     work = OUT / today()
     clips = twitch.top_clips(CONFIG.get("twitch_hours", 36))
+    # Big creators first: priority streamers lead, then everyone else by clip views.
+    prio = [x.lower() for x in CONFIG.get("twitch_priority", [])]
+    clips.sort(key=lambda c: (0 if (c.get("broadcaster_name") or "").lower().replace(" ", "") in prio else 1, -(c.get("view_count") or 0)))
     log(f"twitch: {len(clips)} recent GTA 6 clips found")
     for c in clips:
         if made >= target:

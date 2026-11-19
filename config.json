@@ -14,12 +14,26 @@
   "clips_per_day": 6,
   "clips_per_video": 2,
   "min_score": 9,
-  "skip_channels": ["Rockstar Games"],
-  "daily_caps": {"youtube": 2, "instagram": 2, "threads": 3},
+  "skip_channels": [
+    "Rockstar Games"
+  ],
+  "daily_caps": {
+    "youtube": 2,
+    "instagram": 2,
+    "threads": 3
+  },
   "streamers": [],
-  "twitch_games": ["Grand Theft Auto VI"],
+  "twitch_games": [
+    "Grand Theft Auto VI"
+  ],
   "twitch_hours": 36,
-  "twitch_min_views": 150,
+  "twitch_min_views": 300,
   "twitch_per_streamer": 2,
-  "live_auto_top": 2
+  "live_auto_top": 0,
+  "twitch_priority": [
+    "caseoh_",
+    "kaicenat",
+    "lacy",
+    "tfue"
+  ]
 }
