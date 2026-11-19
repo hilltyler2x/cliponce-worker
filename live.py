@@ -207,7 +207,7 @@ def watch(streamer, deadline):
 def commit_state(msg):
     if not os.environ.get("GITHUB_ACTIONS"):
         return
-    subprocess.run(f"git add state && git commit -qm '{msg}' && git pull -q --rebase -X theirs && git push -q", shell=True)
+    subprocess.run([sys.executable, "sync_state.py", msg])
 
 
 def all_streamers():

@@ -33,4 +33,4 @@ jobs:
       - run: python post_queue.py
       - name: Save state
         if: always()
-        run: git add state && (git commit -qm "posted $(date -u +%FT%H)" && git pull -q --rebase -X theirs && git push -q || true)
+        run: python sync_state.py "posted $(date -u +%FT%H)"

@@ -27,10 +27,10 @@ def run(cmd, check=True, **kw):
 
 def load(name, default):
     p = STATE / name
-    try:
-        return json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
+    if not p.exists():
         return default
+    # A damaged file must stop the run, never be silently replaced (that would wipe the queue).
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def save(name, data):

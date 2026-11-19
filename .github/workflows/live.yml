@@ -33,4 +33,4 @@ jobs:
         run: python live.py
       - name: Save state
         if: always() && steps.check.outputs.live == '1'
-        run: git add state && (git commit -qm "live $(date -u +%FT%H%M)" && git pull -q --rebase -X theirs && git push -q || true)
+        run: python sync_state.py "live $(date -u +%FT%H%M)"
