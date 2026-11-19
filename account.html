@@ -134,7 +134,7 @@ input:focus{border-color:var(--sun1)}
       list=list.slice(0,24);
       $('autoNote').textContent=list.length?'Your cloud autopilot checks for fresh GTA 6 moments every 30 minutes, with your PC off. Newest first.':'The cloud autopilot is connected. Clips show up here after its first run.';
       $('autoList').innerHTML=list.map(function(c){var p=c.posted||{};
-        var done=['youtube','instagram','threads'].filter(function(k){return p[k]&&p[k]!=='skip'});
+        var done=['youtube','instagram','threads','facebook'].filter(function(k){return p[k]&&p[k]!=='skip'});
         var tags=done.length?done.map(function(k){var v=p[k];return /^https?:/.test(v)?'<a class="ok" href="'+esc(v)+'" target="_blank" rel="noopener">'+k+' \u2713</a>':'<span class="ok">'+k+' \u2713</span>'}).join(''):'<span>Not posted yet</span>';
         var cap=String(c.caption||'').split('\n');
         var quote=(cap.filter(function(l){return /^\u201c/.test(l)})[0]||'').replace(/^\u201c|\u201d$/g,'');
