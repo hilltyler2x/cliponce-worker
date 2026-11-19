@@ -43,9 +43,7 @@
   "twitch_languages": [
     "en"
   ],
-  "platform_start": {
-    "facebook": "2026-11-20T14:30"
-  },
+  "platform_start": {},
   "min_minutes_between_posts": {
     "instagram": 240,
     "facebook": 240,
