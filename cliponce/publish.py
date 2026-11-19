@@ -126,6 +126,14 @@ def post_instagram(item):
             c, host = c2, alt
     if "id" not in c:
         if (c.get("error") or {}).get("code") in (100, 190, 10, 200):
+            fb = "graph.facebook.com/v21.0"
+            for path, f in (("me", "id,name"), ("me/accounts", "name,instagram_business_account{id,username}"),
+                            (uid, "id,username")):
+                try:
+                    r = requests.get(f"https://{fb}/{path}", params={"fields": f, "access_token": tok}, timeout=30).json()
+                    log("instagram check", path.replace(uid, "IG_USER_ID"), "->", str(r)[:400])
+                except Exception as e:
+                    log("instagram check failed", e)
             raise SignInProblem(f"Instagram sign-in or permission problem: {c}")
         raise RuntimeError(f"Instagram container failed: {c}")
     _meta_poll(host, c["id"], tok)
