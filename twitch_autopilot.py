@@ -5,7 +5,7 @@ from cliponce.common import OUT, CONFIG, load, save, today, safe_name, log, is_b
 from cliponce import render, twitch, thumb
 from cliponce.moments import kind_of, score_text, EMOJI
 import re
-RISKY = re.compile(r"want the ban|get(ting)? banned|bann?able|tos|dancer|dancing for|twerk|thong|bikini|boobs?|cleavage|sexy|hooker|escort|prostitut", re.I)
+RISKY = re.compile(r"\b(want the ban|get(ting)? banned|bann?able|tos|dancer|dancing for|twerk\w*|thong|bikini|boobs?|cleavage|sexy|hooker|escort|prostitut\w*)\b", re.I)
 from live import transcribe
 
 HYPE_KIND = [("😂", "Funny moment"), ("🤣", "Funny moment"), ("💀", "Funny moment"), ("lmao", "Funny moment"), ("yap", "Funny moment"), ("lol", "Funny moment"), ("funny", "Funny moment"), ("bro", "Funny moment"), ("dead", "Funny moment"),
