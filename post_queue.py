@@ -2,7 +2,7 @@
 Runs every couple of hours; a clip over the cap simply waits for the next day."""
 import sys, time
 from cliponce.common import CONFIG, load, save, today, log
-from cliponce.publish import PLATFORMS, has, CapReached, refresh_tokens
+from cliponce.publish import PLATFORMS, has, CapReached, SignInProblem, refresh_tokens
 
 
 def main():
@@ -44,6 +44,9 @@ def main():
                 day[plat] = day.get(plat, 0) + 1
                 done += 1
                 log(f"{plat}: posted {item['id']} -> {link}")
+            except SignInProblem as e:
+                log(f"{plat}: {e}")
+                break
             except CapReached as e:
                 log(f"{plat}: platform daily limit reached, waiting until tomorrow ({e})")
                 day[plat] = caps.get(plat, 1)

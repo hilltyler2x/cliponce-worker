@@ -114,10 +114,19 @@ def post_instagram(item):
         if not igs:
             raise RuntimeError("No Instagram account linked to this token; save IG_USER_ID")
         uid = igs[0]
-    c = requests.post(f"https://{host}/{uid}/media", data={"media_type": "REELS", "video_url": direct_url(item["url"]),
-                      "caption": item["caption"], "share_to_feed": "true", "access_token": tok,
-                      **({"cover_url": direct_url(item["thumb"])} if item.get("thumb") else {})}, timeout=60).json()
+    data = {"media_type": "REELS", "video_url": direct_url(item["url"]), "caption": item["caption"], "share_to_feed": "true",
+            "access_token": tok, **({"cover_url": direct_url(item["thumb"])} if item.get("thumb") else {})}
+    c = requests.post(f"https://{host}/{uid}/media", data=data, timeout=60).json()
+    if "id" not in c and not os.environ.get("IG_GRAPH_HOST"):
+        # Unified-login tokens can belong to the other Graph host; try it once.
+        alt = ("graph.instagram.com" if "facebook" in host else "graph.facebook.com") + "/v21.0"
+        c2 = requests.post(f"https://{alt}/{uid}/media", data=data, timeout=60).json()
+        log("instagram: retried on", alt, "->", "ok" if "id" in c2 else str(c2)[:200])
+        if "id" in c2:
+            c, host = c2, alt
     if "id" not in c:
+        if (c.get("error") or {}).get("code") in (100, 190, 10, 200):
+            raise SignInProblem(f"Instagram sign-in or permission problem: {c}")
         raise RuntimeError(f"Instagram container failed: {c}")
     _meta_poll(host, c["id"], tok)
     p = requests.post(f"https://{host}/{uid}/media_publish", data={"creation_id": c["id"], "access_token": tok}, timeout=60).json()
@@ -139,6 +148,10 @@ def post_threads(item):
     if "id" not in p:
         raise RuntimeError(f"Threads publish failed: {p}")
     return "threads post " + p["id"]
+
+
+class SignInProblem(Exception):
+    """The token or permissions are wrong; no clip is at fault, so don't count a failure."""
 
 
 class CapReached(Exception):

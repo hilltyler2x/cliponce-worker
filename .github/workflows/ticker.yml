@@ -1,0 +1,36 @@
+name: Ticker
+# GitHub's own cron can be late or skipped, so this keeps the schedule itself:
+# fresh autopilot every 30 minutes, live check every 15, posting every 2 hours (10 AM to 10 PM New York).
+# It runs about 5.5 hours, then starts its own next run.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"   # backup restart if the chain ever breaks
+permissions:
+  actions: write
+  contents: read
+concurrency:
+  group: ticker
+  cancel-in-progress: false
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - name: Keep the schedule
+        run: |
+          fire() { gh api -X POST "repos/$REPO/actions/workflows/$1/dispatches" -f ref=main >/dev/null && echo "$(date -u +%H:%M) started $1" || echo "could not start $1"; }
+          end=$(( $(date +%s) + 330*60 ))
+          last_auto=0; last_live=0; last_post=""
+          while [ "$(date +%s)" -lt "$end" ]; do
+            now=$(date +%s); h=$(date -u +%H); m=$(date -u +%M)
+            if [ $((now - last_auto)) -ge 1800 ]; then fire autopilot.yml; last_auto=$now; fi
+            if [ $((now - last_live)) -ge 900 ]; then fire live.yml; last_live=$now; fi
+            # posting slots, UTC: 15,17,19,21,23,01,03 (10 AM to 10 PM New York)
+            case "$h" in 15|17|19|21|23|01|03) if [ "$last_post" != "$h" ]; then fire post.yml; last_post=$h; fi;; esac
+            sleep 60
+          done
+          fire ticker.yml
