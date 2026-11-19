@@ -152,6 +152,9 @@ def peaks(f, a=0.0):
     return [(a + i, "", round(r, 2)) for r, i in out]
 
 
+GTA6 = re.compile(r"gta ?(6|vi)\b|grand theft auto vi\b", re.I)
+
+
 def main():
     write("running", step="Finding the newest broadcast")
     work = OUT / "jobs" / JOB
@@ -202,7 +205,7 @@ def main():
                     continue
                 k = kind_for(ctitle + " " + words + " " + title)
                 ass = work / (name + ".ass")
-                render.build_ass(cues, 0, end - start, f"{k} in GTA 6" if "gta" in title.lower() else k, f"🎥 @{handle} on Twitch", ass)
+                render.build_ass(cues, 0, end - start, f"{k} in GTA 6" if GTA6.search(title) else k, f"🎥 @{handle} on Twitch", ass)
                 out = render.render(src, ass, work / (name + ".mp4"), end - start)
                 link = out.name
                 if os.environ.get("GITHUB_ACTIONS"):
@@ -210,9 +213,9 @@ def main():
                     link = host(out, "jobs-" + today())
                 quote = max((c[2] for c in cues), key=len, default="")[:90]
                 cap = "\n".join(x for x in [f"{k} {EMOJI.get(k, '🎮')}", f"“{ctitle or quote}”" if (ctitle or quote) else "",
-                                           f"🎥 Credit: @{handle} on Twitch", "#Twitch #Clips" + (" #GTA6" if "gta" in title.lower() else "")] if x)
+                                           f"🎥 Credit: @{handle} on Twitch", "#Twitch #Clips" + (" #GTA6" if GTA6.search(title) else "")] if x)
                 clips.append({"url": link, "kind": k, "start": round(start), "end": round(end), "caption": cap,
-                              "why": (f"{strength} views on a viewer clip: {ctitle}" if ctitle else f"Reaction spike, {strength}x louder than usual")[:140]})
+                              "why": (f"{strength} view{'' if strength == 1 else 's'} on a viewer clip: {ctitle}" if ctitle else f"Reaction spike, {strength}x louder than usual")[:140]})
             except Exception as e:
                 log("clip failed:", e)
         if not clips:

@@ -6,7 +6,7 @@ from cliponce import render, twitch
 from cliponce.moments import kind_of, score_text, EMOJI
 from live import transcribe
 
-HYPE_KIND = [("lol", "Funny moment"), ("funny", "Funny moment"), ("bro", "Funny moment"), ("dead", "Funny moment"),
+HYPE_KIND = [("😂", "Funny moment"), ("🤣", "Funny moment"), ("💀", "Funny moment"), ("lmao", "Funny moment"), ("yap", "Funny moment"), ("lol", "Funny moment"), ("funny", "Funny moment"), ("bro", "Funny moment"), ("dead", "Funny moment"),
              ("glitch", "Glitch"), ("bug", "Glitch"), ("secret", "Hidden secret"), ("easter", "Easter egg"),
              ("hidden", "Hidden detail"), ("trick", "Trick"), ("first", "First ever"), ("insane", "Insane moment"),
              ("crazy", "Insane moment"), ("wtf", "Insane moment"), ("no way", "Insane moment")]
