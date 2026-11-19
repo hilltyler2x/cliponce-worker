@@ -256,7 +256,10 @@
     "made_at": 1795117157,
     "fresh": true,
     "hook": "Joe meets mandy",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 18105279428359233",
+      "threads": "threads post 18025402655722504"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_Joe_Bartolozzi_RudeSilkyHerdNotLike_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-19/2026-11-19_tw_Joe_Bartolozzi_RudeSilkyHerdNotLike.mp4"
   }
