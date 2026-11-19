@@ -7,7 +7,7 @@ Moments come from viewer-made Twitch clips of that broadcast when Twitch keys ar
 the loudest crowd / streamer reactions in the audio. Captions by Whisper, credit to the streamer."""
 import array, json, os, re, subprocess, sys
 from cliponce.common import OUT, STATE, log, run, ytdlp_base, safe_name, today, is_blocked
-from cliponce import render, twitch
+from cliponce import render, thumb, twitch
 from cliponce.moments import score_text, EMOJI
 from live import transcribe
 from twitch_autopilot import kind_for
@@ -208,13 +208,18 @@ def main():
                 render.build_ass(cues, 0, end - start, f"{k} in GTA 6" if GTA6.search(title) else k, f"🎥 @{handle} on Twitch", ass)
                 out = render.render(src, ass, work / (name + ".mp4"), end - start)
                 link = out.name
+                quote = max((c[2] for c in cues), key=len, default="")[:90]
+                cover = thumb.cover_for(src, work / (name + "_cover.jpg"), ctitle, quote, k, f"@{handle} on Twitch",
+                                        end - start, around=(end - start) / 2 if kind == "clips" or kind == "clip" else min(PRE, end - start))
+                poster = cover.name if cover else ""
                 if os.environ.get("GITHUB_ACTIONS"):
                     from cliponce.publish import host
                     link = host(out, "jobs-" + today())
-                quote = max((c[2] for c in cues), key=len, default="")[:90]
+                    if cover:
+                        poster = host(cover, "jobs-" + today())
                 cap = "\n".join(x for x in [f"{k} {EMOJI.get(k, '🎮')}", f"“{ctitle or quote}”" if (ctitle or quote) else "",
                                            f"🎥 Credit: @{handle} on Twitch", "#Twitch #Clips" + (" #GTA6" if GTA6.search(title) else "")] if x)
-                clips.append({"url": link, "kind": k, "start": round(start), "end": round(end), "caption": cap,
+                clips.append({"url": link, "thumb": poster, "kind": k, "start": round(start), "end": round(end), "caption": cap,
                               "why": (f"{strength} view{'' if strength == 1 else 's'} on a viewer clip: {ctitle}" if ctitle else f"Reaction spike, {strength}x louder than usual")[:140]})
             except Exception as e:
                 log("clip failed:", e)

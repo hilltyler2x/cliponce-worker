@@ -74,7 +74,15 @@ def post_youtube(item):
             if "uploadLimitExceeded" in up.text:
                 raise CapReached(up.text[:300])
             raise RuntimeError(f"YouTube upload {up.status_code}: {up.text[:400]}")
-        return "https://youtube.com/shorts/" + up.json()["id"]
+        vid = up.json()["id"]
+        if item.get("thumb"):  # custom thumbnail needs a verified channel; best effort
+            try:
+                img = requests.get(item["thumb"], timeout=60).content
+                requests.post(f"https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId={vid}",
+                              headers={**h, "Content-Type": "image/jpeg"}, data=img, timeout=120)
+            except Exception as e:
+                log("youtube thumbnail skipped:", e)
+        return "https://youtube.com/shorts/" + vid
     finally:
         f.unlink(missing_ok=True)
 
@@ -95,7 +103,8 @@ def post_instagram(item):
     host = os.environ.get("IG_GRAPH_HOST", "graph.facebook.com") + "/v21.0"
     uid, tok = os.environ["IG_USER_ID"], os.environ["IG_TOKEN"]
     c = requests.post(f"https://{host}/{uid}/media", data={"media_type": "REELS", "video_url": direct_url(item["url"]),
-                      "caption": item["caption"], "share_to_feed": "true", "access_token": tok}, timeout=60).json()
+                      "caption": item["caption"], "share_to_feed": "true", "access_token": tok,
+                      **({"cover_url": direct_url(item["thumb"])} if item.get("thumb") else {})}, timeout=60).json()
     if "id" not in c:
         raise RuntimeError(f"Instagram container failed: {c}")
     _meta_poll(host, c["id"], tok)

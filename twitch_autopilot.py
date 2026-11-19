@@ -2,7 +2,7 @@
 the streamer's own VOD, caption them and queue them. Originals only, every clip credits the streamer."""
 import datetime as dt, json, os, sys, time
 from cliponce.common import OUT, CONFIG, load, save, today, safe_name, log, is_blocked, is_secondhand, SKIP_CHANNELS
-from cliponce import render, twitch
+from cliponce import render, twitch, thumb
 from cliponce.moments import kind_of, score_text, EMOJI
 from live import transcribe
 
@@ -94,9 +94,13 @@ def main():
                 "why": f"{c.get('view_count')} views in {c['_age_h']:.1f} h on the Twitch clip of this moment: {title}"[:160],
                 "caption": cap, "title": f"{kind} in GTA 6 | {title}"[:95], "created": today(), "made_at": int(time.time()),
                 "fresh": True, "posted": {}}
+        cover = thumb.cover_for(src, work / (name + "_cover.jpg"), title, quote, kind, f"@{handle} on Twitch",
+                                length, around=(6 + dur / 2) if c.get("video_id") else dur / 2)
         if os.environ.get("GITHUB_ACTIONS"):
             from cliponce.publish import host
             try:
+                if cover:
+                    meta["thumb"] = host(cover, "clips-" + today())
                 meta["url"] = host(out, "clips-" + today())
             except Exception as e:
                 log("could not host clip:", e)
