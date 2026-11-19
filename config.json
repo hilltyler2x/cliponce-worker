@@ -18,10 +18,10 @@
     "Rockstar Games"
   ],
   "daily_caps": {
-    "youtube": 2,
-    "instagram": 25,
-    "threads": 25,
-    "facebook": 25
+    "youtube": 0,
+    "instagram": 3,
+    "facebook": 3,
+    "threads": 8
   },
   "streamers": [],
   "twitch_games": [
@@ -46,5 +46,37 @@
   "platform_start": {
     "facebook": "2026-11-20T14:30"
   },
-  "min_minutes_between_posts": 40
+  "min_minutes_between_posts": {
+    "instagram": 240,
+    "facebook": 240,
+    "threads": 90,
+    "youtube": 180
+  },
+  "recommended_daily": {
+    "_note": "Tyler's safe daily mix 2026-11-19, combined across cloud and PC. Cloud leaves YouTube and TikTok to the PC.",
+    "tiktok": [
+      3,
+      4
+    ],
+    "youtube": [
+      3,
+      5
+    ],
+    "instagram": [
+      2,
+      3
+    ],
+    "facebook": [
+      2,
+      3
+    ],
+    "x": [
+      5,
+      8
+    ],
+    "threads": [
+      5,
+      8
+    ]
+  }
 }

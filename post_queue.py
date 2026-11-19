@@ -29,7 +29,8 @@ def main():
             continue
         done = 0
         last = counts.setdefault("_last", {})
-        gap = CONFIG.get("min_minutes_between_posts", 40) * 60
+        g = CONFIG.get("min_minutes_between_posts", 40)
+        gap = int((g.get(plat, 40) if isinstance(g, dict) else g) * 60)
         if time.time() - last.get(plat, 0) < gap:
             log(f"{plat}: last post was under {gap // 60} minutes ago, spacing posts out")
             continue
