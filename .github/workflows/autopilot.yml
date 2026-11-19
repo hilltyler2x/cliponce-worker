@@ -1,7 +1,7 @@
-name: Daily autopilot
+name: Fresh autopilot
 on:
   schedule:
-    - cron: "0 14 * * *"   # 9 AM New York time (winter)
+    - cron: "7,37 * * * *"   # every 30 minutes: grab new moments before anyone else posts them
   workflow_dispatch:
 permissions:
   contents: write
@@ -11,7 +11,7 @@ concurrency:
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 40
     env:
       GH_TOKEN: ${{ github.token }}
       EXTRA_PIP: faster-whisper

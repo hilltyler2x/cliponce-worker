@@ -19,7 +19,8 @@ def main():
             log(f"{plat}: no sign-in saved yet, skipping")
             continue
         done = 0
-        for item in queue:
+        # Freshest first: a moment is worth most before anyone else posts it.
+        for item in sorted(queue, key=lambda q: (q.get("made_at") or 0, q.get("created") or ""), reverse=True):
             if done >= per_run or day.get(plat, 0) >= caps.get(plat, 1):
                 break
             st = item.setdefault("posted", {})

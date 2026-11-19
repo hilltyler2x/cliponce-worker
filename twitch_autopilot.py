@@ -1,6 +1,6 @@
 """Cloud autopilot for Twitch: find the GTA 6 moments live audiences reacted to most, cut them from
 the streamer's own VOD, caption them and queue them. Originals only, every clip credits the streamer."""
-import json, os, sys
+import datetime as dt, json, os, sys, time
 from cliponce.common import OUT, CONFIG, load, save, today, safe_name, log, is_blocked, is_secondhand, SKIP_CHANNELS
 from cliponce import render, twitch
 from cliponce.moments import kind_of, score_text, EMOJI
@@ -26,28 +26,45 @@ def main():
         log("twitch: no TWITCH_CLIENT_ID / TWITCH_CLIENT_SECRET saved yet, skipping")
         return
     seen, queue = load("seen.json", {}), load("queue.json", [])
-    made, target = 0, CONFIG.get("clips_per_day", 6)
-    per_streamer, min_views = CONFIG.get("twitch_per_streamer", 2), CONFIG.get("twitch_min_views", 150)
+    # Runs every 30 minutes. Goal: be FIRST. Only moments from the last few hours, ranked by how fast
+    # viewers are piling onto them (views per hour), big creators first, a couple per run.
+    todays = [q for q in queue if q.get("created") == today() and str(q.get("id", "")).find("_tw_") > 0]
+    target = max(0, min(CONFIG.get("fresh_per_run", 2), CONFIG.get("clips_per_day", 10) - len(todays)))
+    made = 0
+    per_streamer, min_views = CONFIG.get("twitch_per_streamer", 2), CONFIG.get("twitch_min_views", 80)
+    min_vph = CONFIG.get("twitch_min_views_per_hour", 60)
     used = {}
+    for q in todays:
+        used[q.get("creator", "")] = used.get(q.get("creator", ""), 0) + 1
     work = OUT / today()
-    clips = twitch.top_clips(CONFIG.get("twitch_hours", 36))
-    # Big creators first: priority streamers lead, then everyone else by clip views.
+    now = time.time()
+    clips = twitch.top_clips(CONFIG.get("fresh_hours", 3))
+    for c in clips:
+        try:
+            age_h = max(0.25, (now - dt.datetime.strptime(c["created_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc).timestamp()) / 3600)
+        except Exception:
+            age_h = 3
+        c["_age_h"], c["_vph"] = age_h, (c.get("view_count") or 0) / age_h
     prio = [x.lower() for x in CONFIG.get("twitch_priority", [])]
-    clips.sort(key=lambda c: (0 if (c.get("broadcaster_name") or "").lower().replace(" ", "") in prio else 1, -(c.get("view_count") or 0)))
-    log(f"twitch: {len(clips)} recent GTA 6 clips found")
+    clips.sort(key=lambda c: (0 if (c.get("broadcaster_name") or "").lower().replace(" ", "") in prio else 1, -c["_vph"]))
+    log(f"twitch: {len(clips)} GTA 6 clips from the last {CONFIG.get('fresh_hours', 3)} h, making up to {target}")
     for c in clips:
         if made >= target:
             break
         cid, who, title = c["id"], c.get("broadcaster_name") or "", c.get("title") or ""
         key = "tw:" + cid
         vodkey = f"twvod:{c.get('video_id')}:{int((c.get('vod_offset') or 0) // 60)}"
-        if key in seen or vodkey in seen or (c.get("view_count") or 0) < min_views:
+        # Many viewers clip the same moment; while the VOD offset is not known yet, group by streamer and 3 minutes.
+        momkey = f"twmom:{c.get('broadcaster_id')}:{(c.get('created_at') or '')[:15]}{int((c.get('created_at') or '0000000000000000')[15:16] or 0) // 3}"
+        if key in seen or vodkey in seen or momkey in seen:
+            continue
+        if (c.get("view_count") or 0) < min_views or c["_vph"] < min_vph:
             continue
         if is_blocked(title) or who.lower() in SKIP_CHANNELS or is_secondhand(title, who):
             continue
         if used.get(who, 0) >= per_streamer:
             continue
-        seen[key] = seen[vodkey] = today()
+        seen[key] = seen[vodkey] = seen[momkey] = today()
         handle = who.replace(" ", "")
         dur = float(c.get("duration") or 30)
         name = f"{today()}_tw_{safe_name(handle, 24)}_{cid[:20]}"
@@ -74,8 +91,9 @@ def main():
                                    f"🎥 Credit: @{handle} on Twitch", "#GTA6 #GTAVI #Twitch #Gaming"] if x)
         meta = {"id": name, "video_id": c.get("video_id"), "source": src_url, "creator": who, "handle": handle,
                 "start": start, "end": end, "kind": kind, "score": c.get("view_count"),
-                "why": f"{c.get('view_count')} views on the Twitch clip of this moment: {title}"[:160],
-                "caption": cap, "title": f"{kind} in GTA 6 | {title}"[:95], "created": today(), "posted": {}}
+                "why": f"{c.get('view_count')} views in {c['_age_h']:.1f} h on the Twitch clip of this moment: {title}"[:160],
+                "caption": cap, "title": f"{kind} in GTA 6 | {title}"[:95], "created": today(), "made_at": int(time.time()),
+                "fresh": True, "posted": {}}
         if os.environ.get("GITHUB_ACTIONS"):
             from cliponce.publish import host
             try:

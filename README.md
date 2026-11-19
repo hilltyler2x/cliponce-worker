@@ -4,8 +4,8 @@ Runs ClipOnce's autopilot, live auto-clip and posting on GitHub Actions, so no P
 
 | Job | When | What it does |
 | --- | --- | --- |
-| Daily autopilot | 9 AM New York | Finds the GTA 6 Twitch moments live audiences reacted to most, cuts them from the streamer's own VOD at 1080x1920 with captions and credit, hosts them as release files and queues them. (YouTube blocks GitHub's servers, so YouTube clipping stays on the PC with `autopilot.py`.) |
-| Post queued clips | Every 2 hours, 10 AM to 10 PM | Posts the next clip to YouTube Shorts, Instagram and Threads, within each platform's daily cap. Over-cap clips wait for tomorrow. |
+| Fresh autopilot | Every 30 minutes | Finds GTA 6 Twitch moments from the last 3 hours that viewers are clipping fastest (big creators first), so we post them before anyone else, cuts them from the streamer's own VOD at 1080x1920 with captions and credit, hosts them as release files and queues them. (YouTube blocks GitHub's servers, so YouTube clipping stays on the PC with `autopilot.py`.) |
+| Post queued clips | Every 2 hours, 10 AM to 10 PM, and right after each autopilot run | Posts the freshest clip first to YouTube Shorts, Instagram and Threads, within each platform's daily cap. Over-cap clips wait for tomorrow. |
 | Live auto-clip | Every 15 minutes | If a streamer in `config.json`, or one of the top live GTA 6 Twitch streams, is live, records the stream and reads chat. A chat spike (laugh, hype or sad emotes, "clip it") becomes a captioned clip. |
 
 | Website link job | When someone pastes a Twitch link on cliponce.vercel.app | Clips the newest broadcast (or the VOD / clip linked), using viewer clips or reaction spikes, and writes results to `state/jobs/`. |
