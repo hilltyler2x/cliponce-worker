@@ -93,7 +93,7 @@ def main():
                 "start": start, "end": end, "kind": kind, "score": c.get("view_count"),
                 "why": f"{c.get('view_count')} views in {c['_age_h']:.1f} h on the Twitch clip of this moment: {title}"[:160],
                 "caption": cap, "title": f"{kind} in GTA 6 | {title}"[:95], "created": today(), "made_at": int(time.time()),
-                "fresh": True, "posted": {}}
+                "fresh": True, "hook": thumb.hook_text(title, quote, kind).capitalize(), "posted": {}}
         cover = thumb.cover_for(src, work / (name + "_cover.jpg"), title, quote, kind, f"@{handle} on Twitch",
                                 length, around=(6 + dur / 2) if c.get("video_id") else dur / 2)
         if os.environ.get("GITHUB_ACTIONS"):

@@ -32,6 +32,7 @@ jobs:
         with: { python-version: "3.12" }
       - run: bash .github/workflows/setup.sh
       - run: python twitch_autopilot.py
+      - run: python backfill_covers.py || true
       - run: python post_queue.py
       - name: Save state
         if: always()
