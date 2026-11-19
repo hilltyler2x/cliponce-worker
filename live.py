@@ -110,7 +110,7 @@ _model = None
 
 
 def transcribe(path):
-    """Whisper captions as (start, end, text). Audio is decoded by ffmpeg so PyAV versions don't matter."""
+    """Whisper captions as (start, end, text, words). Audio is decoded by ffmpeg so PyAV versions don't matter."""
     global _model
     try:
         import numpy as np
@@ -120,8 +120,12 @@ def transcribe(path):
         audio = np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
         if _model is None:
             _model = WhisperModel("base.en", device="cpu", compute_type="int8")
-        segs, _ = _model.transcribe(audio, vad_filter=True)
-        return [(s.start, s.end, s.text.strip()) for s in segs]
+        segs, _ = _model.transcribe(audio, vad_filter=True, word_timestamps=True)
+        out = []
+        for s in segs:
+            words = [(w.start, w.end, w.word.strip()) for w in (s.words or []) if w.word.strip()]
+            out.append((s.start, s.end, s.text.strip(), words))
+        return out
     except Exception as e:
         log("captions skipped:", e)
         return []
@@ -137,6 +141,10 @@ def cut(rec, t, name, header, credit, work):
     run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", raw])
     length = min(PRE + POST, 60)
     cues = transcribe(raw)
+    quote = max((c[2] for c in cues), key=len, default="")[:90]
+    if quote:
+        from cliponce import thumb
+        header = thumb.video_hook("", quote, header)
     ass = work / (name + ".ass")
     render.build_ass(cues, 0, length, header, credit, ass)
     out = work / (name + ".mp4")
@@ -176,7 +184,7 @@ def watch(streamer, deadline):
         time.sleep(POST + 2)
         name = f"{today()}_live_{safe_name(handle, 24)}_{int(now)}"
         try:
-            res = cut(rec, now, name, reason, f"🔴 @{handle} live", work)
+            res = cut(rec, now, name, reason, f"@{handle} live", work)
         except Exception as e:
             log("clip failed:", e)
             continue

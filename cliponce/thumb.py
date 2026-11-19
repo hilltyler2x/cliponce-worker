@@ -33,6 +33,15 @@ def hook_text(title="", quote="", kind=""):
             "Hidden secret": "YOU MISSED THIS", "Insane moment": "NO WAY THIS HAPPENED"}.get(kind, "WAIT FOR IT")
 
 
+def video_hook(title="", quote="", kind=""):
+    """Top-of-video headline: the moment's own title when it reads well (3 to 9 words), else a short punchy hook."""
+    t = re.sub(r"[^\w' ?!.,-]", " ", title or "").strip()
+    t = re.sub(r"\s+", " ", t)
+    if 3 <= len(t.split()) <= 9 and not re.search(r"https?|clip ?\d|^untitled", t, re.I):
+        return t.rstrip(".,")
+    return hook_text(title, quote, kind).title()
+
+
 def _score(img):
     g = img.convert("L")
     sharp = ImageStat.Stat(g.filter(ImageFilter.FIND_EDGES)).mean[0]

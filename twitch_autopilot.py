@@ -98,8 +98,9 @@ def main():
                 log("skipped, adult or unsafe talk in the clip:", title)
                 continue
             kind = kind_for(title + " " + " ".join(x[2] for x in cues))
+            quote = max((x[2] for x in cues), key=len, default="")[:90]
             ass = work / (name + ".ass")
-            render.build_ass(cues, 0, length, f"{kind} in GTA 6", f"🎥 @{handle} on Twitch", ass)
+            render.build_ass(cues, 0, length, thumb.video_hook(title, quote, kind), f"@{handle} on Twitch", ass)
             out = render.render(src, ass, work / (name + ".mp4"), length)
         except Exception as e:
             log("twitch render failed:", e)

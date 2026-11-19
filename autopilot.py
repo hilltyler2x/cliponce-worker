@@ -3,7 +3,7 @@ moments, and add them to the posting queue. Runs on GitHub Actions; no PC needed
 import json, sys
 from cliponce.common import OUT, CONFIG, load, save, today, safe_name, log
 import os
-from cliponce import find, moments, render
+from cliponce import find, moments, render, thumb
 
 
 def main():
@@ -30,7 +30,7 @@ def main():
             try:
                 src = render.download_section(full["webpage_url"], m["start"], m["end"], work / "src" / name)
                 ass = work / (name + ".ass")
-                render.build_ass(cues, m["start"], m["end"], f"{m['kind']} in GTA 6", f"🎥 @{handle}", ass)
+                render.build_ass(cues, m["start"], m["end"], thumb.video_hook("", moments.best_quote(m["text"], 90, lines=m.get("hot")), m["kind"]), f"@{handle}", ass)
                 out = render.render(src, ass, work / (name + ".mp4"), m["end"] - m["start"])
             except Exception as e:
                 log("render failed:", e)
