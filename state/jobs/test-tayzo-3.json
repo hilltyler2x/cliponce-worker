@@ -1,26 +1,26 @@
 {
- "id": "test-tayzo-3",
- "url": "https://www.twitch.tv/tayzobandz",
- "status": "done",
- "source": "https://www.twitch.tv/videos/2933111231",
- "creator": "tayzobandz",
- "title": "THE LAST RIDE!! THANK YOU GTA V! YOU'LL BE MISSED😭 JOIN UP POSITIVE VIBES ONLY!!!",
- "clips": [
-  {
-   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/test-tay_tayzobandz_12500.mp4",
-   "kind": "Insane moment",
-   "start": 12500,
-   "end": 12532,
-   "caption": "Insane moment 🎮\n“just a yapper😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
-   "why": "2 views on a viewer clip: just a yapper😂"
-  },
-  {
-   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/test-tay_tayzobandz_13942.mp4",
-   "kind": "Insane moment",
-   "start": 13942,
-   "end": 13974,
-   "caption": "Insane moment 🎮\n“i do mean😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
-   "why": "1 views on a viewer clip: i do mean😂"
-  }
- ]
+  "id": "test-tayzo-3",
+  "url": "https://www.twitch.tv/tayzobandz",
+  "status": "done",
+  "source": "https://www.twitch.tv/videos/2933111231",
+  "creator": "tayzobandz",
+  "title": "THE LAST RIDE!! THANK YOU GTA V! YOU'LL BE MISSED😭 JOIN UP POSITIVE VIBES ONLY!!!",
+  "clips": [
+    {
+      "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/test-tay_tayzobandz_12500.mp4",
+      "kind": "Insane moment",
+      "start": 12500,
+      "end": 12532,
+      "caption": "Insane moment 🎮\n“just a yapper😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
+      "why": "2 views on a viewer clip: just a yapper😂"
+    },
+    {
+      "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/test-tay_tayzobandz_13942.mp4",
+      "kind": "Insane moment",
+      "start": 13942,
+      "end": 13974,
+      "caption": "Insane moment 🎮\n“i do mean😂”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
+      "why": "1 views on a viewer clip: i do mean😂"
+    }
+  ]
 }
