@@ -2,8 +2,19 @@
  "id": "qa1795117608",
  "url": "https://www.twitch.tv/tayzobandz",
  "status": "running",
- "step": "Cutting clip 1 of 3",
+ "step": "Cutting clip 2 of 3",
  "source": "https://www.twitch.tv/videos/2934041278",
  "creator": "tayzobandz",
- "clips": []
+ "clips": [
+  {
+   "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/qa179511_tayzobandz_1061.mp4",
+   "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/jobs-2026-11-19/qa179511_tayzobandz_1061_cover.jpg",
+   "kind": "Insane moment",
+   "hook": "Thank You Straight. Thank...",
+   "start": 1061,
+   "end": 1093,
+   "caption": "Insane moment 🎮\n“Thank you straight. Thank you straight. Yeah, we good. We're good. We're good”\n🎥 Credit: @tayzobandz on Twitch\n#Twitch #Clips #GTA6",
+   "why": "Biggest reaction in the stream: “Thank you straight. Thank you straight. Yeah, we good. We're good. We're good”"
+  }
+ ]
 }
