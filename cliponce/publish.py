@@ -104,6 +104,16 @@ def post_instagram(item):
     # Instagram Login tokens (start with IG) live on graph.instagram.com; Facebook Login ones on graph.facebook.com.
     host = (os.environ.get("IG_GRAPH_HOST") or ("graph.instagram.com" if tok.startswith("IG") else "graph.facebook.com")) + "/v21.0"
     uid = os.environ.get("IG_USER_ID") or "me"
+    if uid == "me" and "graph.facebook.com" in host:
+        # Facebook-style token: find the Instagram account linked to the Page(s) it can manage.
+        pages = requests.get(f"https://{host}/me/accounts", params={"fields": "instagram_business_account", "access_token": tok}, timeout=30).json()
+        igs = [p["instagram_business_account"]["id"] for p in pages.get("data", []) if p.get("instagram_business_account")]
+        if not igs:
+            me = requests.get(f"https://{host}/me", params={"fields": "instagram_business_account", "access_token": tok}, timeout=30).json()
+            igs = [me["instagram_business_account"]["id"]] if me.get("instagram_business_account") else []
+        if not igs:
+            raise RuntimeError("No Instagram account linked to this token; save IG_USER_ID")
+        uid = igs[0]
     c = requests.post(f"https://{host}/{uid}/media", data={"media_type": "REELS", "video_url": direct_url(item["url"]),
                       "caption": item["caption"], "share_to_feed": "true", "access_token": tok,
                       **({"cover_url": direct_url(item["thumb"])} if item.get("thumb") else {})}, timeout=60).json()
