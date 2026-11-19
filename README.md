@@ -8,6 +8,8 @@ Runs ClipOnce's autopilot, live auto-clip and posting on GitHub Actions, so no P
 | Post queued clips | Every 2 hours, 10 AM to 10 PM | Posts the next clip to YouTube Shorts, Instagram and Threads, within each platform's daily cap. Over-cap clips wait for tomorrow. |
 | Live auto-clip | Every 15 minutes | If a streamer in `config.json`, or one of the top live GTA 6 Twitch streams, is live, records the stream and reads chat. A chat spike (laugh, hype or sad emotes, "clip it") becomes a captioned clip. |
 
+| Website link job | When someone pastes a Twitch link on cliponce.vercel.app | Clips the newest broadcast (or the VOD / clip linked), using viewer clips or reaction spikes, and writes results to `state/jobs/`. |
+
 ## Settings
 Edit `config.json`: searches, clips per day, daily caps, and `streamers`, for example
 `{"url": "https://www.twitch.tv/somestreamer", "post": true}`.
