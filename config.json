@@ -11,7 +11,7 @@
   "inspect_top": 12,
   "max_age_days": 3,
   "max_video_minutes": 90,
-  "clips_per_day": 10,
+  "clips_per_day": 20,
   "clips_per_video": 2,
   "min_score": 9,
   "skip_channels": [
@@ -19,9 +19,9 @@
   ],
   "daily_caps": {
     "youtube": 2,
-    "instagram": 2,
-    "threads": 3,
-    "facebook": 3
+    "instagram": 25,
+    "threads": 25,
+    "facebook": 25
   },
   "streamers": [],
   "twitch_games": [
@@ -45,5 +45,6 @@
   ],
   "platform_start": {
     "facebook": "2026-11-20T14:30"
-  }
+  },
+  "min_minutes_between_posts": 40
 }

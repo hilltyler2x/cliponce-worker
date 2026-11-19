@@ -15,7 +15,7 @@ def main():
             log("token refresh skipped:", e)
     day = counts.setdefault(today(), {})
     for k in list(counts):
-        if k < today() and len(counts) > 14:
+        if k != "_last" and k < today() and len(counts) > 14:
             counts.pop(k)
     caps = CONFIG.get("daily_caps", {})
     per_run = CONFIG.get("posts_per_run", 1)
@@ -28,6 +28,11 @@ def main():
             log(f"{plat}: paused until {start} UTC (the PC is posting its backlog there)")
             continue
         done = 0
+        last = counts.setdefault("_last", {})
+        gap = CONFIG.get("min_minutes_between_posts", 40) * 60
+        if time.time() - last.get(plat, 0) < gap:
+            log(f"{plat}: last post was under {gap // 60} minutes ago, spacing posts out")
+            continue
         # Freshest first: a moment is worth most before anyone else posts it.
         for item in sorted(queue, key=lambda q: (q.get("made_at") or 0, q.get("created") or ""), reverse=True):
             if done >= per_run or day.get(plat, 0) >= caps.get(plat, 1):
@@ -42,6 +47,7 @@ def main():
                 link = fn(item)
                 st[plat] = link
                 day[plat] = day.get(plat, 0) + 1
+                last[plat] = int(time.time())
                 done += 1
                 log(f"{plat}: posted {item['id']} -> {link}")
             except SignInProblem as e:
