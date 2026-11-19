@@ -188,7 +188,7 @@ def watch(streamer, deadline):
                                    f"🎥 Credit: @{handle}", "#GTA6 #Live #Clips" if "gta" in title.lower() else "#Live #Clips"] if x)
         meta = {"id": name, "kind": reason, "creator": channel, "handle": handle, "source": url, "caption": cap,
                 "title": f"{reason} on {channel}'s stream"[:95], "why": f"{n} chat messages in 10 s vs usual {med}",
-                "created": today(), "posted": {} if streamer.get("post", True) else {"youtube": "skip", "instagram": "skip", "threads": "skip"}}
+                "created": today(), "posted": {} if streamer.get("post", True) else {"youtube": "skip", "instagram": "skip", "threads": "skip", "facebook": "skip"}}
         if os.environ.get("GITHUB_ACTIONS"):
             from cliponce.publish import host
             try:

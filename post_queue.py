@@ -29,7 +29,8 @@ def main():
             if done >= per_run or day.get(plat, 0) >= caps.get(plat, 1):
                 break
             st = item.setdefault("posted", {})
-            if plat in st or not item.get("url"):
+            held = item.get("held") or all(st.get(k) == "skip" for k in ("youtube", "instagram", "threads"))
+            if held or plat in st or not item.get("url"):
                 continue
             if st.get(plat + "_fails", 0) >= 3:
                 continue
