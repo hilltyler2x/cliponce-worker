@@ -1,0 +1,20 @@
+{
+  "searches": [
+    "GTA 6 easter eggs",
+    "GTA 6 secrets",
+    "GTA 6 hidden details",
+    "GTA 6 glitch",
+    "GTA 6 tips and tricks",
+    "GTA 6 funny moments"
+  ],
+  "per_search": 15,
+  "inspect_top": 12,
+  "max_age_days": 3,
+  "max_video_minutes": 90,
+  "clips_per_day": 6,
+  "clips_per_video": 2,
+  "min_score": 9,
+  "skip_channels": ["Rockstar Games"],
+  "daily_caps": {"youtube": 2, "instagram": 2, "threads": 3},
+  "streamers": []
+}

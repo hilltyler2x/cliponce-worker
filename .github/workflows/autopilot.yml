@@ -1,0 +1,35 @@
+name: Daily autopilot
+on:
+  schedule:
+    - cron: "0 14 * * *"   # 9 AM New York time (winter)
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      GH_TOKEN: ${{ github.token }}
+      YT_COOKIES: ${{ secrets.YT_COOKIES }}
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      IG_TOKEN: ${{ secrets.IG_TOKEN }}
+      IG_GRAPH_HOST: ${{ secrets.IG_GRAPH_HOST }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: bash .github/workflows/setup.sh
+      - run: python autopilot.py
+      - run: python post_queue.py
+      - name: Save state
+        if: always()
+        run: git add state && (git commit -qm "autopilot $(date -u +%F)" && git pull -q --rebase -X theirs && git push -q || true)

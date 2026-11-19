@@ -1,0 +1,39 @@
+name: Live auto-clip
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # check streamers every 15 minutes
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: live
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      GH_TOKEN: ${{ github.token }}
+      YT_COOKIES: ${{ secrets.YT_COOKIES }}
+      EXTRA_PIP: faster-whisper chat-downloader
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Anyone live?
+        id: check
+        run: |
+          pip install -q yt-dlp
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, subprocess
+          s = json.load(open("config.json")).get("streamers", [])
+          live = any(subprocess.run(["yt-dlp", "--print", "%(is_live)s", "--playlist-items", "1", x["url"]], capture_output=True, text=True).stdout.strip().startswith("True") for x in s)
+          print("live=" + ("1" if live else "0"))
+          PY
+      - if: steps.check.outputs.live == '1'
+        run: bash .github/workflows/setup.sh
+      - if: steps.check.outputs.live == '1'
+        run: python live.py
+      - name: Save state
+        if: always() && steps.check.outputs.live == '1'
+        run: git add state && (git commit -qm "live $(date -u +%FT%H%M)" && git pull -q --rebase -X theirs && git push -q || true)

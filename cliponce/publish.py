@@ -1,0 +1,131 @@
+"""Host finished clips as GitHub Release assets and post them to YouTube Shorts, Instagram and Threads.
+
+Credentials come from GitHub Actions secrets (never from the repo):
+  YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN
+  IG_USER_ID, IG_TOKEN, (optional) IG_GRAPH_HOST  default graph.facebook.com
+  THREADS_USER_ID, THREADS_TOKEN
+A platform whose secrets are missing is skipped, not failed.
+"""
+import json, os, time, tempfile
+from pathlib import Path
+import requests
+from .common import run, log, ROOT
+
+REPO = os.environ.get("GITHUB_REPOSITORY", "")
+
+
+# ---------- hosting ----------
+def ensure_release(tag):
+    r = run(["gh", "release", "view", tag], check=False)
+    if r.returncode != 0:
+        run(["gh", "release", "create", tag, "--title", tag, "--notes", "ClipOnce autopilot clips (credited to their creators)."])
+
+
+def host(file: Path, tag):
+    ensure_release(tag)
+    run(["gh", "release", "upload", tag, str(file), "--clobber"])
+    return f"https://github.com/{REPO}/releases/download/{tag}/{file.name}"
+
+
+def direct_url(url):
+    """Resolve GitHub's redirect to the short-lived direct file URL that Meta's servers can fetch."""
+    r = requests.head(url, allow_redirects=False, timeout=30)
+    return r.headers.get("Location", url) if r.status_code in (301, 302, 303, 307, 308) else url
+
+
+def fetch(url):
+    fd, p = tempfile.mkstemp(suffix=".mp4")
+    with requests.get(url, stream=True, timeout=120) as r, os.fdopen(fd, "wb") as f:
+        r.raise_for_status()
+        for chunk in r.iter_content(1 << 20):
+            f.write(chunk)
+    return Path(p)
+
+
+# ---------- platforms ----------
+def has(*keys):
+    return all(os.environ.get(k) for k in keys)
+
+
+def post_youtube(item):
+    tok = requests.post("https://oauth2.googleapis.com/token", data={
+        "client_id": os.environ["YT_CLIENT_ID"], "client_secret": os.environ["YT_CLIENT_SECRET"],
+        "refresh_token": os.environ["YT_REFRESH_TOKEN"], "grant_type": "refresh_token"}, timeout=30).json()
+    if "access_token" not in tok:
+        raise RuntimeError(f"YouTube token refresh failed: {tok.get('error')}")
+    h = {"Authorization": "Bearer " + tok["access_token"]}
+    title = (item["title"].split(" | ")[0] + " #Shorts")[:100]
+    meta = {"snippet": {"title": title, "description": item["caption"] + f"\n\nOriginal video: {item['source']}",
+                        "tags": ["GTA 6", "GTA VI", "GTA 6 secrets", "Shorts"], "categoryId": "20"},
+            "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}}
+    f = fetch(item["url"])
+    try:
+        init = requests.post("https://www.googleapis.com/upload/youtube/v3/videos?uploadType=resumable&part=snippet,status",
+                             headers={**h, "Content-Type": "application/json", "X-Upload-Content-Type": "video/mp4",
+                                      "X-Upload-Content-Length": str(f.stat().st_size)}, data=json.dumps(meta), timeout=60)
+        if init.status_code >= 300:
+            err = init.text[:400]
+            if "uploadLimitExceeded" in err or "quota" in err.lower():
+                raise CapReached(err)
+            raise RuntimeError(f"YouTube init {init.status_code}: {err}")
+        with open(f, "rb") as fh:
+            up = requests.put(init.headers["Location"], headers={**h, "Content-Type": "video/mp4"}, data=fh, timeout=900)
+        if up.status_code >= 300:
+            if "uploadLimitExceeded" in up.text:
+                raise CapReached(up.text[:300])
+            raise RuntimeError(f"YouTube upload {up.status_code}: {up.text[:400]}")
+        return "https://youtube.com/shorts/" + up.json()["id"]
+    finally:
+        f.unlink(missing_ok=True)
+
+
+def _meta_poll(host, cid, token, field="status_code"):
+    for _ in range(60):
+        s = requests.get(f"https://{host}/{cid}", params={"fields": field, "access_token": token}, timeout=30).json()
+        st = s.get(field) or s.get("status")
+        if st in ("FINISHED", "PUBLISHED"):
+            return
+        if st in ("ERROR", "EXPIRED"):
+            raise RuntimeError(f"{host} processing {st}: {s}")
+        time.sleep(10)
+    raise RuntimeError(f"{host} processing timed out")
+
+
+def post_instagram(item):
+    host = os.environ.get("IG_GRAPH_HOST", "graph.facebook.com") + "/v21.0"
+    uid, tok = os.environ["IG_USER_ID"], os.environ["IG_TOKEN"]
+    c = requests.post(f"https://{host}/{uid}/media", data={"media_type": "REELS", "video_url": direct_url(item["url"]),
+                      "caption": item["caption"], "share_to_feed": "true", "access_token": tok}, timeout=60).json()
+    if "id" not in c:
+        raise RuntimeError(f"Instagram container failed: {c}")
+    _meta_poll(host, c["id"], tok)
+    p = requests.post(f"https://{host}/{uid}/media_publish", data={"creation_id": c["id"], "access_token": tok}, timeout=60).json()
+    if "id" not in p:
+        raise RuntimeError(f"Instagram publish failed: {p}")
+    return "instagram media " + p["id"]
+
+
+def post_threads(item):
+    host = "graph.threads.net/v1.0"
+    uid, tok = os.environ["THREADS_USER_ID"], os.environ["THREADS_TOKEN"]
+    text = item["caption"][:490]
+    c = requests.post(f"https://{host}/{uid}/threads", data={"media_type": "VIDEO", "video_url": direct_url(item["url"]),
+                      "text": text, "access_token": tok}, timeout=60).json()
+    if "id" not in c:
+        raise RuntimeError(f"Threads container failed: {c}")
+    _meta_poll(host, c["id"], tok, field="status")
+    p = requests.post(f"https://{host}/{uid}/threads_publish", data={"creation_id": c["id"], "access_token": tok}, timeout=60).json()
+    if "id" not in p:
+        raise RuntimeError(f"Threads publish failed: {p}")
+    return "threads post " + p["id"]
+
+
+class CapReached(Exception):
+    pass
+
+
+PLATFORMS = {
+    "youtube": (("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"), post_youtube),
+    "instagram": (("IG_USER_ID", "IG_TOKEN"), post_instagram),
+    "threads": (("THREADS_USER_ID", "THREADS_TOKEN"), post_threads),
+}
