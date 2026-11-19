@@ -350,5 +350,26 @@
       "youtube": "skip"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/pc-2026-11-19/2026-11-19_pc_Asmongold_e311dbdf69_cover.jpg"
+  },
+  {
+    "id": "2026-11-19_pc_Lacy_ff9342d34b",
+    "creator": "Lacy",
+    "handle": "@lacy",
+    "kind": "Clip it",
+    "source": "Lacy (live) 2026-11-19 16:02",
+    "caption": "Chat couldn't believe what Lacy did 🎥 Lacy #GTA6 #GTAVI",
+    "title": "Lacy did what?",
+    "hook": "Lacy did what?",
+    "namehook": true,
+    "sha1": "ff9342d34bf29b4572faa786d7dae830a72652ba",
+    "from_pc": true,
+    "created": "2026-11-19",
+    "made_at": 1795122840,
+    "why": "Picked on the PC",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/pc-2026-11-19/2026-11-19_pc_Lacy_ff9342d34b.mp4",
+    "posted": {
+      "youtube": "skip"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/pc-2026-11-19/2026-11-19_pc_Lacy_ff9342d34b_cover.jpg"
   }
 ]
