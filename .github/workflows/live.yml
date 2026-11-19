@@ -16,6 +16,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       YT_COOKIES: ${{ secrets.YT_COOKIES }}
       EXTRA_PIP: faster-whisper chat-downloader
+      TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+      TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,13 +25,8 @@ jobs:
       - name: Anyone live?
         id: check
         run: |
-          pip install -q yt-dlp
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          import json, subprocess
-          s = json.load(open("config.json")).get("streamers", [])
-          live = any(subprocess.run(["yt-dlp", "--print", "%(is_live)s", "--playlist-items", "1", x["url"]], capture_output=True, text=True).stdout.strip().startswith("True") for x in s)
-          print("live=" + ("1" if live else "0"))
-          PY
+          pip install -q yt-dlp requests
+          (python live.py --check | grep "^live=" || echo live=0) >> "$GITHUB_OUTPUT"
       - if: steps.check.outputs.live == '1'
         run: bash .github/workflows/setup.sh
       - if: steps.check.outputs.live == '1'

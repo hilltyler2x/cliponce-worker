@@ -6,7 +6,7 @@ Streamers come from config.json "streamers": [{"url": "https://twitch.tv/name", 
 """
 import json, os, re, socket, subprocess, sys, threading, time, collections
 from pathlib import Path
-from cliponce.common import CONFIG, OUT, load, save, today, safe_name, log, run, ytdlp_base
+from cliponce.common import CONFIG, OUT, load, save, today, safe_name, log, run, ytdlp_base, is_secondhand
 from cliponce import render
 
 MAX_SECONDS = int(os.environ.get("LIVE_MAX_SECONDS", 5 * 3600 + 1800))
@@ -199,8 +199,26 @@ def commit_state(msg):
     subprocess.run(f"git add state && git commit -qm '{msg}' && git pull -q --rebase -X theirs && git push -q", shell=True)
 
 
+def all_streamers():
+    """Configured streamers plus the top live GTA 6 streams on Twitch (when Twitch keys are saved)."""
+    streamers = list(CONFIG.get("streamers", []))
+    try:
+        from cliponce import twitch
+        if twitch.has_keys() and CONFIG.get("live_auto_top", 2):
+            have = {s["url"].rstrip("/").split("/")[-1].lower() for s in streamers}
+            for st in twitch.live_streams(CONFIG.get("live_auto_top", 2)):
+                if st["user_login"].lower() not in have and not is_secondhand(st.get("title", ""), st.get("user_name", "")):
+                    streamers.append({"url": "https://www.twitch.tv/" + st["user_login"], "post": True})
+    except Exception as e:
+        log("twitch live lookup failed:", e)
+    return streamers
+
+
 def main():
-    streamers = CONFIG.get("streamers", [])
+    streamers = all_streamers()
+    if "--check" in sys.argv:
+        print("live=" + ("1" if any(is_live(s["url"])[0] for s in streamers) else "0"))
+        return
     if not streamers:
         log("no streamers configured")
         return
