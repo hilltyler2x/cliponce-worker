@@ -631,7 +631,7 @@
     "fresh": true,
     "hook": "What did Kirabeing just do?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_kirabeing_TenuousSecretiveCake_cover.jpg",
@@ -656,11 +656,61 @@
     "fresh": true,
     "hook": "TheBurntPeanut can't believe this",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TheBurntPeanut_WimpyPleasantManatee_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TheBurntPeanut_WimpyPleasantManatee.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_xQc_ArborealVictoriousSn",
+    "video_id": "2934155295",
+    "source": "https://www.twitch.tv/videos/2934155295",
+    "creator": "xQc",
+    "handle": "xQc",
+    "start": 31321.0,
+    "end": 31379.0,
+    "kind": "Insane moment",
+    "score": 331,
+    "why": "331 views in 1.2 h on the Twitch clip of this moment: xQc refuses to leave the club in GTA 6",
+    "caption": "xQc can't believe this 🎮\n“Jesus”\n🎥 Credit: xQc (twitch.tv/xqc)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "xQc can't believe this",
+    "created": "2026-11-20",
+    "made_at": 1795158399,
+    "fresh": true,
+    "hook": "xQc can't believe this",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_ArborealVictoriousSn_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_ArborealVictoriousSn.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_xQc_SpineyFairEggplantDa",
+    "video_id": "2934155295",
+    "source": "https://www.twitch.tv/videos/2934155295",
+    "creator": "xQc",
+    "handle": "xQc",
+    "start": 32173.0,
+    "end": 32201.3,
+    "kind": "Insane moment",
+    "score": 264,
+    "why": "264 views in 1.0 h on the Twitch clip of this moment: xQc just wanted to put his coffee down",
+    "caption": "xQc did what? 🎮\n“Isn't he yeah, he's getting out of that life. I meant to drop the coffee and why would she”\n🎥 Credit: xQc (twitch.tv/xqc)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "xQc did what?",
+    "created": "2026-11-20",
+    "made_at": 1795158436,
+    "fresh": true,
+    "hook": "xQc did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa.mp4",
     "namehook": true
   }
 ]
