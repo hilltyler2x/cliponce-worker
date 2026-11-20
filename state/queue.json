@@ -605,12 +605,62 @@
     "fresh": true,
     "hook": "What did Kai Cenat just do?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f",
       "facebook": "https://www.facebook.com/reel/2600980223648510"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_KaiCenat_PiliableHonorableBan_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_KaiCenat_PiliableHonorableBan.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_kirabeing_TenuousSecretiveCake",
+    "video_id": "2934529645",
+    "source": "https://www.twitch.tv/videos/2934529645",
+    "creator": "kirabeing",
+    "handle": "kirabeing",
+    "start": 1827.0,
+    "end": 1869.0,
+    "kind": "Insane moment",
+    "score": 555,
+    "why": "555 views in 0.8 h on the Twitch clip of this moment: It so it begins...",
+    "caption": "What did Kirabeing just do? 🎮\n“Hey, hey, whatever happens, I am not diving in there. It's gross plus sharks and barracuda”\n🎥 Credit: Kirabeing (twitch.tv/kirabeing)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did Kirabeing just do?",
+    "created": "2026-11-20",
+    "made_at": 1795156696,
+    "fresh": true,
+    "hook": "What did Kirabeing just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_kirabeing_TenuousSecretiveCake_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_kirabeing_TenuousSecretiveCake.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_TheBurntPeanut_WimpyPleasantManatee",
+    "video_id": "2932226282",
+    "source": "https://www.twitch.tv/videos/2932226282",
+    "creator": "TheBurntPeanut",
+    "handle": "TheBurntPeanut",
+    "start": 64433.0,
+    "end": 64468.6,
+    "kind": "Insane moment",
+    "score": 253,
+    "why": "253 views in 0.9 h on the Twitch clip of this moment: checked map for dealership",
+    "caption": "TheBurntPeanut can't believe this 🎮\n“It's a Ferrari, but I doubt that has let me take let me take the things on them. Oh”\n🎥 Credit: TheBurntPeanut (twitch.tv/theburntpeanut)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "TheBurntPeanut can't believe this",
+    "created": "2026-11-20",
+    "made_at": 1795156822,
+    "fresh": true,
+    "hook": "TheBurntPeanut can't believe this",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TheBurntPeanut_WimpyPleasantManatee_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TheBurntPeanut_WimpyPleasantManatee.mp4",
     "namehook": true
   }
 ]
