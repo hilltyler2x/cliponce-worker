@@ -707,7 +707,8 @@
     "hook": "xQc did what?",
     "posted": {
       "threads_fails": 3,
-      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f",
+      "facebook": "https://www.facebook.com/reel/1139634908657713"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa.mp4",
