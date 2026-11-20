@@ -738,5 +738,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_AvoidingThePuddle_HotAlluringThymePrim_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_AvoidingThePuddle_HotAlluringThymePrim.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_theteegoat_RoundWealthyBaboonPa",
+    "video_id": "2933614351",
+    "source": "https://www.twitch.tv/videos/2933614351",
+    "creator": "theteegoat",
+    "handle": "theteegoat",
+    "start": 15685.0,
+    "end": 15727.0,
+    "kind": "Insane moment",
+    "score": 1638,
+    "why": "1638 views in 0.8 h on the Twitch clip of this moment: STEALTH CAR STEAL LO",
+    "caption": "Theteegoat did what? 🎮\n“How you gonna do that? What do you mean like permits and shit? I'll give a damn about no p”\n🎥 Credit: Theteegoat (twitch.tv/theteegoat)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Theteegoat did what?",
+    "created": "2026-11-20",
+    "made_at": 1795178305,
+    "fresh": true,
+    "hook": "Theteegoat did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_theteegoat_RoundWealthyBaboonPa_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_theteegoat_RoundWealthyBaboonPa.mp4",
+    "namehook": true
   }
 ]
