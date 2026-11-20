@@ -888,5 +888,55 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TeosGame_DeadTastyBearPMSTwin_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TeosGame_DeadTastyBearPMSTwin.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_Maya_ViscousWrongOstrichC",
+    "video_id": "2935062259",
+    "source": "https://www.twitch.tv/videos/2935062259",
+    "creator": "Maya",
+    "handle": "Maya",
+    "start": 4431.0,
+    "end": 4483.6,
+    "kind": "Funny moment",
+    "score": 308,
+    "why": "308 views in 0.3 h on the Twitch clip of this moment: maya-ohneeaglefelony",
+    "caption": "What did Maya just do? 😂\n“Act. Mm-hmm. Bad news. Bad news for only pixel. Could be a felony.”\n🎥 Credit: Maya (twitch.tv/maya)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did Maya just do?",
+    "created": "2026-11-20",
+    "made_at": 1795198154,
+    "fresh": true,
+    "hook": "What did Maya just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A8p8E16bMlITL"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Maya_ViscousWrongOstrichC_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Maya_ViscousWrongOstrichC.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_Maya_WisePlumpAlligatorTr",
+    "video_id": "2935062259",
+    "source": "https://www.twitch.tv/videos/2935062259",
+    "creator": "Maya",
+    "handle": "Maya",
+    "start": 3081.0,
+    "end": 3123.7,
+    "kind": "Funny moment",
+    "score": 523,
+    "why": "523 views in 0.6 h on the Twitch clip of this moment: extremely violent chiblee",
+    "caption": "Maya did what? 😂\n“We're gonna go to Florida, and then I'm gonna pick you up, and you're gonna go boneless, a”\n🎥 Credit: Maya (twitch.tv/maya)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Maya did what?",
+    "created": "2026-11-20",
+    "made_at": 1795198204,
+    "fresh": true,
+    "hook": "Maya did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A5TZgBGADuV5L"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Maya_WisePlumpAlligatorTr_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Maya_WisePlumpAlligatorTr.mp4",
+    "namehook": true
   }
 ]
