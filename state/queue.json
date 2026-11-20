@@ -713,5 +713,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_AvoidingThePuddle_HotAlluringThymePrim",
+    "video_id": "2934239945",
+    "source": "https://www.twitch.tv/videos/2934239945",
+    "creator": "AvoidingThePuddle",
+    "handle": "AvoidingThePuddle",
+    "start": 13840.0,
+    "end": 13898.0,
+    "kind": "Insane moment",
+    "score": 295,
+    "why": "295 views in 0.7 h on the Twitch clip of this moment: Aris is disappointed with the lack of target diversity",
+    "caption": "AvoidingThePuddle did what? 🎮\n“Man, can we find a dude to hit I keep finding jigs. I'm trying to like experiment here”\n🎥 Credit: AvoidingThePuddle (twitch.tv/avoidingthepuddle)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "AvoidingThePuddle did what?",
+    "created": "2026-11-20",
+    "made_at": 1795172872,
+    "fresh": true,
+    "hook": "AvoidingThePuddle did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_AvoidingThePuddle_HotAlluringThymePrim_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_AvoidingThePuddle_HotAlluringThymePrim.mp4",
+    "namehook": true
   }
 ]
