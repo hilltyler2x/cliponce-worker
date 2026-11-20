@@ -807,7 +807,7 @@
     "fresh": true,
     "hook": "What did CaseOh just do?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A-DWorqbJaIgp"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_caseoh__ResoluteCrazyPistach_cover.jpg",
@@ -832,7 +832,7 @@
     "fresh": true,
     "hook": "CaseOh can't believe this",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AQ3NXclp7URjn"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_caseoh__EvilChillyKleeKeepo-_cover.jpg",
@@ -857,11 +857,36 @@
     "fresh": true,
     "hook": "What did ohnePixel just do?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AUS6Tb9fwfmB0"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_ohnePixel_LittleLittleLardMing_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_ohnePixel_LittleLittleLardMing.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_TeosGame_DeadTastyBearPMSTwin",
+    "video_id": "2934927543",
+    "source": "https://www.twitch.tv/teosgame/clip/DeadTastyBearPMSTwin-a6rJwiobfIIka5Ri",
+    "creator": "TeosGame",
+    "handle": "TeosGame",
+    "start": 0,
+    "end": 47.9,
+    "kind": "Insane moment",
+    "score": 269,
+    "why": "269 views in 1.8 h on the Twitch clip of this moment: 60fps explanation",
+    "caption": "TeosGame did what? 🎮\n“If you're joining and wondering so that I don't have to repeat myself too much there is a ”\n🎥 Credit: TeosGame (twitch.tv/teosgame)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "TeosGame did what?",
+    "created": "2026-11-20",
+    "made_at": 1795191241,
+    "fresh": true,
+    "hook": "TeosGame did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A0RJpEv2gWfMU"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TeosGame_DeadTastyBearPMSTwin_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_TeosGame_DeadTastyBearPMSTwin.mp4",
     "namehook": true
   }
 ]
