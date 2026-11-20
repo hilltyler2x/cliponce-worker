@@ -580,7 +580,7 @@
     "fresh": true,
     "hook": "Sweet Anita did what?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Sweet_Anita_GrotesqueYummyAlliga_cover.jpg",
