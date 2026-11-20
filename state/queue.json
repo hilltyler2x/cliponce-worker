@@ -681,7 +681,7 @@
     "fresh": true,
     "hook": "xQc can't believe this",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_ArborealVictoriousSn_cover.jpg",
@@ -706,7 +706,7 @@
     "fresh": true,
     "hook": "xQc did what?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_xQc_SpineyFairEggplantDa_cover.jpg",
