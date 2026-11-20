@@ -788,5 +788,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_ohnePixel_MoldyRespectfulOstri_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_ohnePixel_MoldyRespectfulOstri.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_caseoh__ResoluteCrazyPistach",
+    "video_id": "2934099165",
+    "source": "https://www.twitch.tv/videos/2934099165",
+    "creator": "caseoh_",
+    "handle": "caseoh_",
+    "start": 3951.0,
+    "end": 4009.0,
+    "kind": "Insane moment",
+    "score": 498,
+    "why": "498 views in 0.9 h on the Twitch clip of this moment: cooked them",
+    "caption": "What did CaseOh just do? 🎮\n“You trying to kill somebody's grandma, I'll have you know there was a real life court case”\n🎥 Credit: CaseOh (twitch.tv/caseoh_)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did CaseOh just do?",
+    "created": "2026-11-20",
+    "made_at": 1795187399,
+    "fresh": true,
+    "hook": "What did CaseOh just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A-DWorqbJaIgp"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_caseoh__ResoluteCrazyPistach_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_caseoh__ResoluteCrazyPistach.mp4",
+    "namehook": true
   }
 ]
