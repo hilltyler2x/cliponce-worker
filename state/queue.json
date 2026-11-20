@@ -586,5 +586,31 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Sweet_Anita_GrotesqueYummyAlliga_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Sweet_Anita_GrotesqueYummyAlliga.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-20_tw_KaiCenat_PiliableHonorableBan",
+    "video_id": "2932305259",
+    "source": "https://www.twitch.tv/kaicenat/clip/PiliableHonorableBananaBlargNaut-a52-k2Oni16S1Ue6",
+    "creator": "KaiCenat",
+    "handle": "KaiCenat",
+    "start": 0,
+    "end": 12.6,
+    "kind": "Insane moment",
+    "score": 278,
+    "why": "278 views in 2.3 h on the Twitch clip of this moment: winner",
+    "caption": "What did Kai Cenat just do? 🎮\n“Oh, you definitely gonna get in contact with him.”\n🎥 Credit: Kai Cenat (twitch.tv/kaicenat)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did Kai Cenat just do?",
+    "created": "2026-11-20",
+    "made_at": 1795153199,
+    "fresh": true,
+    "hook": "What did Kai Cenat just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: This Threads account needs to complete a checkpoint before it can access this app. To recover access, log in to www.threads.com and follow the instructions.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'f",
+      "facebook": "https://www.facebook.com/reel/2600980223648510"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_KaiCenat_PiliableHonorableBan_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_KaiCenat_PiliableHonorableBan.mp4",
+    "namehook": true
   }
 ]
