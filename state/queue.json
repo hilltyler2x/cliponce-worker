@@ -1288,5 +1288,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_FURI_DirtyGiftedVelocirap_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_FURI_DirtyGiftedVelocirap.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_Quin69_FlirtySassyNeanderth",
+    "video_id": "2936181330",
+    "source": "https://www.twitch.tv/videos/2936181330",
+    "creator": "Quin69",
+    "handle": "Quin69",
+    "start": 18323.0,
+    "end": 18357.1,
+    "kind": "Insane moment",
+    "score": 337,
+    "why": "337 views in 1.0 h on the Twitch clip of this moment: Need for Quin69",
+    "caption": "Quin69 can't believe this 🎮\n“How do you turn on the headlights? How do you do that? Okay”\n🎥 Credit: Quin69 (twitch.tv/quin69)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Quin69 can't believe this",
+    "created": "2026-11-21",
+    "made_at": 1795295627,
+    "fresh": true,
+    "hook": "Quin69 can't believe this",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A72xNbbSfsqNx"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Quin69_FlirtySassyNeanderth_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Quin69_FlirtySassyNeanderth.mp4",
+    "namehook": true
   }
 ]
