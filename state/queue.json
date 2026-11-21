@@ -1057,11 +1057,36 @@
     "fresh": true,
     "hook": "Chiblee can't believe this",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A-Nlj6pUhmmES"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_chiblee_HonorableFriendlyDol_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_chiblee_HonorableFriendlyDol.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_Atrioc_ArtisticResilientBea",
+    "video_id": "2935648632",
+    "source": "https://www.twitch.tv/videos/2935648632",
+    "creator": "Atrioc",
+    "handle": "Atrioc",
+    "start": 16522.0,
+    "end": 16580.0,
+    "kind": "Funny moment",
+    "score": 300,
+    "why": "300 views in 2.2 h on the Twitch clip of this moment: cat lul",
+    "caption": "What did Atrioc just do? 😂\n“I'm sitting at the right direction. I'm doing the right thing.”\n🎥 Credit: Atrioc (twitch.tv/atrioc)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did Atrioc just do?",
+    "created": "2026-11-21",
+    "made_at": 1795250677,
+    "fresh": true,
+    "hook": "What did Atrioc just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'Al77MQEF1ORNq"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Atrioc_ArtisticResilientBea_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Atrioc_ArtisticResilientBea.mp4",
     "namehook": true
   }
 ]
