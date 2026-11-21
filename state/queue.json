@@ -1182,7 +1182,7 @@
     "fresh": true,
     "hook": "ohnePixel did what?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AD5HvIipNIUMu"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ohnePixel_CarelessHeartlessDol_cover.jpg",
