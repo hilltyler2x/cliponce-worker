@@ -1238,5 +1238,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_jasontheween_PreciousAuspiciousBa_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_jasontheween_PreciousAuspiciousBa.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_FURI_HonestBlitheGorillaO",
+    "video_id": "2936228893",
+    "source": "https://www.twitch.tv/furi/clip/HonestBlitheGorillaOneHand-PFbquzu7EwDfm8D5",
+    "creator": "FURI",
+    "handle": "FURI",
+    "start": 0,
+    "end": 42.6,
+    "kind": "Funny moment",
+    "score": 260,
+    "why": "260 views in 1.2 h on the Twitch clip of this moment: FURI 50 GIFTED THANK YOU",
+    "caption": "What did FURI just do? 😂\n“Boogal, this is for you bro. Thank you. Thank you. Thank you. Thank you. Thank you.”\n🎥 Credit: FURI (twitch.tv/furi)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did FURI just do?",
+    "created": "2026-11-21",
+    "made_at": 1795290641,
+    "fresh": true,
+    "hook": "What did FURI just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AmtUlMCssbi7l"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_FURI_HonestBlitheGorillaO_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_FURI_HonestBlitheGorillaO.mp4",
+    "namehook": true
   }
 ]
