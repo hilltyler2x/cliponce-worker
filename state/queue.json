@@ -1113,5 +1113,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Ludwig_DistinctReliableChow_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Ludwig_DistinctReliableChow.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_caseoh__OddSweetToadMVGame-G",
+    "video_id": "2935283335",
+    "source": "https://www.twitch.tv/videos/2935283335",
+    "creator": "caseoh_",
+    "handle": "caseoh_",
+    "start": 11577.0,
+    "end": 11635.0,
+    "kind": "Insane moment",
+    "score": 299,
+    "why": "299 views in 0.9 h on the Twitch clip of this moment: kyle 1",
+    "caption": "CaseOh did what? 🎮\n“You're gonna be okay, buddy.”\n🎥 Credit: CaseOh (twitch.tv/caseoh_)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "CaseOh did what?",
+    "created": "2026-11-21",
+    "made_at": 1795272277,
+    "fresh": true,
+    "hook": "CaseOh did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AILxTrjahcuzs"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_caseoh__OddSweetToadMVGame-G_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_caseoh__OddSweetToadMVGame-G.mp4",
+    "namehook": true
   }
 ]
