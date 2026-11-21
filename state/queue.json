@@ -957,7 +957,7 @@
     "fresh": true,
     "hook": "Ludwig was NOT ready",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AtReVuOLMsbLN"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Ludwig_SassyWiseRingFeelsBa_cover.jpg",
@@ -982,11 +982,36 @@
     "fresh": true,
     "hook": "What did ZoReee just do?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'Akc87GTr2g4-G"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ZoReee_PatientJazzyGarageTr_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ZoReee_PatientJazzyGarageTr.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_ohnePixel_FragileTardySquidAMP",
+    "video_id": "2934862154",
+    "source": "https://www.twitch.tv/videos/2934862154",
+    "creator": "ohnePixel",
+    "handle": "ohnePixel",
+    "start": 32890.0,
+    "end": 32948.0,
+    "kind": "Insane moment",
+    "score": 1229,
+    "why": "1229 views in 3.0 h on the Twitch clip of this moment: Ohne Bricked Up!!",
+    "caption": "ohnePixel did what? 🎮\n“Let's get on let's get on let's get on let's get on. Let's get on let's get on let's do I ”\n🎥 Credit: ohnePixel (twitch.tv/ohnepixel)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "ohnePixel did what?",
+    "created": "2026-11-21",
+    "made_at": 1795221701,
+    "fresh": true,
+    "hook": "ohnePixel did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AyaRDxbM-52b-"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ohnePixel_FragileTardySquidAMP_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ohnePixel_FragileTardySquidAMP.mp4",
     "namehook": true
   }
 ]
