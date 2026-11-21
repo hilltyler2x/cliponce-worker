@@ -938,5 +938,55 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Maya_WisePlumpAlligatorTr_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-20/2026-11-20_tw_Maya_WisePlumpAlligatorTr.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_Ludwig_SassyWiseRingFeelsBa",
+    "video_id": "2934132437",
+    "source": "https://www.twitch.tv/ludwig/clip/SassyWiseRingFeelsBadMan-KWr9lkKEN2ayfe1P",
+    "creator": "Ludwig",
+    "handle": "Ludwig",
+    "start": 0,
+    "end": 9.7,
+    "kind": "Funny moment",
+    "score": 1027,
+    "why": "1027 views in 0.6 h on the Twitch clip of this moment: one of the better drivers",
+    "caption": "Ludwig was NOT ready 😂\n“First streamer I've seen that isn't a shit driver. Thank you, bro. I'm literally one of th”\n🎥 Credit: Ludwig (twitch.tv/ludwig)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Ludwig was NOT ready",
+    "created": "2026-11-21",
+    "made_at": 1795220024,
+    "fresh": true,
+    "hook": "Ludwig was NOT ready",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AtReVuOLMsbLN"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Ludwig_SassyWiseRingFeelsBa_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_Ludwig_SassyWiseRingFeelsBa.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-21_tw_ZoReee_PatientJazzyGarageTr",
+    "video_id": "2934327274",
+    "source": "https://www.twitch.tv/videos/2934327274",
+    "creator": "ZoReee",
+    "handle": "ZoReee",
+    "start": 13995.0,
+    "end": 14021.8,
+    "kind": "Funny moment",
+    "score": 3261,
+    "why": "3261 views in 3.1 h on the Twitch clip of this moment: Craziest Gas Station Glitch",
+    "caption": "What did ZoReee just do? 😂\n“I guess I found my first glitch.”\n🎥 Credit: ZoReee (twitch.tv/zoreee)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did ZoReee just do?",
+    "created": "2026-11-21",
+    "made_at": 1795220127,
+    "fresh": true,
+    "hook": "What did ZoReee just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'Akc87GTr2g4-G"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ZoReee_PatientJazzyGarageTr_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-21/2026-11-21_tw_ZoReee_PatientJazzyGarageTr.mp4",
+    "namehook": true
   }
 ]
