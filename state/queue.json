@@ -1438,5 +1438,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_LIRIK_CredulousThoughtfulA_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_LIRIK_CredulousThoughtfulA.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_TheBurntPeanut_TubularBoxyDumplings",
+    "video_id": "2936706130",
+    "source": "https://www.twitch.tv/theburntpeanut/clip/TubularBoxyDumplingsBabyRage-tnXrWQ4-tF5ZipDe",
+    "creator": "TheBurntPeanut",
+    "handle": "TheBurntPeanut",
+    "start": 0,
+    "end": 15.4,
+    "kind": "Funny moment",
+    "score": 263,
+    "why": "263 views in 0.3 h on the Twitch clip of this moment: lmaooo",
+    "caption": "What did TheBurntPeanut just do? 😂\n“and if you know you want to call them a mean name or something to make them look”\n🎥 Credit: TheBurntPeanut (twitch.tv/theburntpeanut)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did TheBurntPeanut just do?",
+    "created": "2026-11-22",
+    "made_at": 1795323049,
+    "fresh": true,
+    "hook": "What did TheBurntPeanut just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AWKG8OeRVQBxA"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_TheBurntPeanut_TubularBoxyDumplings_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_TheBurntPeanut_TubularBoxyDumplings.mp4",
+    "namehook": true
   }
 ]
