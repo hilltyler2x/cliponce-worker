@@ -1563,5 +1563,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_donaCS_FilthySarcasticTiger_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_donaCS_FilthySarcasticTiger.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_ohnePixel_UnsightlyWanderingDi",
+    "video_id": "2937242599",
+    "source": "https://www.twitch.tv/ohnepixel/clip/UnsightlyWanderingDiscPipeHype-N8ySiJHdA6x0qn0l",
+    "creator": "ohnePixel",
+    "handle": "ohnePixel",
+    "start": 0,
+    "end": 27.8,
+    "kind": "Insane moment",
+    "score": 256,
+    "why": "256 views in 1.2 h on the Twitch clip of this moment: Ohne planet naming",
+    "caption": "ohnePixel did what? 🎮\n“Mercury, Neptune, Mars, Saturn, Pluto, small Sun, Earth, Mass again, Cannonball, and Sun.”\n🎥 Credit: ohnePixel (twitch.tv/ohnepixel)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "ohnePixel did what?",
+    "created": "2026-11-22",
+    "made_at": 1795373521,
+    "fresh": true,
+    "hook": "ohnePixel did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AaHg9PYyIXBLC"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_ohnePixel_UnsightlyWanderingDi_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_ohnePixel_UnsightlyWanderingDi.mp4",
+    "namehook": true
   }
 ]
