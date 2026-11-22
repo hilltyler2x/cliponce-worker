@@ -1588,5 +1588,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_ohnePixel_UnsightlyWanderingDi_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_ohnePixel_UnsightlyWanderingDi.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_Jerma985_MuddyInexpensiveLard",
+    "video_id": "2937408089",
+    "source": "https://www.twitch.tv/jerma985/clip/MuddyInexpensiveLardAliens-bXEojJwJjpV5Wwh-",
+    "creator": "Jerma985",
+    "handle": "Jerma985",
+    "start": 0,
+    "end": 30.0,
+    "kind": "Insane moment",
+    "score": 262,
+    "why": "262 views in 2.0 h on the Twitch clip of this moment: spoke too soon",
+    "caption": "Jerma985 can't believe this 🎮\n“My mom's gonna show up and demand a mother-in-law. Sweet. You look at that. Yep. You tell ”\n🎥 Credit: Jerma985 (twitch.tv/jerma985)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Jerma985 can't believe this",
+    "created": "2026-11-22",
+    "made_at": 1795377149,
+    "fresh": true,
+    "hook": "Jerma985 can't believe this",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AbN2jgjEMCE1p"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Jerma985_MuddyInexpensiveLard_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Jerma985_MuddyInexpensiveLard.mp4",
+    "namehook": true
   }
 ]
