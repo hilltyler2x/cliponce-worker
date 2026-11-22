@@ -1513,5 +1513,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Clix_ConcernedDarkMagePea_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Clix_ConcernedDarkMagePea.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_WoolieVersus_ImpartialSeductiveOr",
+    "video_id": "2936501633",
+    "source": "https://www.twitch.tv/videos/2936501633",
+    "creator": "WoolieVersus",
+    "handle": "WoolieVersus",
+    "start": 10489.0,
+    "end": 10547.0,
+    "kind": "First ever",
+    "score": 368,
+    "why": "368 views in 1.1 h on the Twitch clip of this moment: Reggie folds",
+    "caption": "What did WoolieVersus just do? 🎮\n“Really annoying that Brian makes everyone pay the rent manually, nonetheless on a sketchy”\n🎥 Credit: WoolieVersus (twitch.tv/woolieversus)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did WoolieVersus just do?",
+    "created": "2026-11-22",
+    "made_at": 1795339053,
+    "fresh": true,
+    "hook": "What did WoolieVersus just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AWM4SuP3CYcZD"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_WoolieVersus_ImpartialSeductiveOr_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_WoolieVersus_ImpartialSeductiveOr.mp4",
+    "namehook": true
   }
 ]
