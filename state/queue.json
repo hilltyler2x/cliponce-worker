@@ -1457,11 +1457,36 @@
     "fresh": true,
     "hook": "What did TheBurntPeanut just do?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AWKG8OeRVQBxA"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_TheBurntPeanut_TubularBoxyDumplings_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_TheBurntPeanut_TubularBoxyDumplings.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_Silky_AbstruseBoldPassionf",
+    "video_id": "2936828440",
+    "source": "https://www.twitch.tv/videos/2936828440",
+    "creator": "Silky",
+    "handle": "Silky",
+    "start": 8787.0,
+    "end": 8832.2,
+    "kind": "Funny moment",
+    "score": 278,
+    "why": "278 views in 1.2 h on the Twitch clip of this moment: NO KILL",
+    "caption": "What did Silky just do? 😂\n“bro I was not trying to weak you where you going work you tell oh my oh my oh my”\n🎥 Credit: Silky (twitch.tv/silky)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did Silky just do?",
+    "created": "2026-11-22",
+    "made_at": 1795324706,
+    "fresh": true,
+    "hook": "What did Silky just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AH2JNe2oDLfgw"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Silky_AbstruseBoldPassionf_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Silky_AbstruseBoldPassionf.mp4",
     "namehook": true
   }
 ]
