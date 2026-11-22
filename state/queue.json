@@ -1457,7 +1457,7 @@
     "fresh": true,
     "hook": "What did TheBurntPeanut just do?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AWKG8OeRVQBxA"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_TheBurntPeanut_TubularBoxyDumplings_cover.jpg",
@@ -1482,11 +1482,36 @@
     "fresh": true,
     "hook": "What did Silky just do?",
     "posted": {
-      "threads_fails": 1,
+      "threads_fails": 2,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AH2JNe2oDLfgw"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Silky_AbstruseBoldPassionf_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Silky_AbstruseBoldPassionf.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_Clix_ConcernedDarkMagePea",
+    "video_id": "2936385310",
+    "source": "https://www.twitch.tv/videos/2936385310",
+    "creator": "Clix",
+    "handle": "Clix",
+    "start": 25032.0,
+    "end": 25090.0,
+    "kind": "Insane moment",
+    "score": 255,
+    "why": "255 views in 2.0 h on the Twitch clip of this moment: sssssssssssss",
+    "caption": "What did Clix just do? 🎮\n“Fuck, fuck you, Giorgio, fuck you, fucking going down for this.”\n🎥 Credit: Clix (twitch.tv/clix)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did Clix just do?",
+    "created": "2026-11-22",
+    "made_at": 1795326374,
+    "fresh": true,
+    "hook": "What did Clix just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AawwJcocRw2VZ"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Clix_ConcernedDarkMagePea_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Clix_ConcernedDarkMagePea.mp4",
     "namehook": true
   }
 ]
