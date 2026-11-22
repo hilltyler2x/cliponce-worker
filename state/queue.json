@@ -1538,5 +1538,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_WoolieVersus_ImpartialSeductiveOr_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_WoolieVersus_ImpartialSeductiveOr.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_donaCS_FilthySarcasticTiger",
+    "video_id": "2937221358",
+    "source": "https://www.twitch.tv/videos/2937221358",
+    "creator": "donaCS",
+    "handle": "donaCS",
+    "start": 12323.0,
+    "end": 12371.1,
+    "kind": "Funny moment",
+    "score": 312,
+    "why": "312 views in 0.7 h on the Twitch clip of this moment: o7 lucia",
+    "caption": "What did donaCS just do? 😂\n“I'll kill her accidentally by picking while picking her up”\n🎥 Credit: donaCS (twitch.tv/donacs)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did donaCS just do?",
+    "created": "2026-11-22",
+    "made_at": 1795364218,
+    "fresh": true,
+    "hook": "What did donaCS just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AX3OEB6qrQnjj"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_donaCS_FilthySarcasticTiger_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_donaCS_FilthySarcasticTiger.mp4",
+    "namehook": true
   }
 ]
