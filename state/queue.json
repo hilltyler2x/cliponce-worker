@@ -1638,5 +1638,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Jerma985_InventiveRelievedHer_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_Jerma985_InventiveRelievedHer.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-22_tw_ohnePixel_JazzyNiceRadicchioHa",
+    "video_id": "2937242599",
+    "source": "https://www.twitch.tv/videos/2937242599",
+    "creator": "ohnePixel",
+    "handle": "ohnePixel",
+    "start": 27289.0,
+    "end": 27315.7,
+    "kind": "Insane moment",
+    "score": 322,
+    "why": "322 views in 2.2 h on the Twitch clip of this moment: ohneGooner",
+    "caption": "ohnePixel can't believe this 🎮\n“ohneGooner”\n🎥 Credit: ohnePixel (twitch.tv/ohnepixel)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "ohnePixel can't believe this",
+    "created": "2026-11-22",
+    "made_at": 1795385891,
+    "fresh": true,
+    "hook": "ohnePixel can't believe this",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AytArapmWtQXN"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_ohnePixel_JazzyNiceRadicchioHa_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_ohnePixel_JazzyNiceRadicchioHa.mp4",
+    "namehook": true
   }
 ]
