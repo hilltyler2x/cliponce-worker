@@ -1838,5 +1838,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_Promised_Consort_Abearbi_ProtectiveNastyHorne_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_Promised_Consort_Abearbi_ProtectiveNastyHorne.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_caseoh__SmoggyCleverMosquito",
+    "video_id": "2937666104",
+    "source": "https://www.twitch.tv/videos/2937666104",
+    "creator": "caseoh_",
+    "handle": "caseoh_",
+    "start": 2556.0,
+    "end": 2614.0,
+    "kind": "Insane moment",
+    "score": 313,
+    "why": "313 views in 0.9 h on the Twitch clip of this moment: get away",
+    "caption": "CaseOh did what? 🎮\n“Don't make me catch a body this early in the day.”\n🎥 Credit: CaseOh (twitch.tv/caseoh_)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "CaseOh did what?",
+    "created": "2026-11-23",
+    "made_at": 1795445597,
+    "fresh": true,
+    "hook": "CaseOh did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A2yF2lnTtWG-v"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_caseoh__SmoggyCleverMosquito_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_caseoh__SmoggyCleverMosquito.mp4",
+    "namehook": true
   }
 ]
