@@ -1932,11 +1932,36 @@
     "fresh": true,
     "hook": "ohnePixel did what?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'APT--6rYCMaXd"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_ohnePixel_DarlingGiftedCheeseW_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_ohnePixel_DarlingGiftedCheeseW.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_CohhCarnage_ArtsyGenerousAniseDe",
+    "video_id": "2938310833",
+    "source": "https://www.twitch.tv/cohhcarnage/clip/ArtsyGenerousAniseDendiFace-NxwfD1GOBiYOHbfx",
+    "creator": "CohhCarnage",
+    "handle": "CohhCarnage",
+    "start": 0,
+    "end": 58,
+    "kind": "Easter egg",
+    "score": 787,
+    "why": "787 views in 1.0 h on the Twitch clip of this moment: Cohh realized something about the UFO Easter Egg he found in GTA 6",
+    "caption": "CohhCarnage found what? 🥚\n“She's too heavy for the aliens to suck into the ship.”\n🎥 Credit: CohhCarnage (twitch.tv/cohhcarnage)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "CohhCarnage found what?",
+    "created": "2026-11-23",
+    "made_at": 1795460559,
+    "fresh": true,
+    "hook": "CohhCarnage found what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AKaOA4EcThHUX"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_CohhCarnage_ArtsyGenerousAniseDe_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_CohhCarnage_ArtsyGenerousAniseDe.mp4",
     "namehook": true
   }
 ]
