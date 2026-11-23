@@ -1738,5 +1738,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_xQc_MoralLivelyMouseTake_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_xQc_MoralLivelyMouseTake.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_xQc_DullPrettyCaterpilla",
+    "video_id": "2937629817",
+    "source": "https://www.twitch.tv/videos/2937629817",
+    "creator": "xQc",
+    "handle": "xQc",
+    "start": 36655.0,
+    "end": 36713.0,
+    "kind": "First ever",
+    "score": 492,
+    "why": "492 views in 1.0 h on the Twitch clip of this moment: xQc finishes GTA 6 after 62 hours and rates it a 9/10",
+    "caption": "What did xQc just do? 🎮\n“I mean, I know I was and I'm not going to ADHD and do that much these days, like the pacin”\n🎥 Credit: xQc (twitch.tv/xqc)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did xQc just do?",
+    "created": "2026-11-23",
+    "made_at": 1795418551,
+    "fresh": true,
+    "hook": "What did xQc just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AUpN_PFmw2KzL"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_xQc_DullPrettyCaterpilla_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_xQc_DullPrettyCaterpilla.mp4",
+    "namehook": true
   }
 ]
