@@ -1688,5 +1688,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_xQc_KathishVivaciousBadg_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-22/2026-11-22_tw_xQc_KathishVivaciousBadg.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_drupy876_OutstandingFairCobbl",
+    "video_id": "2936703252",
+    "source": "https://www.twitch.tv/videos/2936703252",
+    "creator": "drupy876",
+    "handle": "drupy876",
+    "start": 4127.0,
+    "end": 4169.0,
+    "kind": "Funny moment",
+    "score": 5627,
+    "why": "5627 views in 0.4 h on the Twitch clip of this moment: push ping ping crazy B****😭😭😂",
+    "caption": "Drupy876 was NOT ready 😂\n“You got that I think I can manage lucky for you. This girl don't go anywhere without her c”\n🎥 Credit: Drupy876 (twitch.tv/drupy876)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Drupy876 was NOT ready",
+    "created": "2026-11-23",
+    "made_at": 1795396755,
+    "fresh": true,
+    "hook": "Drupy876 was NOT ready",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'ADuz_M0Zde7VN"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_drupy876_OutstandingFairCobbl_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_drupy876_OutstandingFairCobbl.mp4",
+    "namehook": true
   }
 ]
