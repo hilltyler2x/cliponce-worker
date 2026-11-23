@@ -1988,5 +1988,55 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_LIRIK_PlainDiligentOstrich_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_LIRIK_PlainDiligentOstrich.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_AvoidingThePuddle_EmpathicLitigiousTur",
+    "video_id": "2938781725",
+    "source": "https://www.twitch.tv/videos/2938781725",
+    "creator": "AvoidingThePuddle",
+    "handle": "AvoidingThePuddle",
+    "start": 3732.0,
+    "end": 3757.4,
+    "kind": "Insane moment",
+    "score": 278,
+    "why": "278 views in 0.4 h on the Twitch clip of this moment: god damnnn",
+    "caption": "What did AvoidingThePuddle just do? 🎮\n“She shits out that dude. I can't control the camera. Okay. There we go”\n🎥 Credit: AvoidingThePuddle (twitch.tv/avoidingthepuddle)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did AvoidingThePuddle just do?",
+    "created": "2026-11-23",
+    "made_at": 1795477969,
+    "fresh": true,
+    "hook": "What did AvoidingThePuddle just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AISxcJh-XGd_x"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_AvoidingThePuddle_EmpathicLitigiousTur_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_AvoidingThePuddle_EmpathicLitigiousTur.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_raw_phil_SullenHelplessSamosa",
+    "video_id": "2938595088",
+    "source": "https://www.twitch.tv/videos/2938595088",
+    "creator": "raw_phil",
+    "handle": "raw_phil",
+    "start": 14712.0,
+    "end": 14752.8,
+    "kind": "Insane moment",
+    "score": 287,
+    "why": "287 views in 0.8 h on the Twitch clip of this moment: dsp drives into water .-.",
+    "caption": "Raw Phil did what? 🎮\n“That's the second time I just drove a car into water and it counted fully as a full destru”\n🎥 Credit: Raw Phil (twitch.tv/raw_phil)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Raw Phil did what?",
+    "created": "2026-11-23",
+    "made_at": 1795478041,
+    "fresh": true,
+    "hook": "Raw Phil did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AXEAm2o31_w_S"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_raw_phil_SullenHelplessSamosa_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_raw_phil_SullenHelplessSamosa.mp4",
+    "namehook": true
   }
 ]
