@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-22",
-  "taken_at": "2026-11-22T13:00:12Z",
+  "date": "2026-11-23",
+  "taken_at": "2026-11-23T13:00:31Z",
   "platforms": {
     "instagram": {
       "note": "no Instagram account linked to the token"
@@ -37,6 +37,7 @@
       "facebook": 3
     },
     "2026-11-21": {},
-    "2026-11-22": {}
+    "2026-11-22": {},
+    "2026-11-23": {}
   }
 }
