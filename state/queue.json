@@ -1763,5 +1763,30 @@
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_xQc_DullPrettyCaterpilla_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_xQc_DullPrettyCaterpilla.mp4",
     "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_eviemeowie_AlertColdCheetahEleG",
+    "video_id": "2938020682",
+    "source": "https://www.twitch.tv/videos/2938020682",
+    "creator": "eviemeowie",
+    "handle": "eviemeowie",
+    "start": 20438.0,
+    "end": 20481.6,
+    "kind": "Insane moment",
+    "score": 3479,
+    "why": "3479 views in 0.5 h on the Twitch clip of this moment: Mi novia estaciona el avión (sale mal)",
+    "caption": "Eviemeowie did what? 🎮\n“Like I guess it's not real. Oh my god. There's helicopters on these buildings guys. Oh”\n🎥 Credit: Eviemeowie (twitch.tv/eviemeowie)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "Eviemeowie did what?",
+    "created": "2026-11-23",
+    "made_at": 1795423836,
+    "fresh": true,
+    "hook": "Eviemeowie did what?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'An8CDAU6Qch3v"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_eviemeowie_AlertColdCheetahEleG_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_eviemeowie_AlertColdCheetahEleG.mp4",
+    "namehook": true
   }
 ]
