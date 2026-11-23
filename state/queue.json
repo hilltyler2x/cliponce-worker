@@ -1707,7 +1707,7 @@
     "fresh": true,
     "hook": "Drupy876 was NOT ready",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'ADuz_M0Zde7VN"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_drupy876_OutstandingFairCobbl_cover.jpg",
