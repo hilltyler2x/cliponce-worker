@@ -1807,7 +1807,7 @@
     "fresh": true,
     "hook": "What did Promised Consort Abearbis just do?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AxNZ7AqMAVLYW"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_Promised_Consort_Abearbi_DullCreativeZucchini_cover.jpg",
@@ -1832,7 +1832,7 @@
     "fresh": true,
     "hook": "Promised Consort Abearbis can't believe this",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AEem8ySFS22r1"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_Promised_Consort_Abearbi_ProtectiveNastyHorne_cover.jpg",
