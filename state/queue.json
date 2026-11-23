@@ -1857,11 +1857,61 @@
     "fresh": true,
     "hook": "CaseOh did what?",
     "posted": {
-      "threads_fails": 2,
+      "threads_fails": 3,
       "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'A2yF2lnTtWG-v"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_caseoh__SmoggyCleverMosquito_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_caseoh__SmoggyCleverMosquito.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_caseoh__BlueBlitheMarjoramWo",
+    "video_id": "2937666104",
+    "source": "https://www.twitch.tv/videos/2937666104",
+    "creator": "caseoh_",
+    "handle": "caseoh_",
+    "start": 6393.0,
+    "end": 6435.0,
+    "kind": "Insane moment",
+    "score": 255,
+    "why": "255 views in 1.4 h on the Twitch clip of this moment: nice scooter",
+    "caption": "CaseOh can't believe this 🎮\n“Tish, I look forward to bringing you.”\n🎥 Credit: CaseOh (twitch.tv/caseoh_)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "CaseOh can't believe this",
+    "created": "2026-11-23",
+    "made_at": 1795447522,
+    "fresh": true,
+    "hook": "CaseOh can't believe this",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AyTCG8ZfNVNfc"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_caseoh__BlueBlitheMarjoramWo_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_caseoh__BlueBlitheMarjoramWo.mp4",
+    "namehook": true
+  },
+  {
+    "id": "2026-11-23_tw_ohnePixel_ProductiveKathishChi",
+    "video_id": "2938342600",
+    "source": "https://www.twitch.tv/ohnepixel/clip/ProductiveKathishChimpanzeeTheThing-7N-DcQi8o3v6fffj",
+    "creator": "ohnePixel",
+    "handle": "ohnePixel",
+    "start": 0,
+    "end": 7.0,
+    "kind": "Insane moment",
+    "score": 315,
+    "why": "315 views in 1.1 h on the Twitch clip of this moment: Lucia tripped",
+    "caption": "What did ohnePixel just do? 🎮\n“baby we're not taking that shot shit what 13 years”\n🎥 Credit: ohnePixel (twitch.tv/ohnepixel)\n#GTA6 #GTAVI #Twitch #Gaming",
+    "title": "What did ohnePixel just do?",
+    "created": "2026-11-23",
+    "made_at": 1795447792,
+    "fresh": true,
+    "hook": "What did ohnePixel just do?",
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AohUzouYQRWi3"
+    },
+    "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_ohnePixel_ProductiveKathishChi_cover.jpg",
+    "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_ohnePixel_ProductiveKathishChi.mp4",
     "namehook": true
   }
 ]
