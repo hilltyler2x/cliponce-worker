@@ -1954,7 +1954,9 @@
     "made_at": 1795495130,
     "fresh": true,
     "hook": "TheBurntPeanut did what?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18105276476566532"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_TheBurntPeanut_TrustworthyAbrasiveP_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_TheBurntPeanut_TrustworthyAbrasiveP.mp4",
     "namehook": true,
