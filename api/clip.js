@@ -62,6 +62,32 @@ module.exports = async (req, res) => {
       return send(res, 200, { id, clips, cost });
     }
 
+    if (req.method === 'POST' && action === 'autopost') {
+      // Edit or Post button on an autopilot clip (account page). The worker posts through the same
+      // duplicate-proof ledger as the schedule, so a clip can never go out twice.
+      const origin = req.headers.origin || '';
+      if (origin) { let h = ''; try { h = new URL(origin).host; } catch (e) {} if (h !== req.headers.host) return send(res, 403, { error: 'Bad origin' }); }
+      if (u.plan !== 'owner') return send(res, 403, { error: 'Autopilot posting is not on your plan yet.' });
+      if (!process.env.GH_DISPATCH_TOKEN) return send(res, 503, { error: 'Cloud posting is being switched on. Try again soon.' });
+      const b = typeof req.body === 'object' && req.body ? req.body : {};
+      const id = String(b.id || '');
+      if (!/^[\w.-]{1,140}$/.test(id)) return send(res, 400, { error: 'Bad clip id' });
+      let edit = '';
+      if (b.edit && typeof b.edit === 'object') {
+        const e = {};
+        if (typeof b.edit.title === 'string') e.title = b.edit.title.slice(0, 120);
+        if (typeof b.edit.caption === 'string') e.caption = b.edit.caption.slice(0, 2200);
+        if (e.title !== undefined) e.hook = e.title;
+        if (b.edit.post) e.post = true;
+        edit = JSON.stringify(e);
+        if (edit.length > 6000) return send(res, 400, { error: 'That caption is too long.' });
+      }
+      const r = await gh('/actions/workflows/clip_action.yml/dispatches', { method: 'POST',
+        body: JSON.stringify({ ref: 'main', inputs: { id, edit } }) });
+      if (r.status !== 204) { console.error('clip action failed', r.status, (await r.text()).slice(0, 200)); return send(res, 502, { error: 'The cloud did not answer. Try again in a minute.' }); }
+      return send(res, 200, { ok: true });
+    }
+
     if (req.method === 'GET' && action === 'status') {
       const id = String((req.query && req.query.id) || '');
       if (!/^[0-9a-f-]{36}$/i.test(id)) return send(res, 400, { error: 'Bad job id' });

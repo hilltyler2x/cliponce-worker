@@ -62,6 +62,22 @@ input:focus{border-color:var(--sun1)}
 .ac .tags span,.ac .tags a{font:500 10.5px var(--mono);padding:3px 7px;border-radius:99px;border:1px solid var(--hair2)}
 .ac .tags .ok{border-color:rgba(93,242,164,.5);color:var(--ok)}
 .ac a{color:var(--sun2);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ac .acts{display:flex;gap:8px}
+.ac .acts button{all:unset;cursor:pointer;flex:1;text-align:center;padding:8px 0;border-radius:10px;border:1px solid var(--hair2);font:600 12.5px var(--body);color:var(--text)}
+.ac .acts button.go{background:var(--sunset);border-color:transparent;color:#16070f}
+.ac .acts button:focus-visible,.mdl button:focus-visible{outline:2px solid var(--sun2);outline-offset:2px}
+.alert{margin-top:10px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,138,61,.5);background:rgba(255,138,61,.08);color:var(--text);font-size:13px}
+.mdl{position:fixed;inset:0;background:rgba(5,5,10,.72);display:grid;place-items:center;padding:20px;z-index:50}
+.mdl[hidden]{display:none}
+.mdl .box{width:min(460px,100%);background:#14141c;border:1px solid var(--hair2);border-radius:18px;padding:22px;display:grid;gap:12px}
+.mdl h4{margin:0;font:600 17px var(--body);color:var(--text)}
+.mdl p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.5}
+.mdl label{display:grid;gap:6px;font-size:12.5px;color:var(--dim)}
+.mdl input,.mdl textarea{font:14px var(--body);color:var(--text);background:#0c0c12;border:1px solid var(--hair2);border-radius:10px;padding:10px;box-sizing:border-box;width:100%}
+.mdl textarea{min-height:120px;resize:vertical}
+.mdl .row2{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.mdl .row2 button{all:unset;cursor:pointer;padding:10px 16px;border-radius:10px;border:1px solid var(--hair2);font:600 13.5px var(--body);color:var(--text)}
+.mdl .row2 button.go{background:var(--sunset);border-color:transparent;color:#16070f}
 @media (max-width:560px){nav.top .links{gap:14px}}
 </style>
 </head>
@@ -105,6 +121,7 @@ input:focus{border-color:var(--sun1)}
     <div class="panel" id="autoBox" style="margin-top:18px" hidden>
       <h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Autopilot clips</h3>
       <p class="note" id="autoNote" style="margin-top:6px">Loading...</p>
+      <div class="alert" id="autoAlert" hidden></div>
       <div class="auto" id="autoList"></div>
     </div>
     <div class="panel" id="upgrade" style="margin-top:18px">
@@ -120,6 +137,7 @@ input:focus{border-color:var(--sun1)}
 
   <p class="note" id="loading">Loading your account...</p>
 </div>
+<div class="mdl" id="mdl" hidden role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="box" id="mdlBox"></div></div>
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
@@ -130,13 +148,48 @@ input:focus{border-color:var(--sun1)}
   }
   var WORKER='hilltyler2x/cliponce-worker';
   function esc(t){return String(t||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var AUTO={};
+  var NAMES={kaicenat:'Kai Cenat',caseoh:'CaseOh',ohnepixel:'ohnePixel',xqc:'xQc',lacy:'Lacy',tfue:'Tfue',jasontheween:'Jason The Ween'};
+  function plainName(n){n=String(n||'').replace(/^@/,'').replace(/_+$/,'');if(NAMES[n.toLowerCase()])return NAMES[n.toLowerCase()];n=n.replace(/_/g,' ');return /[A-Z]/.test(n)?n:n.replace(/\b[a-z]/g,function(x){return x.toUpperCase()})}
+  var WARN='ClipOnce already has videos scheduled to post. Posting or changing clips by hand adds to that schedule and could affect your social media page: too many posts in a day can lower your reach or look like spam. ClipOnce never posts the same video twice, even if your PC is off or a post was already made.';
+  function modal(html){$('mdlBox').innerHTML=html;$('mdl').hidden=false;var f=$('mdlBox').querySelector('input,textarea,button.go');if(f)f.focus()}
+  function closeModal(){$('mdl').hidden=true}
+  function clipAction(body,done){
+    fetch('/api/clip?action=autopost',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})})
+      .then(function(){modal('<h4>On its way</h4><p>'+esc(done)+' The cloud picks it up within a few minutes, and this page shows where it was posted once it is live.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')})
+      .catch(function(e){modal('<h4>Could not do that</h4><p>'+esc(e.message)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')});
+  }
+  function warnThen(act,id){
+    modal('<h4 id="mdlT">Heads up before you '+(act==='post'?'post':'edit')+'</h4><p>'+WARN+'</p><div class="row2"><button type="button" data-m="close">Keep the schedule</button><button type="button" class="go" data-m="'+act+'2" data-id="'+esc(id)+'">Continue</button></div>');
+  }
+  function editForm(id){
+    var c=AUTO[id]||{};
+    modal('<h4 id="mdlT">Edit this clip</h4><label>Title<input id="edTitle" maxlength="120" value="'+esc(c.hook||c.title||'')+'"></label><label>Caption<textarea id="edCap" maxlength="2200">'+esc(c.caption||'')+'</textarea></label><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" data-m="save" data-id="'+esc(id)+'">Save</button><button type="button" class="go" data-m="savepost" data-id="'+esc(id)+'">Save and post</button></div>');
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act],[data-m]');if(!b)return;
+    var id=b.getAttribute('data-id'),a=b.getAttribute('data-act')||b.getAttribute('data-m');
+    if(a==='edit'||a==='post')return warnThen(a,id);
+    if(a==='close')return closeModal();
+    if(a==='edit2')return editForm(id);
+    if(a==='post2'){b.disabled=true;return clipAction({id:id},'Posting this clip now.')}
+    if(a==='save'||a==='savepost'){b.disabled=true;return clipAction({id:id,edit:{title:$('edTitle').value,caption:$('edCap').value,post:a==='savepost'}},a==='savepost'?'Saving your changes and posting.':'Saving your changes.')}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('mdl').hidden)closeModal()});
+  $('mdl').addEventListener('click',function(e){if(e.target===$('mdl'))closeModal()});
+  function showAlerts(){
+    fetch('https://raw.githubusercontent.com/'+WORKER+'/main/state/alerts.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).then(function(a){
+      if(a&&a.meta_blocked){$('autoAlert').hidden=false;$('autoAlert').textContent=a.meta_blocked.message+' Paused since '+new Date(a.meta_blocked.since*1000).toLocaleString()+'.'}
+    }).catch(function(){});
+  }
   function showAuto(){
-    $('autoBox').hidden=false;
+    $('autoBox').hidden=false;showAlerts();
     fetch('https://raw.githubusercontent.com/'+WORKER+'/main/state/queue.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
       // Held-back clips (skipped on every platform) never show here.
       list=list.filter(function(c){var p=c.posted||{};return !(p.youtube==='skip'&&p.instagram==='skip'&&p.threads==='skip')&&!c.held});
       list.sort(function(a,b){return (b.made_at||0)-(a.made_at||0)||String(b.created||'').localeCompare(String(a.created||''))});
-      list=list.slice(0,24);
+      list=list.slice(0,24);AUTO={};list.forEach(function(c){AUTO[c.id]=c});
       $('autoNote').textContent=list.length?'Your cloud autopilot checks for fresh GTA 6 moments every 30 minutes, with your PC off. Newest first.':'The cloud autopilot is connected. Clips show up here after its first run.';
       $('autoList').innerHTML=list.map(function(c){var p=c.posted||{};
         var done=['youtube','instagram','threads','facebook'].filter(function(k){return p[k]&&p[k]!=='skip'});
@@ -147,7 +200,7 @@ input:focus{border-color:var(--sun1)}
         hook=String(hook).replace(/[^\x20-\u2FFF]/g,'').trim();
         var poster=c.thumb?' poster="'+esc(c.thumb)+'"':'';
         var src=esc(c.url)+(c.thumb?'':'#t=2');
-        return '<div class="ac">'+(c.url?'<video src="'+src+'"'+poster+' controls playsinline preload="'+(c.thumb?'none':'metadata')+'"></video>':'')+'<b>'+esc(hook)+'</b><span>'+esc(c.kind)+' from @'+esc(c.handle||c.creator)+'\u2019s stream</span><a href="'+esc(c.source)+'" target="_blank" rel="noopener">Watch the original</a><div class="tags">'+tags+'</div></div>'}).join('');
+        return '<div class="ac">'+(c.url?'<video src="'+src+'"'+poster+' controls playsinline preload="'+(c.thumb?'none':'metadata')+'"></video>':'')+'<b>'+esc(hook)+'</b><span>'+esc(c.kind)+' from '+esc(plainName(c.creator||c.handle))+'\u2019s stream</span><a href="'+esc(c.source)+'" target="_blank" rel="noopener">Watch the original</a><div class="tags">'+tags+'</div><div class="acts"><button type="button" data-act="edit" data-id="'+esc(c.id)+'">Edit</button><button type="button" class="go" data-act="post" data-id="'+esc(c.id)+'"'+(done.length>=3?' disabled':'')+'>Post</button></div></div>'}).join('');
     }).catch(function(){$('autoNote').textContent='The cloud autopilot is not connected yet. Once it is, its clips and where they were posted show up here.'});
   }
   function showAuth(){$('loading').hidden=true;$('dash').hidden=true;$('authBox').hidden=false}
