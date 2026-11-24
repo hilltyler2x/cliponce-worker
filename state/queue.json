@@ -2105,10 +2105,13 @@
     "made_at": 1795560996,
     "fresh": true,
     "hook": "Kai Cenat was NOT ready",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 18147183931609689"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_KaiCenat_BitterStylishLemurSS_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_KaiCenat_BitterStylishLemurSS.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "13672e2d223b9be0277822125ea27077efe44122"
   },
   {
     "id": "2026-11-24_tw_KaiCenat_MistyFastChickpeaBat",
