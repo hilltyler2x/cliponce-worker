@@ -2056,7 +2056,10 @@
     "made_at": 1795479793,
     "fresh": true,
     "hook": "What did Joe Bartolozzi just do?",
-    "posted": {},
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AiTk8YRC5cCE8"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Joe_Bartolozzi_HomelyHotAnacondaCei_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Joe_Bartolozzi_HomelyHotAnacondaCei.mp4",
     "namehook": true,
