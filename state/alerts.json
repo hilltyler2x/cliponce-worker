@@ -1,7 +1,7 @@
 {
   "meta_blocked": {
-    "since": 1795479803,
-    "error": "Instagram sign-in or permission problem: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode': 5258005, 'fbtrace_id': 'AbyyTGJVQ49sqARd-pR1R0C'}}",
+    "since": 1795523016,
+    "error": "Instagram sign-in or permission problem: {'error': {'message': 'API access blocked.', 'type': 'OAuthException', 'code': 200, 'error_subcode': 5258005, 'fbtrace_id': 'AMsbCa9_t4oOxXTn84UaNMO'}}",
     "message": "Meta blocked API posting for this business. Request a review in Meta Business Support; ClipOnce pauses Instagram, Facebook and Threads posting and retries every 12 hours."
   }
 }
