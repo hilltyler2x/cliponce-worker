@@ -2101,10 +2101,14 @@
     "made_at": 1795495130,
     "fresh": true,
     "hook": "TheBurntPeanut did what?",
-    "posted": {},
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AhIAVrYtSiGTw"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_TheBurntPeanut_TrustworthyAbrasiveP_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_TheBurntPeanut_TrustworthyAbrasiveP.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "8ac970eb1ae1a284ae07f689bd43b20c598bef56"
   },
   {
     "id": "2026-11-24_tw_PatStaresAt_HonestLachrymoseVamp",
