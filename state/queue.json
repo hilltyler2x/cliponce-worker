@@ -2026,10 +2026,13 @@
     "made_at": 1795535862,
     "fresh": true,
     "hook": "CaseOh did what?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18429738421155276"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_caseoh__LitigiousNaiveHorser_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_caseoh__LitigiousNaiveHorser.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "10e827a6c9f88430a1be68b36aa47a0eeb672ab2"
   },
   {
     "id": "2026-11-24_tw_caseoh__CuteDoubtfulTeaDendi",
