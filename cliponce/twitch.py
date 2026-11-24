@@ -30,8 +30,8 @@ def get(path, **params):
     return r.json().get("data", [])
 
 
-def game_ids():
-    names = CONFIG.get("twitch_games", ["Grand Theft Auto VI"])
+def game_ids(names=None):
+    names = names or CONFIG.get("twitch_games", ["Grand Theft Auto VI"])
     ids = []
     for n in names:
         d = get("/games", name=n)
@@ -42,12 +42,19 @@ def game_ids():
     return ids
 
 
-def top_clips(hours=36, first=100):
-    """Most-viewed recent clips across the GTA 6 category, newest window first."""
+def top_clips(hours=36, first=100, games=None, creators=None):
+    """Most-viewed recent clips across a game category (GTA 6 by default) and/or from named creators."""
     since = (dt.datetime.utcnow() - dt.timedelta(hours=hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
     out = []
-    for gid in game_ids():
-        out += get("/clips", game_id=gid, started_at=since, first=min(first, 100))
+    if games is not None or not creators:
+        for gid in game_ids(games):
+            out += get("/clips", game_id=gid, started_at=since, first=min(first, 100))
+    if creators:
+        users = get("/users", login=[c.lower() for c in creators][:100])
+        for u in users:
+            out += get("/clips", broadcaster_id=u["id"], started_at=since, first=50)
+        seen = set()
+        out = [c for c in out if not (c["id"] in seen or seen.add(c["id"]))]
     out.sort(key=lambda c: -(c.get("view_count") or 0))
     return out
 

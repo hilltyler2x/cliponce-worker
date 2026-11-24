@@ -43,20 +43,26 @@ def fetch(url):
 
 
 # ---------- platforms ----------
-def has(*keys):
-    return all(os.environ.get(k) for k in keys)
+def has(*keys, cr=None):
+    cr = os.environ if cr is None else cr
+    return all(cr.get(k) for k in keys)
 
 
-def post_youtube(item):
-    tok = requests.post("https://oauth2.googleapis.com/token", data={
-        "client_id": os.environ["YT_CLIENT_ID"], "client_secret": os.environ["YT_CLIENT_SECRET"],
-        "refresh_token": os.environ["YT_REFRESH_TOKEN"], "grant_type": "refresh_token"}, timeout=30).json()
+def post_youtube(item, cr=None):
+    cr = os.environ if cr is None else cr
+    if cr.get("YT_ACCESS_TOKEN"):
+        tok = {"access_token": cr["YT_ACCESS_TOKEN"]}  # a brand signed in on the site; the site refreshed it
+    else:
+        tok = requests.post("https://oauth2.googleapis.com/token", data={
+            "client_id": cr["YT_CLIENT_ID"], "client_secret": cr["YT_CLIENT_SECRET"],
+            "refresh_token": cr["YT_REFRESH_TOKEN"], "grant_type": "refresh_token"}, timeout=30).json()
     if "access_token" not in tok:
         raise RuntimeError(f"YouTube token refresh failed: {tok.get('error')}")
     h = {"Authorization": "Bearer " + tok["access_token"]}
     title = (item["title"].split(" | ")[0] + " #Shorts")[:100]
+    game = item.get("game") or "GTA 6"
     meta = {"snippet": {"title": title, "description": item["caption"] + f"\n\nOriginal video: {item['source']}",
-                        "tags": ["GTA 6", "GTA VI", "GTA 6 secrets", "Shorts"], "categoryId": "20"},
+                        "tags": [game, "Gaming", "Shorts"] if game != "GTA 6" else ["GTA 6", "GTA VI", "GTA 6 secrets", "Shorts"], "categoryId": "20"},
             "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}}
     f = fetch(item["url"])
     try:
@@ -99,11 +105,12 @@ def _meta_poll(host, cid, token, field="status_code"):
     raise RuntimeError(f"{host} processing timed out")
 
 
-def post_instagram(item):
-    tok = os.environ["IG_TOKEN"]
+def post_instagram(item, cr=None):
+    cr = os.environ if cr is None else cr
+    tok = cr["IG_TOKEN"]
     # Instagram Login tokens (start with IG) live on graph.instagram.com; Facebook Login ones on graph.facebook.com.
-    host = (os.environ.get("IG_GRAPH_HOST") or ("graph.instagram.com" if tok.startswith("IG") else "graph.facebook.com")) + "/v21.0"
-    uid = os.environ.get("IG_USER_ID") or "me"
+    host = (cr.get("IG_GRAPH_HOST") or ("graph.instagram.com" if tok.startswith("IG") else "graph.facebook.com")) + "/v21.0"
+    uid = cr.get("IG_USER_ID") or "me"
     if "graph.facebook.com" in host:
         # Facebook-style token: find the Instagram account linked to the Page(s) it can manage.
         pages = requests.get(f"https://{host}/me/accounts", params={"fields": "instagram_business_account", "access_token": tok}, timeout=30).json()
@@ -118,7 +125,7 @@ def post_instagram(item):
     data = {"media_type": "REELS", "video_url": direct_url(item["url"]), "caption": item["caption"], "share_to_feed": "true",
             "access_token": tok, **({"cover_url": direct_url(item["thumb"])} if item.get("thumb") else {})}
     c = requests.post(f"https://{host}/{uid}/media", data=data, timeout=60).json()
-    if "id" not in c and not os.environ.get("IG_GRAPH_HOST"):
+    if "id" not in c and not cr.get("IG_GRAPH_HOST"):
         # Unified-login tokens can belong to the other Graph host; try it once.
         alt = ("graph.instagram.com" if "facebook" in host else "graph.facebook.com") + "/v21.0"
         c2 = requests.post(f"https://{alt}/{uid}/media", data=data, timeout=60).json()
@@ -144,9 +151,10 @@ def post_instagram(item):
     return "instagram media " + p["id"]
 
 
-def post_threads(item):
+def post_threads(item, cr=None):
+    cr = os.environ if cr is None else cr
     host = "graph.threads.net/v1.0"
-    uid, tok = os.environ.get("THREADS_USER_ID") or "me", os.environ["THREADS_TOKEN"]
+    uid, tok = cr.get("THREADS_USER_ID") or "me", cr["THREADS_TOKEN"]
     text = item["caption"][:490]
     c = requests.post(f"https://{host}/{uid}/threads", data={"media_type": "VIDEO", "video_url": direct_url(item["url"]),
                       "text": text, "access_token": tok}, timeout=60).json()
@@ -170,15 +178,16 @@ class CapReached(Exception):
     pass
 
 
-def post_facebook(item):
+def post_facebook(item, cr=None):
+    cr = os.environ if cr is None else cr
     """Facebook Page Reel via the official Reels publishing API (page token with pages_manage_posts)."""
     host = "graph.facebook.com/v21.0"
-    tok = os.environ.get("FB_PAGE_TOKEN")
-    pid = os.environ.get("FB_PAGE_ID") or "me"
+    tok = cr.get("FB_PAGE_TOKEN")
+    pid = cr.get("FB_PAGE_ID") or "me"
     if not tok:
         # One system-user token for everything: get the Page's own token from it.
-        pages = requests.get(f"https://{host}/me/accounts", params={"fields": "id,name,access_token", "access_token": os.environ["IG_TOKEN"]}, timeout=30).json()
-        page = next((p for p in pages.get("data", []) if not os.environ.get("FB_PAGE_ID") or p["id"] == os.environ["FB_PAGE_ID"]), None)
+        pages = requests.get(f"https://{host}/me/accounts", params={"fields": "id,name,access_token", "access_token": cr["IG_TOKEN"]}, timeout=30).json()
+        page = next((p for p in pages.get("data", []) if not cr.get("FB_PAGE_ID") or p["id"] == cr["FB_PAGE_ID"]), None)
         if not page:
             raise SignInProblem(f"Facebook: the token cannot manage any Page yet: {str(pages)[:200]}")
         tok, pid = page["access_token"], page["id"]
@@ -208,8 +217,52 @@ def post_facebook(item):
     return f"https://www.facebook.com/reel/{vid}"
 
 
+def post_tiktok(item, cr=None):
+    """TikTok Content Posting API, Direct Post with a file upload (official API, no browser)."""
+    cr = os.environ if cr is None else cr
+    h = {"Authorization": "Bearer " + cr["TIKTOK_ACCESS_TOKEN"], "Content-Type": "application/json; charset=UTF-8"}
+    api = "https://open.tiktokapis.com/v2/post/publish"
+    info = requests.post("https://open.tiktokapis.com/v2/post/publish/creator_info/query/", headers=h, timeout=30).json()
+    if (info.get("error") or {}).get("code") not in (None, "ok"):
+        raise SignInProblem(f"TikTok sign-in problem: {info.get('error')}")
+    opts = (info.get("data") or {}).get("privacy_level_options") or []
+    if "PUBLIC_TO_EVERYONE" not in opts:
+        raise SignInProblem(f"TikTok will not allow public posts for this account yet (options: {opts})")
+    f = fetch(item["url"])
+    try:
+        size = f.stat().st_size
+        init = requests.post(api + "/video/init/", headers=h, json={
+            "post_info": {"title": item["caption"][:2100], "privacy_level": "PUBLIC_TO_EVERYONE",
+                          "disable_comment": False, "disable_duet": False, "disable_stitch": False, "is_aigc": False},
+            "source_info": {"source": "FILE_UPLOAD", "video_size": size, "chunk_size": size, "total_chunk_count": 1}}, timeout=60).json()
+        err = init.get("error") or {}
+        if err.get("code") not in (None, "ok"):
+            if "unaudited" in str(err) or err.get("code") in ("access_token_invalid", "scope_not_authorized", "spam_risk_too_many_posts"):
+                if "too_many" in str(err):
+                    raise CapReached(str(err)[:300])
+                raise SignInProblem(f"TikTok: {err}")
+            raise RuntimeError(f"TikTok init failed: {err}")
+        pid, up_url = init["data"]["publish_id"], init["data"]["upload_url"]
+        with open(f, "rb") as fh:
+            up = requests.put(up_url, data=fh, headers={"Content-Type": "video/mp4", "Content-Range": f"bytes 0-{size - 1}/{size}"}, timeout=900)
+        if up.status_code >= 300:
+            raise RuntimeError(f"TikTok upload {up.status_code}: {up.text[:300]}")
+        for _ in range(60):
+            s = requests.post(api + "/status/fetch/", headers=h, json={"publish_id": pid}, timeout=30).json().get("data") or {}
+            if s.get("status") == "PUBLISH_COMPLETE":
+                ids = s.get("publicaly_available_post_id") or s.get("publicly_available_post_id") or []
+                return f"tiktok post {ids[0]}" if ids else f"tiktok publish {pid}"
+            if s.get("status") == "FAILED":
+                raise RuntimeError(f"TikTok publish failed: {s.get('fail_reason')}")
+            time.sleep(10)
+        return f"tiktok publish {pid}"
+    finally:
+        f.unlink(missing_ok=True)
+
+
 PLATFORMS = {
     "youtube": (("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"), post_youtube),
+    "tiktok": (("TIKTOK_ACCESS_TOKEN",), post_tiktok),
     "instagram": (("IG_TOKEN",), post_instagram),
     "threads": (("THREADS_TOKEN",), post_threads),
     "facebook": (("IG_TOKEN",) if not os.environ.get("FB_PAGE_TOKEN") else ("FB_PAGE_TOKEN",), post_facebook),

@@ -5,6 +5,7 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  id-token: write   # lets the worker prove to cliponce.vercel.app that it is this repo's run (brand list)
 concurrency:
   group: state
   cancel-in-progress: false
