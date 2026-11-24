@@ -1977,7 +1977,9 @@
     "made_at": 1795498065,
     "fresh": true,
     "hook": "PatStaresAt did what?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18122589616754808"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_PatStaresAt_HonestLachrymoseVamp_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_PatStaresAt_HonestLachrymoseVamp.mp4",
     "namehook": true,
