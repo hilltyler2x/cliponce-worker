@@ -2165,7 +2165,8 @@
     "posted": {
       "instagram": "instagram media 18172080664469033",
       "threads_fails": 1,
-      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AgN2jRT4LDk1x"
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AgN2jRT4LDk1x",
+      "facebook": "https://www.facebook.com/reel/29599045069717871"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_pokelawls_SavoryEnchantingCara_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_pokelawls_SavoryEnchantingCara.mp4",
