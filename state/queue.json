@@ -2123,10 +2123,14 @@
     "made_at": 1795498065,
     "fresh": true,
     "hook": "PatStaresAt did what?",
-    "posted": {},
+    "posted": {
+      "threads_fails": 1,
+      "threads_error": "Threads container failed: {'error': {'message': 'Error validating access token: The session has been invalidated because the user changed their password or Facebook has changed the session for security reasons.', 'type': 'OAuthException', 'code': 190, 'error_subcode': 0, 'fbtrace_id': 'AIuHbMeQf4PGg"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_PatStaresAt_HonestLachrymoseVamp_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_PatStaresAt_HonestLachrymoseVamp.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "1404c0d550c8b10daaed8793836a9aae64396b31"
   },
   {
     "id": "2026-11-24_tw_pokelawls_SavoryEnchantingCara",
