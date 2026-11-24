@@ -151,6 +151,9 @@ def post_threads(item):
     c = requests.post(f"https://{host}/{uid}/threads", data={"media_type": "VIDEO", "video_url": direct_url(item["url"]),
                       "text": text, "access_token": tok}, timeout=60).json()
     if "id" not in c:
+        e = c.get("error") or {}
+        if e.get("code") in (190, 200, 10) or "blocked" in str(e.get("message", "")):
+            raise SignInProblem(f"Threads sign-in problem (needs a new THREADS_TOKEN): {c}")
         raise RuntimeError(f"Threads container failed: {c}")
     _meta_poll(host, c["id"], tok, field="status")
     p = requests.post(f"https://{host}/{uid}/threads_publish", data={"creation_id": c["id"], "access_token": tok}, timeout=60).json()
