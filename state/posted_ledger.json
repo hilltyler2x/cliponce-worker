@@ -106,11 +106,5 @@
   "by": "cloud (seeded from queue)",
   "id": "2026-11-20_tw_xQc_SpineyFairEggplantDa",
   "at": "2026-11-24T13:54:58Z"
- },
- "pc-selftest:none": {
-  "ref": "connectivity test",
-  "by": "pc",
-  "id": "",
-  "at": "2026-11-24T13:55:36Z"
  }
 }
