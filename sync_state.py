@@ -48,6 +48,8 @@ def merge(name, mine, theirs):
         for d, plats in mine.items():
             out[d] = {p: max(n, out.get(d, {}).get(p, 0)) for p, n in {**out.get(d, {}), **plats}.items()}
         return out
+    if name == "alerts.json":
+        return mine  # the latest run knows best (a cleared alert must stay cleared)
     if isinstance(mine, dict) and isinstance(theirs, dict):
         return {**theirs, **mine}
     return mine
