@@ -1,18 +1,18 @@
 // Connect a brand's YouTube or TikTok with the platform's official sign-in (OAuth).
 // Needs GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET and TIKTOK_CLIENT_KEY / TIKTOK_CLIENT_SECRET in Vercel.
-// Redirect URLs to register: https://cliponce.vercel.app/api/connect?p=youtube and ?p=tiktok
+// Redirect URL to register on both platforms (exactly): https://cliponce.vercel.app/api/connect
 const crypto = require('crypto');
 const q = require('../lib/db');
 const core = require('../lib/core');
 const brands = require('../lib/brands');
 
 const BASE = process.env.SITE_URL || 'https://cliponce.vercel.app';
-const redirect = p => BASE + '/api/connect?p=' + p;
+const redirect = () => BASE + '/api/connect';
 function go(res, url) { res.statusCode = 302; res.setHeader('Location', url); res.setHeader('Cache-Control', 'no-store'); res.end(); }
 const back = (res, msg, ok) => go(res, '/account.html?' + (ok ? 'connected=' : 'connect_error=') + encodeURIComponent(msg));
 
 module.exports = async (req, res) => {
-  const p = String((req.query && req.query.p) || '');
+  let p = String((req.query && req.query.p) || '');
   try {
     const s = core.readSession(req);
     if (!s) return go(res, '/account.html');
@@ -40,7 +40,8 @@ module.exports = async (req, res) => {
 
     // Step 2: the platform sent the user back.
     const st = core.verify(String(query.state || ''));
-    if (!st || st.uid !== u.id || st.p !== p) return back(res, 'That sign-in link expired. Try again.');
+    if (st) p = st.p;
+    if (!st || st.uid !== u.id) return back(res, 'That sign-in link expired. Try again.');
     if (query.error) return back(res, 'Sign-in was cancelled.');
     const b = await brands.owned(q, u, st.brand);
     if (!b) return back(res, 'Brand not found.');
