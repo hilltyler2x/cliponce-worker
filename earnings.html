@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><meta name="theme-color" content="#07060b">
+<title>ClipOnce Earnings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#07060b;--glass:rgba(22,19,32,.62);--hair:rgba(255,255,255,.08);--hair2:rgba(255,255,255,.14);--text:#f6f2ff;--dim:#9d96b3;--faint:#6b6582;--sun1:#ff3d8b;--sun2:#ff8a3d;--sun3:#ffd23d;--ok:#5df2a4;--bad:#ff6b7d;--sunset:linear-gradient(100deg,var(--sun1),var(--sun2) 55%,var(--sun3));--r:18px;--display:'Anton',Impact,'Arial Narrow',sans-serif;--body:'Inter Tight',system-ui,'Segoe UI',sans-serif;--mono:'JetBrains Mono',Consolas,monospace;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+body{background:var(--ink);color:var(--text);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 520px at 85% -10%,rgba(255,61,139,.22),transparent 60%),radial-gradient(700px 500px at -10% 110%,rgba(61,224,255,.12),transparent 60%)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px));display:grid;gap:28px}
+.wrap>*{min-width:0}
+nav.top{display:flex;align-items:center;gap:16px;padding:22px 0;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.mark{font:400 26px/1 var(--display);text-transform:uppercase;letter-spacing:.5px;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+.mark .logo{width:30px;height:30px;flex:none;border-radius:8px}
+.mark .wm span{background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav.top .links{margin-left:auto;display:flex;gap:22px}
+nav.top a.l{color:var(--dim);text-decoration:none;font-weight:600;font-size:14px}
+h1{font:400 clamp(38px,7vw,68px)/.92 var(--display);text-transform:uppercase;letter-spacing:.4px;margin-top:6px}
+h1 em{font-style:normal;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font:400 26px/1 var(--display);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px}
+.eyebrow{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sun2)}
+.panel{background:var(--glass);border:1px solid var(--hair);border-radius:var(--r);padding:24px;backdrop-filter:blur(22px)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:18px}
+.stat{border-top:2px solid var(--hair2);padding-top:12px;display:grid;gap:3px;min-width:0}
+.stat.hot{border-top-color:var(--sun1)}
+.stat .k{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.stat .v{font:400 42px/1 var(--display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stat .s{color:var(--dim);font-size:13px}
+.up{color:var(--ok)}.down{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);text-align:left;padding:8px 10px;border-bottom:1px solid var(--hair2)}
+td{padding:10px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums}
+td.n,th.n{text-align:right}
+.scroll{overflow-x:auto}
+.plats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));gap:14px}
+.pc{border:1px solid var(--hair);border-radius:14px;padding:16px;background:rgba(0,0,0,.25);display:grid;gap:6px;min-width:0}
+.pc .name{font:400 20px var(--display);text-transform:uppercase;letter-spacing:.5px;display:flex;justify-content:space-between;gap:8px}
+.pc .name small{font:500 12px var(--body);color:var(--faint);text-transform:none;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc .big{font:400 34px/1 var(--display);font-variant-numeric:tabular-nums}
+.pc .row{display:flex;justify-content:space-between;color:var(--dim);font-size:13px;gap:8px}
+.pc .note{font-size:12.5px;color:var(--faint)}
+.meter{height:6px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:4px}
+.meter i{display:block;height:100%;background:var(--sunset)}
+.bars{display:flex;align-items:flex-end;gap:8px;height:140px;margin-top:8px}
+.bars div{flex:1;display:grid;gap:4px;justify-items:center;font:500 11px var(--mono);color:var(--faint);min-width:0}
+.bars b{display:block;width:100%;max-width:46px;border-radius:6px 6px 2px 2px;background:var(--sunset);min-height:2px}
+.note{font-size:13px;color:var(--faint)}
+.links2{display:flex;flex-wrap:wrap;gap:10px}
+.links2 a{color:var(--text);text-decoration:none;border:1px solid var(--hair2);border-radius:11px;padding:9px 13px;font-weight:600;font-size:13.5px}
+.links2 a:hover{border-color:var(--sun1)}
+.cta{display:inline-block;margin-top:14px;padding:13px 20px;border-radius:14px;background:var(--sunset);color:#16070f;font:400 19px var(--display);letter-spacing:.8px;text-transform:uppercase;text-decoration:none}
+.warn{border-color:rgba(255,138,61,.4)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Main">
+    <a class="mark" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3d8b"/><stop offset=".55" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ffd23d"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#lg)"/><path d="M45.5 21.5A16 16 0 1 0 45.5 42.5" fill="none" stroke="#16070f" stroke-width="7.5" stroke-linecap="round"/><path d="M28 24.5v15l12-7.5z" fill="#16070f"/></svg><span class="wm">Clip<span>Once</span></span></a>
+    <div class="links"><a class="l" href="/app.html">Clipper</a><a class="l" href="/account.html">Account</a></div>
+  </nav>
+  <header>
+    <div class="eyebrow">Owner only</div>
+    <h1>Money <em>coming in</em></h1>
+    <p class="note" id="when" style="margin-top:10px">Loading...</p>
+  </header>
+
+  <section id="gate" class="panel" hidden>
+    <h2>Log in first</h2>
+    <p class="note">This page only opens for the owner account.</p>
+    <a class="cta" href="/account.html">Log in</a>
+  </section>
+
+  <div id="main" hidden style="display:grid;gap:28px">
+    <section class="panel">
+      <h2>ClipOnce subscriptions</h2>
+      <div id="stripeNote"></div>
+      <div class="stats" id="moneyStats"></div>
+    </section>
+
+    <section class="panel" id="monthsBox" hidden>
+      <h2>Collected by month</h2>
+      <div class="bars" id="months"></div>
+    </section>
+
+    <section class="panel" id="upBox" hidden>
+      <h2>First charges coming up</h2>
+      <p class="note" style="margin-bottom:10px">Trials that turn into paid plans, if the customer keeps them.</p>
+      <div class="scroll"><table><thead><tr><th>Date</th><th>Plan</th><th class="n">Amount</th></tr></thead><tbody id="upcoming"></tbody></table></div>
+    </section>
+
+    <section class="panel">
+      <h2>DailyGTA6Info page</h2>
+      <p class="note" id="audWhen" style="margin-bottom:14px"></p>
+      <div class="plats" id="plats"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Page payouts</h2>
+      <p class="note" style="margin-bottom:14px">No platform pays yet. These are the free payout programs and how close the page is.</p>
+      <div class="plats" id="payouts"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Check the source</h2>
+      <div class="links2">
+        <a href="https://dashboard.stripe.com/" target="_blank" rel="noopener">Stripe dashboard</a>
+        <a href="https://studio.youtube.com/" target="_blank" rel="noopener">YouTube Studio</a>
+        <a href="https://www.tiktok.com/tiktokstudio" target="_blank" rel="noopener">TikTok Studio</a>
+        <a href="https://business.facebook.com/latest/insights" target="_blank" rel="noopener">Meta insights</a>
+        <a href="https://x.com/i/account_analytics" target="_blank" rel="noopener">X analytics</a>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const usd = c => '$' + (Math.round(c || 0) / 100).toLocaleString('en-US', {minimumFractionDigits: (c % 100 ? 2 : 0), maximumFractionDigits: 2});
+const num = n => n == null ? '-' : Number(n).toLocaleString('en-US');
+const stat = (k, v, s, hot) => `<div class="stat${hot ? ' hot' : ''}"><span class="k">${esc(k)}</span><span class="v">${v}</span><span class="s">${s || ''}</span></div>`;
+const NAMES = {youtube: 'YouTube', tiktok: 'TikTok', instagram: 'Instagram', facebook: 'Facebook', threads: 'Threads', x: 'X'};
+const ET = {timeZone: 'America/New_York', dateStyle: 'medium', timeStyle: 'short'};
+
+function renderMoney(m) {
+  if (!m.connected) {
+    $('#stripeNote').innerHTML = `<p class="note" style="margin-bottom:14px">${esc(m.note)} Until then, money shows in the Stripe dashboard.</p>`;
+    $('#moneyStats').innerHTML = stat('Collected', '-', 'waiting for the Stripe key', true);
+    return;
+  }
+  const c = m.counts;
+  $('#moneyStats').innerHTML =
+    stat('Collected, all time', usd(m.collected.total_cents), `${usd(m.collected.last30_cents)} in the last 30 days`, true) +
+    stat('Today', usd(m.collected.today_cents), `${usd(m.collected.last7_cents)} in the last 7 days`) +
+    stat('Monthly revenue now', usd(m.mrr_cents), `${c.active + c.past_due} paying`) +
+    stat('After trials end', usd(m.mrr_after_trials_cents), `${c.trialing} on free trial`) +
+    stat('Stripe balance', m.balance.available_cents != null ? usd(m.balance.available_cents) : '-', m.balance.pending_cents != null ? `${usd(m.balance.pending_cents)} on the way` : esc(m.balance.note)) +
+    stat('Cancelled', num(c.canceled), Object.entries(m.plans).map(([p, v]) => `${esc(p)}: ${v.paying} paying, ${v.trialing} trial`).join('<br>') || 'no signups yet');
+  const months = Object.entries(m.by_month || {}).sort().slice(-12);
+  if (months.length) {
+    const max = Math.max(...months.map(x => x[1]), 1);
+    $('#months').innerHTML = months.map(([k, v]) => `<div title="${usd(v)}"><span>${usd(v)}</span><b style="height:${Math.max(2, v / max * 100)}px"></b><span>${k.slice(5)}/${k.slice(2, 4)}</span></div>`).join('');
+    $('#monthsBox').hidden = false;
+  }
+  if (m.upcoming_charges.length) {
+    $('#upcoming').innerHTML = m.upcoming_charges.map(u => `<tr><td>${esc(u.date)}</td><td>${esc(u.plan)}</td><td class="n">${usd(u.amount)}</td></tr>`).join('');
+    $('#upBox').hidden = false;
+  }
+}
+
+function delta(now, before) {
+  if (now == null || before == null) return '';
+  const d = now - before;
+  return d === 0 ? '<span>no change</span>' : `<span class="${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${num(d)} since yesterday</span>`;
+}
+
+function renderAudience(a) {
+  const l = a.latest;
+  if (!l) { $('#audWhen').textContent = 'The first daily snapshot runs at 8 AM ET.'; $('#plats').innerHTML = ''; return {}; }
+  $('#audWhen').textContent = 'Snapshot from ' + new Date(l.taken_at).toLocaleString('en-US', ET) + ' ET. Refreshes daily at 8 AM ET.';
+  const days = Object.keys(a.history || {}).sort();
+  const prev = days.length > 1 ? a.history[days[days.length - 2]] : {};
+  $('#plats').innerHTML = ['youtube', 'tiktok', 'instagram', 'facebook', 'threads', 'x'].map(k => {
+    const p = l.platforms[k] || {};
+    const views = p.views_24h ?? p.video_views_24h;
+    return `<div class="pc"><div class="name">${NAMES[k]}<small>${esc(p.handle || '')}</small></div>
+      <div class="big">${num(p.followers)}</div>
+      <div class="row"><span>followers</span>${delta(p.followers, (prev[k] || {}).followers)}</div>
+      ${views != null ? `<div class="row"><span>views, last 24h</span><span>${num(views)}</span></div>` : ''}
+      ${p.views_total != null ? `<div class="row"><span>views, all time</span><span>${num(p.views_total)}</span></div>` : ''}
+      ${p.posts != null ? `<div class="row"><span>posts</span><span>${num(p.posts)}</span></div>` : ''}
+      ${p.note ? `<div class="note">${esc(p.note)}</div>` : ''}</div>`;
+  }).join('');
+  return l.platforms;
+}
+
+function renderPayouts(p) {
+  const f = k => (p[k] || {}).followers;
+  const goals = [
+    ['YouTube Partner Program', f('youtube'), 1000, 'subscribers, plus 10M Shorts views in 90 days'],
+    ['TikTok Creator Rewards', f('tiktok'), 10000, 'followers, plus 100K views in 30 days'],
+    ['X ads revenue sharing', null, 500, 'verified followers, plus Premium and 5M views in 3 months'],
+    ['Facebook content monetization', f('facebook'), null, 'invite based; Meta shows eligibility in the Professional dashboard'],
+  ];
+  $('#payouts').innerHTML = goals.map(([n, have, need, what]) => `<div class="pc"><div class="name" style="font-size:17px">${esc(n)}</div>
+    ${need ? `<div class="row"><span>${have == null ? 'not tracked' : num(have)} of ${num(need)}</span><span>${have == null ? '' : Math.min(100, Math.round(have / need * 100)) + '%'}</span></div>
+    <div class="meter"><i style="width:${have == null ? 0 : Math.min(100, have / need * 100)}%"></i></div>` : ''}
+    <div class="note">${esc(what)}</div></div>`).join('');
+}
+
+(async () => {
+  const r = await fetch('/api/earnings', {credentials: 'same-origin'});
+  if (r.status === 401) { $('#gate').hidden = false; $('#when').textContent = ''; return; }
+  const j = await r.json();
+  if (!r.ok) { $('#when').textContent = j.error || 'Could not load.'; return; }
+  $('#when').textContent = 'Updated ' + new Date(j.generated_at).toLocaleString('en-US', ET) + ' ET';
+  $('#main').hidden = false;
+  renderMoney(j.money);
+  renderPayouts(renderAudience(j.audience) || {});
+})().catch(e => { $('#when').textContent = 'Could not load: ' + e.message; });
+</script>
+</body>
+</html>

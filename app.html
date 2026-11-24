@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><meta name="theme-color" content="#07060b">
+<title>ClipOnce Clipper: free vertical clips in your browser</title>
+<meta name="description" content="Drop in a long video and get vertical 1080x1920 clips of the best moments. Free, runs in your browser, your video never leaves your device.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#07060b; --glass:rgba(22,19,32,.62);
+  --hair:rgba(255,255,255,.08); --hair2:rgba(255,255,255,.14);
+  --text:#f6f2ff; --dim:#9d96b3; --faint:#6b6582;
+  --sun1:#ff3d8b; --sun2:#ff8a3d; --sun3:#ffd23d; --ok:#5df2a4; --bad:#ff6b7d;
+  --sunset:linear-gradient(100deg,var(--sun1),var(--sun2) 55%,var(--sun3));
+  --r:18px;
+  --display:'Anton',Impact,'Arial Narrow',sans-serif;
+  --body:'Inter Tight',system-ui,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--ink);color:var(--text);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(900px 520px at 85% -10%,rgba(255,61,139,.22),transparent 60%),
+  radial-gradient(700px 500px at -10% 110%,rgba(61,224,255,.12),transparent 60%),
+  linear-gradient(180deg,rgba(7,6,11,.2),rgba(7,6,11,.85));}
+.wrap{max-width:1180px;margin:0 auto;padding-block:0 80px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));display:grid;gap:34px}
+.wrap>*{min-width:0}
+nav.top{display:flex;align-items:center;gap:16px;padding:22px 0;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.mark{font:400 26px/1 var(--display);text-transform:uppercase;letter-spacing:.5px;color:var(--text);text-decoration:none}
+.mark{display:inline-flex;align-items:center;gap:10px}.mark .logo{width:30px;height:30px;flex:none;border-radius:8px;box-shadow:0 6px 18px -6px rgba(255,61,139,.6)}
+.mark .wm span{background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav.top .links{margin-left:auto;display:flex;gap:22px;flex-wrap:wrap}
+nav.top a.l{color:var(--dim);text-decoration:none;font-weight:600;font-size:14px}
+nav.top a.l:hover{color:var(--text)}
+.eyebrow{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sun2)}
+h1{font:400 clamp(40px,7vw,84px)/.92 var(--display);text-transform:uppercase;letter-spacing:.4px;margin:12px 0 14px;overflow-wrap:anywhere}
+h1 em{font-style:normal;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{color:var(--dim);max-width:640px;font-size:16px}
+.cols{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;align-items:start}
+.panel{background:var(--glass);border:1px solid var(--hair);border-radius:var(--r);padding:24px;backdrop-filter:blur(22px) saturate(1.2);box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.04);min-width:0}
+.panel h3{font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.panel h3::after{content:"";flex:1;height:1px;background:var(--hair)}
+.drop{display:grid;place-items:center;gap:8px;text-align:center;padding:34px 18px;border:1.5px dashed var(--hair2);border-radius:16px;background:rgba(0,0,0,.3);cursor:pointer;transition:.2s}
+.drop:hover,.drop.over{border-color:var(--sun1);background:rgba(255,61,139,.06)}
+.drop b{font:400 26px var(--display);text-transform:uppercase;letter-spacing:.4px}
+.drop span{color:var(--dim);font-size:13px}
+.drop input{display:none}
+.file{display:flex;gap:12px;align-items:center;margin-top:14px;font-size:14px;color:var(--dim);min-width:0}
+.file b{color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.or{display:flex;align-items:center;gap:12px;margin:16px 0 12px;color:var(--faint);font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase}
+.or:before,.or:after{content:"";flex:1;height:1px;background:var(--hair)}
+.link{display:flex;gap:8px;min-width:0}
+.link input{flex:1;min-width:0;padding:12px 14px;border-radius:12px;border:1px solid var(--hair2);background:rgba(0,0,0,.35);color:var(--text);font:500 14px var(--body);outline:none}
+.link input:focus{border-color:var(--sun1)}
+.link button{all:unset;cursor:pointer;padding:12px 16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));border:1px solid var(--hair2);font:600 13px var(--body);white-space:nowrap}
+.link button:disabled{opacity:.5;cursor:default}
+.linknote{margin-top:8px;font-size:12.5px;color:var(--dim);line-height:1.5}
+.linknote.warn{color:#ffb37a}
+.cloud{margin-top:12px;border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px;background:rgba(255,255,255,.03)}
+.cstep{font-size:13px;color:var(--dim);display:flex;gap:8px;align-items:center}
+.cstep.busy::before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:cspin .8s linear infinite;flex:none}
+@keyframes cspin{to{transform:rotate(360deg)}}
+.cclips{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:10px}
+.cclips:empty{display:none}
+.cclip{display:flex;flex-direction:column;gap:6px;font-size:12px;min-width:0}
+.cclip video{width:100%;aspect-ratio:9/16;border-radius:10px;background:#000;object-fit:cover}
+.cclip b{font-size:12.5px}.cclip span{color:var(--dim);line-height:1.35;overflow-wrap:anywhere}
+.cclip a{align-self:flex-start;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);color:inherit;text-decoration:none;font-weight:600}
+video.src{width:100%;max-height:260px;border-radius:12px;background:#000;margin-top:14px;display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.field{margin-top:20px}
+.lab{display:flex;justify-content:space-between;align-items:baseline;font:600 12px var(--body);color:var(--dim);letter-spacing:.04em;margin-bottom:10px}
+.lab output{font:500 13px var(--mono);color:var(--text)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;padding:4px;border-radius:13px;background:rgba(0,0,0,.35);border:1px solid var(--hair)}
+.seg button{all:unset;cursor:pointer;text-align:center;padding:10px 8px;border-radius:10px;font:600 13px var(--body);color:var(--dim);transition:.18s}
+.seg button small{display:block;font:500 10.5px var(--mono);color:var(--faint);margin-top:2px}
+.seg button.on{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--text)}
+.seg button.on small{color:var(--sun2)}
+.seg button:focus-visible{outline:2px solid var(--sun2)}
+.stepper{display:flex;align-items:center;justify-content:space-between;border-radius:13px;background:rgba(0,0,0,.35);border:1px solid var(--hair);padding:4px}
+.stepper button{all:unset;cursor:pointer;width:40px;height:38px;display:grid;place-items:center;border-radius:10px;font-size:20px;color:var(--dim)}
+.stepper button:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.stepper span{font:400 26px var(--display)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:38px;background:transparent}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--sun1) 0,var(--sun2) var(--p,50%),rgba(255,255,255,.1) var(--p,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;margin-top:-7px;box-shadow:0 0 0 5px rgba(255,61,139,.25)}
+input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:rgba(255,255,255,.1)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:6px;background:var(--sun1)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border:0;border-radius:50%;background:#fff}
+.cta{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin-top:24px;padding:17px;border-radius:15px;background:var(--sunset);color:#16070f;font:400 22px var(--display);letter-spacing:.8px;text-transform:uppercase;box-shadow:0 18px 40px -16px rgba(255,61,139,.7);box-sizing:border-box;text-align:center}
+.cta:hover{filter:brightness(1.06)}
+.cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.cta[disabled]{filter:grayscale(.7) brightness(.6);cursor:not-allowed}
+.cta.alt{background:rgba(255,255,255,.08);color:var(--text);box-shadow:none;font-size:18px;padding:13px;margin-top:14px}
+.steps{display:grid;gap:2px;margin:4px 0 14px}
+.st{display:flex;align-items:center;gap:14px;padding:8px 0;color:var(--faint);font-weight:600;font-size:14px}
+.st b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--hair2);font:500 11px var(--mono);flex:none}
+.st.now{color:var(--text)} .st.now b{border-color:var(--sun1);color:var(--sun1);box-shadow:0 0 0 5px rgba(255,61,139,.12)}
+.st.ok{color:var(--dim)} .st.ok b{background:var(--ok);border-color:var(--ok);color:#06210f}
+.st.err b{background:var(--bad);border-color:var(--bad);color:#2b0007}
+.bar{height:4px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;width:0;background:var(--sunset);transition:width .4s}
+.msg{font:12px/1.6 var(--mono);color:#b7aed0;min-height:1.6em}
+.moments{display:grid;gap:8px;margin-top:6px}
+.mo{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--hair);border-radius:12px;background:rgba(0,0,0,.25)}
+.mo input{accent-color:var(--sun1);width:18px;height:18px}
+.mo .t{font:500 13px var(--mono)}
+.mo .s{height:6px;border-radius:6px;background:var(--sunset)}
+.mo button{all:unset;cursor:pointer;font:600 12px var(--body);color:var(--dim);padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06)}
+.mo button:hover{color:var(--text)}
+.results{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:16px}
+.clip{display:grid;gap:8px}
+.clip video{width:100%;aspect-ratio:9/16;border-radius:12px;background:#000;border:1px solid var(--hair);object-fit:cover}
+.clip a{text-align:center;padding:10px;border-radius:11px;background:var(--sunset);color:#16070f;font:400 16px var(--display);letter-spacing:.6px;text-transform:uppercase;text-decoration:none}
+.clip span{font:500 11px var(--mono);color:var(--faint);text-align:center}
+.note{font-size:13px;color:var(--faint)}
+.empty{color:var(--faint);font-size:14px;padding:6px 0}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:13px;color:var(--dim)}
+.check input{accent-color:var(--sun1);width:18px;height:18px;flex:none;margin-top:1px}
+@media (max-width:900px){.cols{grid-template-columns:1fr}}
+@media (max-width:560px){nav.top .links{display:none}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Main">
+    <a class="mark" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3d8b"/><stop offset=".55" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ffd23d"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#lg)"/><path d="M45.5 21.5A16 16 0 1 0 45.5 42.5" fill="none" stroke="#16070f" stroke-width="7.5" stroke-linecap="round"/><path d="M28 24.5v15l12-7.5z" fill="#16070f"/></svg><span class="wm">Clip<span>Once</span></span></a>
+    <div class="links"><a class="l" href="/#compare">Why us</a><a class="l" href="/#plans">Plans</a></div>
+  </nav>
+
+  <header>
+    <div class="eyebrow">Free clipper · beta</div>
+    <h1>Drop a video.<br><em>Get the moments.</em></h1>
+    <p class="lede">We find the loudest, most exciting moments and cut them into vertical 1080x1920 clips, ready for TikTok, Shorts and Reels. Everything runs in your browser, so your video never leaves your device.</p>
+  </header>
+
+  <div class="cols">
+    <section class="panel" aria-labelledby="src-h">
+      <h3 id="src-h">Your video</h3>
+      <label class="drop" id="drop" for="file">
+        <input type="file" id="file" accept="video/*">
+        <b>Choose a video</b>
+        <span>or drag it here · MP4, MOV, MKV or WebM · up to about 1 hour works best</span>
+      </label>
+      <div class="or">or paste a link</div>
+      <form class="link" id="linkForm" novalidate><input id="linkIn" type="url" inputmode="url" placeholder="Video, live stream or channel link" aria-label="Video link"><button id="linkGo" type="submit">Use link</button></form>
+      <div class="linknote" id="linkNote">Paste a Twitch channel, past broadcast or clip and we clip its newest stream in the cloud. Direct .mp4, .webm or .mov links work too.</div>
+      <div class="cloud" id="cloudBox" hidden><div class="cstep" id="cloudStep"></div><div class="cclips" id="cloudClips"></div></div>
+      <div class="file" id="fileInfo" hidden><span>File</span><b id="fileName"></b><span id="fileDur"></span></div>
+      <video class="src" id="srcVid" controls playsinline hidden></video>
+
+      <div class="grid2">
+        <div class="field"><div class="lab">Framing</div>
+          <div class="seg" data-name="mode"><button class="on" data-val="crop">Full screen<small>center crop</small></button><button data-val="blur">Whole shot<small>blurred fill</small></button></div></div>
+        <div class="field"><div class="lab">Quality</div>
+          <div class="seg" data-name="quality"><button class="on" data-val="1080">Full HD<small>1080x1920</small></button><button data-val="720">Fast<small>720x1280</small></button></div></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><div class="lab">Clips</div>
+          <div class="stepper"><button id="cMinus" aria-label="Fewer clips">&minus;</button><span id="count">3</span><button id="cPlus" aria-label="More clips">+</button></div></div>
+        <div class="field"><div class="lab"><label for="length">Length</label> <output id="lenOut" for="length">30s</output></div>
+          <input type="range" id="length" min="15" max="60" step="1" value="30"></div>
+      </div>
+      <label class="check"><input type="checkbox" id="rights"><span>I own this video or have permission to use it.</span></label>
+      <button class="cta" id="go" disabled>Find moments</button>
+      <p class="note" style="margin-top:12px">The first run downloads the video engine (about 31 MB) once. Clips render on your computer, so a fast laptop or desktop is quickest.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="job-h">
+      <h3 id="job-h">Live render</h3>
+      <div class="bar"><i id="bar"></i></div>
+      <div class="steps" id="steps"></div>
+      <div class="msg" id="msg" aria-live="polite">Choose a video to start.</div>
+      <div id="momentBox" hidden>
+        <h3 style="margin-top:18px">Best moments</h3>
+        <div class="moments" id="moments"></div>
+        <button class="cta" id="render">Make clips</button>
+      </div>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="res-h">
+    <h3 id="res-h">Your clips</h3>
+    <div class="results" id="results"><div class="empty">Finished clips show up here, ready to download.</div></div>
+  </section>
+
+  <p class="note">Beta. Captions, auto-posting and cloud processing come with paid plans at launch. Only use videos you own or have permission to use.</p>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const LOCAL=(location.hostname==='localhost'||location.hostname==='127.0.0.1');
+const CORE_BASES=LOCAL?['/core-esm']:['https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm','https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm'];
+const LIB=LOCAL?{ff:'/vendor/ffmpeg.js',util:'/vendor/util.js',worker:'/vendor/814.ffmpeg.js'}:{ff:'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js',util:'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js',worker:'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/814.ffmpeg.js'};
+function loadScript(src){return new Promise((ok,no)=>{if(document.querySelector('script[src="'+src+'"]'))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+const state={mode:'crop',quality:'1080',count:3,file:null,dur:0,moments:[],busy:false};
+const STEPS=['Load video engine','Listen for the best moments','Pick your clips','Render vertical clips'];
+let stepIdx=-1, stepErr=false, ff=null, mounted=false;
+
+function drawSteps(){ $('steps').innerHTML=STEPS.map((s,i)=>{const c=stepErr&&i===stepIdx?'err':i<stepIdx?'ok':i===stepIdx?'now':'';return '<div class="st '+c+'"><b>'+(i<stepIdx?'&#10003;':stepErr&&i===stepIdx?'!':i+1)+'</b>'+s+'</div>'}).join('') }
+function setStep(i){stepIdx=i;stepErr=false;drawSteps()}
+function fail(t){stepErr=true;drawSteps();msg(t);state.busy=false;updateGo();$('render').disabled=false}
+function msg(t){$('msg').textContent=t}
+function bar(p){$('bar').style.width=Math.max(0,Math.min(100,p))+'%'}
+function fmt(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0')}
+drawSteps();
+
+document.querySelectorAll('.seg').forEach(seg=>seg.querySelectorAll('button').forEach(b=>b.onclick=()=>{seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');state[seg.dataset.name]=b.dataset.val}));
+const len=$('length');function lenUpd(){len.style.setProperty('--p',((len.value-len.min)/(len.max-len.min)*100)+'%');$('lenOut').textContent=len.value+'s'}len.oninput=lenUpd;lenUpd();
+$('cMinus').onclick=()=>{state.count=Math.max(1,state.count-1);$('count').textContent=state.count};
+$('cPlus').onclick=()=>{state.count=Math.min(10,state.count+1);$('count').textContent=state.count};
+function updateGo(){$('go').disabled=!(state.file&&$('rights').checked&&!state.busy)}
+$('rights').onchange=updateGo;
+
+function pick(file){
+  if(!file)return; if(!/^video\//.test(file.type)&&!/\.(mp4|mov|mkv|webm|m4v)$/i.test(file.name)){msg('That file does not look like a video. Try an MP4, MOV, MKV or WebM.');return}
+  state.file=file;mounted=false;state.moments=[];$('momentBox').hidden=true;
+  $('fileInfo').hidden=false;$('fileName').textContent=file.name;$('fileDur').textContent='';
+  const v=$('srcVid');v.hidden=false;v.src=URL.createObjectURL(file);
+  v.onloadedmetadata=()=>{state.dur=v.duration||0;$('fileDur').textContent=fmt(state.dur)};
+  msg('Ready. Tick the permission box and press Find moments.');updateGo();
+}
+$('file').onchange=e=>pick(e.target.files[0]);
+const drop=$('drop');
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over')}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over')}));
+drop.addEventListener('drop',e=>pick(e.dataTransfer.files[0]));
+const PLATFORM=/(^|\.)(youtube\.com|youtu\.be|twitch\.tv|kick\.com|tiktok\.com|instagram\.com|x\.com|twitter\.com|facebook\.com|fb\.watch|rumble\.com|vimeo\.com|streamable\.com)$/i;
+function note(t,warn){const n=$('linkNote');n.textContent=t;n.classList.toggle('warn',!!warn)}
+$('linkForm').onsubmit=async e=>{
+  e.preventDefault();let raw=$('linkIn').value.trim();if(!raw)return;
+  if(!/^https?:\/\//i.test(raw))raw='https://'+raw;
+  let u;try{u=new URL(raw)}catch(err){return note('That does not look like a link. Paste the full address.',true)}
+  const kind=/\/(channel|c|user|@[^/]+)(\/|$)|\/@|\/videos\/?$/i.test(u.pathname)?'channel':/live/i.test(u.pathname+u.hostname)?'live stream':'video';
+  if(/(^|\.)twitch\.tv$/i.test(u.hostname))return cloudClip(u.href);
+  if(PLATFORM.test(u.hostname))return note((/youtu/i.test(u.hostname)?'YouTube blocks cloud downloads, so YouTube links can\'t be clipped here yet. ':'Clipping straight from '+u.hostname.replace(/^www\./,'')+' is coming soon. ')+'Twitch links work now. For this one, download the video you have rights to and drop the file above.',true);
+  const b=$('linkGo');b.disabled=true;note('Downloading the video...');
+  try{
+    const r=await fetch(u.href,{mode:'cors'});if(!r.ok)throw new Error('http '+r.status);
+    const ct=r.headers.get('content-type')||'';const total=+r.headers.get('content-length')||0;
+    if(ct&&!/video|octet-stream|matroska/i.test(ct))throw new Error('type');
+    const rd=r.body.getReader();const parts=[];let got=0;
+    for(;;){const {done,value}=await rd.read();if(done)break;parts.push(value);got+=value.length;note('Downloading the video... '+(total?Math.round(got/total*100)+'%':(got/1048576).toFixed(0)+' MB'))}
+    let name=decodeURIComponent(u.pathname.split('/').pop()||'video.mp4').replace(/[^\w.\-]+/g,'_');if(!/\.(mp4|mov|mkv|webm|m4v)$/i.test(name))name+='.mp4';
+    pick(new File(parts,name,{type:/video/.test(ct)?ct.split(';')[0]:'video/mp4'}));note('Loaded from the link.');
+  }catch(err){note(err.message==='type'?'That link is a web page, not a video file. Use a link that ends in .mp4, .webm or .mov.':'That site does not let other websites download its videos. Download the file and drop it above instead.',true)}
+  b.disabled=false;
+};
+
+// Home page funnel: /app.html?link=<url> fills the link box and starts right away.
+try{const pl=new URLSearchParams(location.search).get('link');if(pl&&pl.length<400){$('linkIn').value=pl;setTimeout(()=>$('linkForm').requestSubmit(),0)}}catch(e){}
+
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])}
+let cloudTimer=null;
+async function cloudClip(href){
+  const b=$('linkGo');b.disabled=true;clearTimeout(cloudTimer);
+  const box=$('cloudBox'),st=$('cloudStep'),list=$('cloudClips');
+  const step=(t,busy)=>{box.hidden=false;st.textContent=t;st.classList.toggle('busy',!!busy)};
+  list.innerHTML='';step('Sending the link to the cloud clipper...',true);note('Clipping in the cloud. You can keep this tab open and do other things.');
+  try{
+    const r=await fetch('/api/clip?action=start',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({url:href,count:state.count})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok){b.disabled=false;step('',false);box.hidden=true;
+      if(d.login){note('Log in (free) to clip from links. ',true);const a=document.createElement('a');a.href='/account.html';a.textContent='Log in or sign up';$('linkNote').append(a);return}
+      return note(d.error||'The cloud clipper did not answer. Try again in a minute.',true)}
+    poll(d.id,0);
+  }catch(e){b.disabled=false;box.hidden=true;note('Could not reach the cloud clipper. Check your connection and try again.',true)}
+}
+async function poll(id,n){
+  const b=$('linkGo'),st=$('cloudStep'),list=$('cloudClips');
+  let d={};try{const r=await fetch('/api/clip?action=status&id='+id,{credentials:'same-origin',cache:'no-store'});d=await r.json()}catch(e){}
+  const shown=list.children.length;
+  (d.clips||[]).slice(shown).forEach((c,i)=>{const el=document.createElement('div');el.className='cclip';
+    el.innerHTML='<video src="'+esc(c.url)+'" controls playsinline preload="metadata"></video><b>'+esc(c.kind||'Clip')+'</b><span>'+esc(c.why||'')+'</span><a href="'+esc(c.url)+'" download>Download</a>';list.append(el)});
+  if(d.status==='done'){st.classList.remove('busy');const k=(d.clips||[]).length;st.textContent=k+(k===1?' clip':' clips')+' ready'+(d.creator?' from '+d.creator:'')+'. Credit the streamer when you post.';note('Done. Your clips are below.');b.disabled=false;return}
+  if(d.status==='failed'){st.classList.remove('busy');st.textContent=d.error||'That one did not work.';note('No minutes were used for this job.',true);b.disabled=false;return}
+  st.classList.add('busy');st.textContent=(d.step||'Working')+'... (usually 5 to 15 minutes)';
+  cloudTimer=setTimeout(()=>poll(id,n+1),n<6?10000:20000);
+}
+
+async function engine(){
+  if(ff&&ff.loaded)return ff;
+  setStep(0);msg('Downloading the video engine (about 31 MB, only the first time)...');bar(3);
+  await loadScript(LIB.ff);await loadScript(LIB.util);
+  const classWorkerURL=await FFmpegUtil.toBlobURL(LIB.worker,'text/javascript');
+  ff=new FFmpegWASM.FFmpeg();
+  let lastErr;
+  for(const base of CORE_BASES){
+    try{
+      const coreURL=await FFmpegUtil.toBlobURL(base+'/ffmpeg-core.js','text/javascript');
+      const wasmURL=await FFmpegUtil.toBlobURL(base+'/ffmpeg-core.wasm','application/wasm',true,e=>{if(e.total)bar(3+e.received/e.total*20)});
+      await ff.load({coreURL,wasmURL,classWorkerURL});
+      return ff;
+    }catch(e){lastErr=e}
+  }
+  throw lastErr||new Error('engine');
+}
+async function mount(){
+  if(mounted)return;
+  try{await ff.unmount('/in')}catch(e){}
+  try{await ff.createDir('/in')}catch(e){}
+  await ff.mount('WORKERFS',{files:[state.file]},'/in');mounted=true;
+}
+const IN=()=>'/in/'+state.file.name;
+
+$('go').onclick=async()=>{
+  state.busy=true;updateGo();$('momentBox').hidden=true;
+  try{await engine()}catch(e){return fail('Could not load the video engine. Check your connection and try again.')}
+  try{
+    await mount();
+    setStep(1);msg('Listening to the audio for hype moments...');bar(25);
+    const onp=({progress})=>{if(progress>0&&progress<=1)bar(25+progress*40)};
+    ff.on('progress',onp);
+    const code=await ff.exec(['-i',IN(),'-vn','-ac','1','-ar','4000','-f','s16le','/a.raw']);
+    ff.off('progress',onp);
+    if(code!==0)throw new Error('audio');
+    const raw=await ff.readFile('/a.raw');try{await ff.deleteFile('/a.raw')}catch(e){}
+    const pcm=new Int16Array(raw.buffer,raw.byteOffset,Math.floor(raw.byteLength/2));
+    if(!state.dur)state.dur=pcm.length/4000;
+    state.moments=findMoments(pcm,4000,+len.value,state.count);
+    setStep(2);bar(66);
+    if(!state.moments.length){msg('This video has no audio track, so I spread clips evenly instead.');state.moments=even(+len.value,state.count)}
+    else msg('Found '+state.moments.length+' moment'+(state.moments.length>1?'s':'')+'. Untick any you do not want, then press Make clips.');
+    showMoments();
+  }catch(e){fail('Something went wrong reading this video. Try an MP4 file, or a shorter video.')}
+  state.busy=false;updateGo();
+};
+
+function findMoments(pcm,rate,L,N){
+  if(pcm.length<rate*2)return [];
+  const win=rate/2, n=Math.floor(pcm.length/win), e=new Float32Array(n);
+  for(let i=0;i<n;i++){let s=0;for(let j=i*win;j<(i+1)*win;j++){const v=pcm[j]/32768;s+=v*v}e[i]=Math.sqrt(s/win)}
+  let max=0;for(const v of e)max=Math.max(max,v); if(max<1e-4)return [];
+  const sorted=Array.from(e).sort((a,b)=>a-b), med=sorted[Math.floor(n/2)]||1e-6;
+  const span=6, score=new Float32Array(n);
+  for(let i=0;i<n;i++){let s=0,c=0;for(let k=Math.max(0,i-span);k<=Math.min(n-1,i+span);k++){s+=e[k];c++}score[i]=(s/c)/(med+1e-6)}
+  const order=Array.from(score.keys()).sort((a,b)=>score[b]-score[a]);
+  const total=pcm.length/rate, picks=[];
+  for(const i of order){
+    const peak=i*0.5, start=Math.max(0,Math.min(total-L,peak-L*0.35));
+    if(picks.some(p=>Math.abs(p.start-start)<L))continue;
+    picks.push({start,peak,score:score[i],on:true});
+    if(picks.length>=N)break;
+  }
+  const top=picks.length?picks[0].score:1;
+  picks.forEach(p=>p.rel=Math.max(.15,p.score/top));
+  return picks.sort((a,b)=>a.start-b.start);
+}
+function even(L,N){const out=[];for(let i=0;i<N;i++){const st=Math.max(0,(state.dur-L)*(i+1)/(N+1));out.push({start:st,peak:st,rel:.5,on:true})}return out}
+
+function showMoments(){
+  $('momentBox').hidden=false;
+  $('moments').innerHTML=state.moments.map((m,i)=>'<div class="mo"><input type="checkbox" '+(m.on?'checked':'')+' data-i="'+i+'" aria-label="Use moment '+(i+1)+'"><div><div class="t">'+fmt(m.start)+' to '+fmt(m.start+ +len.value)+'</div><div class="s" style="width:'+Math.round(m.rel*100)+'%"></div></div><button data-p="'+i+'">Preview</button></div>').join('');
+  $('moments').querySelectorAll('input').forEach(c=>c.onchange=()=>{state.moments[+c.dataset.i].on=c.checked});
+  $('moments').querySelectorAll('button').forEach(b=>b.onclick=()=>{const v=$('srcVid');v.currentTime=state.moments[+b.dataset.p].start;v.play().catch(()=>{})});
+}
+
+$('render').onclick=async()=>{
+  const todo=state.moments.filter(m=>m.on);if(!todo.length){msg('Tick at least one moment.');return}
+  if(state.busy)return;state.busy=true;$('render').disabled=true;updateGo();
+  try{await engine();await mount()}catch(e){return fail('Could not load the video engine. Try again.')}
+  setStep(3);
+  const L=+len.value, H=state.quality==='720'?1280:1920, W=H===1920?1080:720;
+  const res=$('results');if(res.querySelector('.empty'))res.innerHTML='';
+  for(let k=0;k<todo.length;k++){
+    const m=todo[k], out='/clip'+k+'.mp4';
+    msg('Rendering clip '+(k+1)+' of '+todo.length+'...');
+    const onp=({progress})=>{if(progress>0&&progress<=1)bar(66+((k+progress)/todo.length)*34)};
+    ff.on('progress',onp);
+    const vf=state.mode==='blur'
+      ? ['-filter_complex','[0:v]split[a][b];[a]scale='+W+':'+H+':force_original_aspect_ratio=increase,crop='+W+':'+H+',boxblur=20:2[bg];[b]scale='+W+':-2[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2,setsar=1,fps=30[v]','-map','[v]','-map','0:a?']
+      : ['-vf',"crop='min(iw,ih*9/16)':ih,scale="+W+':'+H+':flags=lanczos,setsar=1,fps=30'];
+    const code=await ff.exec(['-ss',String(m.start.toFixed(2)),'-i',IN(),'-t',String(L)].concat(vf,['-c:v','libx264','-preset','veryfast','-crf','21','-pix_fmt','yuv420p','-c:a','aac','-b:a','160k','-movflags','+faststart',out]));
+    ff.off('progress',onp);
+    if(code!==0){fail('Clip '+(k+1)+' could not be rendered. Try Fast quality or the Full screen framing.');return}
+    const data=await ff.readFile(out);try{await ff.deleteFile(out)}catch(e){}
+    const url=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));
+    const base=state.file.name.replace(/\.[^.]+$/,'').replace(/[^\w-]+/g,'-').slice(0,40);
+    const name=base+'_clip'+(k+1)+'_'+fmt(m.start).replace(/:/g,'m')+'.mp4';
+    const d=document.createElement('div');d.className='clip';
+    d.innerHTML='<video src="'+url+'" controls playsinline muted loop></video><a href="'+url+'" download="'+name+'">Download</a><span>'+fmt(m.start)+' · '+W+'x'+H+' · '+(data.byteLength/1048576).toFixed(1)+' MB</span>';
+    res.prepend(d);
+  }
+  bar(100);stepIdx=STEPS.length;drawSteps();msg('Done. '+todo.length+' clip'+(todo.length>1?'s':'')+' ready below.');
+  state.busy=false;$('render').disabled=false;updateGo();
+};
+})();
+</script>
+</body>
+</html>
