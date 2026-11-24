@@ -78,6 +78,30 @@ input:focus{border-color:var(--sun1)}
 .mdl .row2{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
 .mdl .row2 button{all:unset;cursor:pointer;padding:10px 16px;border-radius:10px;border:1px solid var(--hair2);font:600 13.5px var(--body);color:var(--text)}
 .mdl .row2 button.go{background:var(--sunset);border-color:transparent;color:#16070f}
+.brands .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.brands .pill{all:unset;cursor:pointer;padding:9px 14px;border-radius:99px;border:1px solid var(--hair2);font:600 13.5px var(--body);color:var(--dim)}
+.brands .pill.on{background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05));color:var(--text);border-color:rgba(255,138,61,.6)}
+.brands .pill.add{border-style:dashed;color:var(--sun2)}
+.brands .pill:focus-visible,.brands button:focus-visible{outline:2px solid var(--sun2);outline-offset:2px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:14px;margin-top:18px}
+.bgrid label{margin-bottom:0}
+.conns{display:grid;gap:8px;margin-top:18px}
+.conn{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:11px 14px;border:1px solid var(--hair);border-radius:12px;background:rgba(0,0,0,.25);flex-wrap:wrap}
+.conn b{font:600 14px var(--body)}
+.conn .st{font-size:12.5px;color:var(--faint);flex:1;min-width:140px}
+.conn .st.ok{color:var(--ok)}
+.sbtn{all:unset;cursor:pointer;padding:8px 14px;border-radius:10px;border:1px solid var(--hair2);font:600 12.5px var(--body);color:var(--text);text-align:center}
+.sbtn.go{background:var(--sunset);border-color:transparent;color:#16070f}
+.sbtn[disabled]{opacity:.5;cursor:default}
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:10px;margin-top:10px}
+.caps label{margin:0;font-size:12px}
+.caps input{padding:9px 10px}
+.caps small{font:500 11px var(--body);color:var(--faint);letter-spacing:0}
+.caps small.warn{color:var(--sun2)}
+select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:rgba(0,0,0,.35);color:var(--text);font:500 15px var(--body);width:100%}
+.sub{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:22px}
+.chk{display:flex;align-items:center;gap:10px;font:500 14px var(--body);color:var(--text);margin:0}
+.chk input{width:auto}
 @media (max-width:560px){nav.top .links{gap:14px}}
 </style>
 </head>
@@ -112,6 +136,12 @@ input:focus{border-color:var(--sun1)}
         <div class="stat"><span class="k">Minutes refill</span><span class="v" id="reset" style="font-size:32px">-</span><span class="s">every 30 days</span></div>
       </div>
       <a class="cta" href="/app.html" style="margin-top:22px">Open the clipper</a>
+    </div>
+    <div class="panel brands" id="brandBox" style="margin-top:18px">
+      <div class="row"><div><h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Brands</h3>
+      <p class="note" id="brandNote" style="margin-top:6px">Run several pages from one login. Each brand has its own accounts, daily limits and schedule.</p></div></div>
+      <div class="pills" id="brandPills" role="tablist" aria-label="Your brands"></div>
+      <div id="brandEdit"></div>
     </div>
     <div class="panel" id="earnBox" style="margin-top:18px" hidden>
       <div class="row"><div><h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Earnings</h3>
@@ -187,12 +217,12 @@ input:focus{border-color:var(--sun1)}
     $('autoBox').hidden=false;showAlerts();
     fetch('https://raw.githubusercontent.com/'+WORKER+'/main/state/queue.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
       // Held-back clips (skipped on every platform) never show here.
-      list=list.filter(function(c){var p=c.posted||{};return !(p.youtube==='skip'&&p.instagram==='skip'&&p.threads==='skip')&&!c.held});
+      var ab=activeBrand();list=list.filter(function(c){var p=c.posted||{};return !(p.youtube==='skip'&&p.instagram==='skip'&&p.threads==='skip')&&!c.held&&(ab?(c.brand?c.brand===ab.id:ab.legacy):true)});
       list.sort(function(a,b){return (b.made_at||0)-(a.made_at||0)||String(b.created||'').localeCompare(String(a.created||''))});
       list=list.slice(0,24);AUTO={};list.forEach(function(c){AUTO[c.id]=c});
-      $('autoNote').textContent=list.length?'Your cloud autopilot checks for fresh GTA 6 moments every 30 minutes, with your PC off. Newest first.':'The cloud autopilot is connected. Clips show up here after its first run.';
+      var gm=(ab&&ab.game)||'GTA 6';$('autoNote').textContent=list.length?'Clips for '+(ab?ab.name:'this brand')+'. The cloud checks for fresh '+gm+' moments every 30 minutes, with your PC off. Newest first.':(ab&&!ab.legacy&&!ab.game&&!ab.creators?'Add a game or creators above and the cloud starts making clips for this brand.':'Clips for this brand show up here after the next cloud run.');
       $('autoList').innerHTML=list.map(function(c){var p=c.posted||{};
-        var done=['youtube','instagram','threads','facebook'].filter(function(k){return p[k]&&p[k]!=='skip'});
+        var done=['youtube','tiktok','instagram','threads','facebook'].filter(function(k){return p[k]&&p[k]!=='skip'});
         var tags=done.length?done.map(function(k){var v=p[k];return /^https?:/.test(v)?'<a class="ok" href="'+esc(v)+'" target="_blank" rel="noopener">'+k+' \u2713</a>':'<span class="ok">'+k+' \u2713</span>'}).join(''):'<span>Not posted yet</span>';
         var cap=String(c.caption||'').split('\n');
         var quote=(cap.filter(function(l){return /^\u201c/.test(l)})[0]||'').replace(/^\u201c|\u201d$/g,'');
@@ -203,6 +233,74 @@ input:focus{border-color:var(--sun1)}
         return '<div class="ac">'+(c.url?'<video src="'+src+'"'+poster+' controls playsinline preload="'+(c.thumb?'none':'metadata')+'"></video>':'')+'<b>'+esc(hook)+'</b><span>'+esc(c.kind)+' from '+esc(plainName(c.creator||c.handle))+'\u2019s stream</span><a href="'+esc(c.source)+'" target="_blank" rel="noopener">Watch the original</a><div class="tags">'+tags+'</div><div class="acts"><button type="button" data-act="edit" data-id="'+esc(c.id)+'">Edit</button><button type="button" class="go" data-act="post" data-id="'+esc(c.id)+'"'+(done.length>=3?' disabled':'')+'>Post</button></div></div>'}).join('');
     }).catch(function(){$('autoNote').textContent='The cloud autopilot is not connected yet. Once it is, its clips and where they were posted show up here.'});
   }
+  // ---------- brands ----------
+  var BR=null,USER=null,ADDON='';
+  var HOURS=[];for(var h=0;h<=24;h++)HOURS.push(h);
+  function hourLabel(h){if(h===0||h===24)return h===0?'12 AM':'Midnight';return (h%12||12)+(h<12?' AM':' PM')}
+  function bapi(action,body){
+    return fetch('/api/brands?action='+action,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin'})
+      .then(function(r){return r.json().then(function(j){if(!r.ok){var e=new Error(j.error||'Something went wrong.');e.needAddon=j.needAddon;throw e}return j})});
+  }
+  function activeBrand(){return BR&&BR.brands.filter(function(b){return b.id===BR.active})[0]}
+  function loadBrands(){bapi('list').then(function(j){BR=j;drawBrands();if(USER&&USER.plan==='owner')showAuto()}).catch(function(e){$('brandNote').textContent=e.message})}
+  function addonLink(){var A=(BR&&BR.limits.addonLink)||ADDON;return A?A+'?prefilled_email='+encodeURIComponent(USER.email)+'&client_reference_id='+encodeURIComponent(USER.id):''}
+  function drawBrands(){
+    var L=BR.limits,n=BR.brands.length;
+    $('brandNote').textContent='Run several pages from one login. Each brand has its own accounts, daily limits and schedule. You are using '+n+' of '+L.max+' brand'+(L.max===1?'':'s')+(L.extra?' ('+L.included+' included plus '+L.extra+' extra)':'')+'.';
+    $('brandPills').innerHTML=BR.brands.map(function(b){return '<button type="button" role="tab" class="pill'+(b.id===BR.active?' on':'')+'" aria-selected="'+(b.id===BR.active)+'" data-brand="'+b.id+'">'+esc(b.name)+(b.paused?' (paused)':'')+'</button>'}).join('')+'<button type="button" class="pill add" data-badd="1">+ Add brand</button>';
+    var b=activeBrand();if(!b){$('brandEdit').innerHTML='';return}
+    var rec=BR.recommended,lab=BR.labels;
+    var conns=BR.platforms.map(function(p){var c=b.connections[p]||{},st,btn='';
+      if(c.state==='cloud'){st='<span class="st ok">'+esc(c.handle)+' ✓ '+esc(c.note)+'</span>'}
+      else if(c.state==='connected'){st='<span class="st ok">'+esc(c.handle)+' ✓ Connected</span>';btn='<button type="button" class="sbtn" data-disc="'+p+'">Disconnect</button>'}
+      else if(c.state==='connect'){st='<span class="st">Not connected</span>';btn='<a class="sbtn go" href="/api/connect?p='+p+'&brand='+b.id+'">Connect</a>'}
+      else{st='<span class="st">'+esc(c.note||'Coming soon')+'</span>';btn='<button type="button" class="sbtn" disabled>Soon</button>'}
+      return '<div class="conn"><b>'+esc(lab[p])+'</b>'+st+btn+'</div>'}).join('');
+    var caps=BR.platforms.map(function(p){var v=b.caps[p]||0,r=rec[p];return '<label>'+esc(lab[p])+'<input type="number" min="0" max="20" inputmode="numeric" data-cap="'+p+'" value="'+v+'"><small data-capnote="'+p+'"'+(v>r[1]?' class="warn"':'')+'>'+(v>r[1]?'Above the safe '+r[0]+' to '+r[1]+' a day':'Recommended '+r[0]+' to '+r[1]+' a day')+'</small></label>'}).join('');
+    var hrs=function(id,val){return '<select id="'+id+'">'+HOURS.map(function(h){return '<option value="'+h+'"'+(h===val?' selected':'')+'>'+hourLabel(h)+'</option>'}).join('')+'</select>'};
+    $('brandEdit').innerHTML='<div class="bgrid"><label>Brand name<input id="bName" maxlength="40" value="'+esc(b.name)+'"></label>'+
+      '<label>Game to clip (Twitch category)<input id="bGame" maxlength="80" placeholder="Grand Theft Auto VI" value="'+esc(b.game)+'"></label>'+
+      '<label>Creators to follow (Twitch names, comma separated)<input id="bCreators" maxlength="400" placeholder="kaicenat, caseoh_, your own channel" value="'+esc(b.creators)+'"></label></div>'+
+      '<div class="sub">Accounts for this brand</div><div class="conns">'+conns+'</div>'+
+      '<div class="sub">Posts per day</div><div class="caps">'+caps+'</div>'+
+      '<p class="note" id="capWarn" style="margin-top:8px"></p>'+
+      '<div class="sub">Posting hours (New York time)</div><div class="bgrid"><label>From'+hrs('bStart',b.postStart)+'</label><label>Until'+hrs('bEnd',b.postEnd)+'</label>'+
+      '<label class="chk" style="align-self:end;padding-bottom:12px"><input type="checkbox" id="bPaused"'+(b.paused?' checked':'')+'> Pause posting for this brand</label></div>'+
+      '<div class="row" style="margin-top:20px"><div class="err" id="bErr" role="alert" style="margin:0"></div><div style="display:flex;gap:10px;flex-wrap:wrap">'+
+      (b.legacy?'':'<button type="button" class="sbtn" data-bdel="1">Delete brand</button>')+'<button type="button" class="sbtn go" data-bsave="1">Save brand</button></div></div>'+
+      '<p class="note" style="margin-top:10px">Everything runs in the cloud on its own, with your PC off. ClipOnce never posts the same video twice to the same account.</p>';
+    capWarn();
+  }
+  function capWarn(){
+    var over=[];document.querySelectorAll('[data-cap]').forEach(function(i){var p=i.getAttribute('data-cap'),r=BR.recommended[p],v=parseInt(i.value,10)||0,n=document.querySelector('[data-capnote="'+p+'"]');
+      n.className=v>r[1]?'warn':'';n.textContent=v>r[1]?'Above the safe '+r[0]+' to '+r[1]+' a day':'Recommended '+r[0]+' to '+r[1]+' a day';if(v>r[1])over.push(BR.labels[p])});
+    $('capWarn').textContent=over.length?'Heads up: posting more than the recommended amount on '+over.join(', ')+' can lower your reach or look like spam to the platform. It is your call, and ClipOnce will post what you set.':'';
+  }
+  function addBrandModal(){
+    var L=BR.limits;
+    if(BR.brands.length>=L.max){
+      if(USER.plan==='free')return modal('<h4 id="mdlT">Add another brand</h4><p>Free accounts have one brand. Pro includes 2 brands, so you can run your gaming channel and your clip page on one login. Extra brands are $9 a month each.</p><div class="row2"><button type="button" data-m="close">Not now</button><a class="sbtn go" href="/#plans">See plans</a></div>');
+      var link=addonLink();
+      return modal('<h4 id="mdlT">Add another brand</h4><p>Your plan includes '+L.max+' brand'+(L.max===1?'':'s')+'. Each extra brand is $9 a month and comes with its own accounts, limits and schedule. Cancel any time.</p><div class="row2"><button type="button" data-m="close">Not now</button>'+(link?'<a class="sbtn go" href="'+esc(link)+'">Add a brand for $9 a month</a>':'<button type="button" class="sbtn" disabled>Opening soon</button>')+'</div>');
+    }
+    modal('<h4 id="mdlT">Add a brand</h4><p>A brand is one set of social accounts, like your gaming channel or a clip page.</p><label>Brand name<input id="nbName" maxlength="40" placeholder="My gaming page"></label><label>Game to clip (optional)<input id="nbGame" maxlength="80" placeholder="Fortnite"></label><div class="err" id="nbErr" role="alert"></div><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" class="go" data-m="bcreate">Add brand</button></div>');
+  }
+  document.addEventListener('input',function(e){if(e.target.matches('[data-cap]'))capWarn()});
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-brand],[data-badd],[data-bsave],[data-bdel],[data-disc],[data-m="bcreate"],[data-m="bdel2"]');if(!t)return;
+    if(t.hasAttribute('data-brand')){var id=t.getAttribute('data-brand');if(id===BR.active)return;BR.active=id;drawBrands();showAuto();bapi('switch',{id:id}).catch(function(){});return}
+    if(t.hasAttribute('data-badd'))return addBrandModal();
+    if(t.getAttribute('data-m')==='bcreate'){t.disabled=true;return bapi('create',{name:$('nbName').value,game:$('nbGame').value}).then(function(j){BR=j;BR.active=j.id;closeModal();drawBrands();showAuto()}).catch(function(err){t.disabled=false;if(err.needAddon){closeModal();loadBrands();return addBrandModal()}$('nbErr').textContent=err.message})}
+    var b=activeBrand();if(!b)return;
+    if(t.hasAttribute('data-bsave')){var caps={};document.querySelectorAll('[data-cap]').forEach(function(i){caps[i.getAttribute('data-cap')]=i.value});t.disabled=true;$('bErr').textContent='';
+      return bapi('update',{id:b.id,name:$('bName').value,game:$('bGame').value,creators:$('bCreators').value,caps:caps,postStart:$('bStart').value,postEnd:$('bEnd').value,paused:$('bPaused').checked})
+        .then(function(j){var a=BR.active;BR=j;BR.active=a;drawBrands();$('bErr').style.color='var(--ok)';$('bErr').textContent='Saved.'}).catch(function(err){t.disabled=false;$('bErr').style.color='';$('bErr').textContent=err.message})}
+    if(t.hasAttribute('data-bdel'))return modal('<h4 id="mdlT">Delete '+esc(b.name)+'?</h4><p>Its sign-ins, limits and schedule are removed and it stops posting. Clips already posted stay on your accounts.</p><div class="row2"><button type="button" data-m="close">Keep it</button><button type="button" class="go" data-m="bdel2">Delete brand</button></div>');
+    if(t.getAttribute('data-m')==='bdel2')return bapi('delete',{id:b.id}).then(function(j){BR=j;closeModal();drawBrands();showAuto()}).catch(function(err){modal('<h4>Could not delete</h4><p>'+esc(err.message)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')});
+    if(t.hasAttribute('data-disc'))return bapi('disconnect',{id:b.id,platform:t.getAttribute('data-disc')}).then(function(j){var a=BR.active;BR=j;BR.active=a;drawBrands()});
+  });
+  (function(){var u=new URLSearchParams(location.search),c=u.get('connected'),er=u.get('connect_error'),ad=u.get('brand_added');
+    if(c||er||ad){history.replaceState(null,'','/account.html');setTimeout(function(){modal(c?'<h4>'+esc(c)+' connected</h4><p>This brand can now post there from the cloud.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>':ad?'<h4>Brand slot added</h4><p>Thanks. Tap "+ Add brand" to set up your new brand.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>':'<h4>Could not connect</h4><p>'+esc(er)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')},400)}})();
   function showAuth(){$('loading').hidden=true;$('dash').hidden=true;$('authBox').hidden=false}
   function showDash(u){
     $('loading').hidden=true;$('authBox').hidden=true;$('dash').hidden=false;
@@ -212,7 +310,8 @@ input:focus{border-color:var(--sun1)}
     $('planNote').textContent=u.plan==='owner'?'Full access to everything':u.plan==='free'?'Upgrade any time below':'Thanks for subscribing';
     $('reset').textContent=new Date(u.resetsAt).toLocaleDateString(undefined,{month:'short',day:'numeric'});
     $('upgrade').hidden=u.plan!=='free';
-    if(u.plan==='owner'){$('earnBox').hidden=false;showAuto();}
+    USER=u;loadBrands();
+    if(u.plan==='owner'){$('earnBox').hidden=false;}
     document.querySelectorAll('[data-link]').forEach(function(a){a.href=a.dataset.link+'?prefilled_email='+encodeURIComponent(u.email)+'&client_reference_id='+encodeURIComponent(u.id)});
   }
   document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){

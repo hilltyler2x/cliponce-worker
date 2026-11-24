@@ -3,9 +3,26 @@
 const crypto = require('crypto');
 const q = require('../lib/db');
 const core = require('../lib/core');
+const brands = require('../lib/brands');
 
 let pendingReady = false;
 const BY_AMOUNT = { 1900: 'creator', 3900: 'pro', 9900: 'agency' };
+const ADDON_AMOUNT = 900; // extra brand, $9 a month each
+
+// Extra-brand add-on subscriptions never change the plan; they only add brand slots.
+function addonQty(obj) {
+  const items = (obj.items && obj.items.data) || (obj.lines && obj.lines.data) || [];
+  const it = items.find(i => i.price && i.price.unit_amount === ADDON_AMOUNT);
+  return it ? (it.quantity || 1) : 0;
+}
+async function setAddon(subId, customer, qty, active, userId) {
+  if (!subId) return;
+  let uid = userId || null;
+  if (!uid && customer) { const r = await q('select id from co_users where stripe_customer = $1 limit 1', [customer]); uid = r.length ? r[0].id : null; }
+  await q(`insert into co_addons (sub_id, user_id, customer, qty, active, updated_at) values ($1, $2, $3, $4, $5, now())
+    on conflict (sub_id) do update set user_id = coalesce(excluded.user_id, co_addons.user_id), customer = coalesce(excluded.customer, co_addons.customer),
+      qty = excluded.qty, active = excluded.active, updated_at = now()`, [subId, uid, customer || null, Math.max(1, qty || 1), !!active]);
+}
 
 function rawBody(req) {
   return new Promise((ok, no) => { const c = []; req.on('data', d => c.push(d)); req.on('end', () => ok(Buffer.concat(c))); req.on('error', no); });
@@ -47,6 +64,21 @@ module.exports = async (req, res) => {
     await core.migrate(q);
     if (!pendingReady) { await q('create table if not exists co_pending_plan (customer text primary key, plan text not null, created_at timestamptz not null default now())'); pendingReady = true; }
     const o = ev.data && ev.data.object || {};
+    await brands.migrate(q);
+    if (ev.type === 'checkout.session.completed' && o.mode === 'subscription' && (o.amount_total === ADDON_AMOUNT || o.amount_subtotal === ADDON_AMOUNT || (o.metadata && o.metadata.addon === 'brand'))) {
+      let uid = o.client_reference_id && /^[0-9a-f-]{36}$/i.test(o.client_reference_id) ? o.client_reference_id : null;
+      const email = (o.customer_details && o.customer_details.email || o.customer_email || '').toLowerCase();
+      if (!uid && email) { const r = await q('select id from co_users where email = $1', [email]); uid = r.length ? r[0].id : null; }
+      if (uid && o.customer) await q('update co_users set stripe_customer = coalesce(stripe_customer, $2) where id = $1', [uid, o.customer]);
+      await setAddon(o.subscription, o.customer, Math.max(1, Math.round((o.amount_subtotal || ADDON_AMOUNT) / ADDON_AMOUNT)), true, uid);
+      return send(200, { ok: true, addon: true, matched: !!uid });
+    }
+    if (ev.type.startsWith('customer.subscription.') && addonQty(o)) {
+      const active = ev.type !== 'customer.subscription.deleted' && ['active', 'trialing', 'past_due'].includes(o.status);
+      await setAddon(o.id, o.customer, addonQty(o), active, null);
+      return send(200, { ok: true, addon: true });
+    }
+    if (ev.type === 'invoice.paid' && addonQty(o)) return send(200, { ok: true, addon: true });
     if (ev.type === 'checkout.session.completed' && o.mode === 'subscription') {
       // amount_total is 0 during a free trial, so fall back to the price on the line items via the subscription event below.
       let plan = planOf(o) || null;
