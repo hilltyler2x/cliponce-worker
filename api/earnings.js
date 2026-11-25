@@ -4,6 +4,7 @@
 const crypto = require('crypto');
 const core = require('../lib/core');
 const q = require('../lib/db');
+const aff = require('../lib/affiliate');
 
 const STATS = 'https://raw.githubusercontent.com/hilltyler2x/cliponce-worker/main/state/stats/';
 const PLAN_BY_AMOUNT = { 1900: 'Creator', 3900: 'Pro', 9900: 'Agency' };
@@ -124,8 +125,9 @@ module.exports = async (req, res) => {
   try {
     const token = (req.query && req.query.token) || req.headers['x-report-token'] || '';
     if (!tokenOk(String(token)) && !(await isOwner(req))) return send(res, 401, { error: 'Owner only. Log in with your owner account.' });
-    const [m, a] = await Promise.all([money().catch(e => ({ connected: false, note: 'Stripe: ' + e.message })), audience()]);
-    return send(res, 200, { generated_at: new Date().toISOString(), money: m, audience: a });
+    const [m, a, cp] = await Promise.all([money().catch(e => ({ connected: false, note: 'Stripe: ' + e.message })), audience(),
+      aff.owner(q).then(o => ({ totals: o.totals, rules: o.rules })).catch(e => ({ note: e.message }))]);
+    return send(res, 200, { generated_at: new Date().toISOString(), money: m, audience: a, creator_partners: cp });
   } catch (e) {
     console.error('earnings error', e && e.message);
     return send(res, 500, { error: 'Could not build the report right now.' });
