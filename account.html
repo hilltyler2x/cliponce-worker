@@ -253,8 +253,8 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
     var conns=BR.platforms.map(function(p){var c=b.connections[p]||{},st,btn='';
       if(c.state==='cloud'){st='<span class="st ok">'+esc(c.handle)+' ✓ '+esc(c.note)+'</span>'}
       else if(c.state==='connected'){st='<span class="st ok">'+esc(c.handle)+' ✓ Connected</span>';btn='<button type="button" class="sbtn" data-disc="'+p+'">Disconnect</button>'}
-      else if(c.state==='connect'){st='<span class="st">Not connected</span>';btn='<a class="sbtn go" href="/api/connect?p='+p+'&brand='+b.id+'">Connect</a>'}
-      else{st='<span class="st">'+esc(c.note||'Coming soon')+'</span>';btn='<button type="button" class="sbtn" disabled>Soon</button>'}
+      else if(c.state==='connect'){st='<span class="st">Not connected'+(c.note?'. '+esc(c.note):'')+'</span>';btn='<a class="sbtn go" href="/api/connect?p='+p+'&brand='+b.id+'">Connect</a>'}
+      else{st='<span class="st">Not connected</span>';btn='<button type="button" class="sbtn go" data-setup="'+p+'">Connect</button>'}
       return '<div class="conn"><b>'+esc(lab[p])+'</b>'+st+btn+'</div>'}).join('');
     var caps=BR.platforms.map(function(p){var v=b.caps[p]||0,r=rec[p];return '<label>'+esc(lab[p])+'<input type="number" min="0" max="20" inputmode="numeric" data-cap="'+p+'" value="'+v+'"><small data-capnote="'+p+'"'+(v>r[1]?' class="warn"':'')+'>'+(v>r[1]?'Above the safe '+r[0]+' to '+r[1]+' a day':'Recommended '+r[0]+' to '+r[1]+' a day')+'</small></label>'}).join('');
     var hrs=function(id,val){return '<select id="'+id+'">'+HOURS.map(function(h){return '<option value="'+h+'"'+(h===val?' selected':'')+'>'+hourLabel(h)+'</option>'}).join('')+'</select>'};
@@ -287,6 +287,9 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
   }
   document.addEventListener('input',function(e){if(e.target.matches('[data-cap]'))capWarn()});
   document.addEventListener('click',function(e){
+    var su=e.target.closest('[data-setup]');if(su){var sp=su.getAttribute('data-setup'),sc=(activeBrand().connections[sp]||{});
+      return modal(USER&&USER.plan==='owner'?'<h4 id="mdlT">One step to switch on '+esc(BR.labels[sp])+'</h4><p>'+esc(sc.setup||'')+' Once it is saved, this button signs you in right away. The setup doc has the exact clicks.</p><div class="row2"><button type="button" data-m="close">OK</button><a class="sbtn go" href="https://claude.ai/artifact/3Wxg4JDmzggetZ1yP7qT1b" target="_blank" rel="noopener">Open setup steps</a></div>'
+        :'<h4 id="mdlT">'+esc(BR.labels[sp])+' sign-in is almost ready</h4><p>We are finishing the official connection with '+esc(BR.labels[sp])+'. Your brand settings are saved, and this button will sign you in as soon as it opens.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')}
     var t=e.target.closest('[data-brand],[data-badd],[data-bsave],[data-bdel],[data-disc],[data-m="bcreate"],[data-m="bdel2"]');if(!t)return;
     if(t.hasAttribute('data-brand')){var id=t.getAttribute('data-brand');if(id===BR.active)return;BR.active=id;drawBrands();showAuto();bapi('switch',{id:id}).catch(function(){});return}
     if(t.hasAttribute('data-badd'))return addBrandModal();
