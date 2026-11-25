@@ -2206,9 +2206,12 @@
     "made_at": 1795591883,
     "fresh": true,
     "hook": "TheBurntPeanut can't believe this",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 18136245986508719"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_TheBurntPeanut_GloriousShortRamenAN_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_TheBurntPeanut_GloriousShortRamenAN.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "7b4c8f3f6f5bbecf6dfbdb09aca6f3a9e1fe6520"
   }
 ]
