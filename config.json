@@ -1,0 +1,84 @@
+{
+  "searches": [
+    "GTA 6 easter eggs",
+    "GTA 6 secrets",
+    "GTA 6 hidden details",
+    "GTA 6 glitch",
+    "GTA 6 tips and tricks",
+    "GTA 6 funny moments"
+  ],
+  "per_search": 15,
+  "inspect_top": 12,
+  "max_age_days": 3,
+  "max_video_minutes": 90,
+  "clips_per_day": 20,
+  "clips_per_video": 2,
+  "min_score": 9,
+  "skip_channels": [
+    "Rockstar Games"
+  ],
+  "daily_caps": {
+    "youtube": 0,
+    "instagram": 3,
+    "facebook": 3,
+    "threads": 8
+  },
+  "streamers": [],
+  "twitch_games": [
+    "Grand Theft Auto VI"
+  ],
+  "twitch_hours": 36,
+  "twitch_min_views": 250,
+  "twitch_per_streamer": 2,
+  "live_auto_top": 0,
+  "twitch_priority": [
+    "caseoh_",
+    "kaicenat",
+    "lacy",
+    "tfue"
+  ],
+  "fresh_hours": 3,
+  "fresh_per_run": 2,
+  "twitch_min_views_per_hour": 120,
+  "twitch_languages": [
+    "en"
+  ],
+  "platform_start": {},
+  "min_minutes_between_posts": {
+    "instagram": 240,
+    "facebook": 240,
+    "threads": 90,
+    "youtube": 180
+  },
+  "recommended_daily": {
+    "_note": "Tyler's safe daily mix 2026-11-19, combined across cloud and PC. Cloud leaves YouTube and TikTok to the PC.",
+    "tiktok": [
+      3,
+      4
+    ],
+    "youtube": [
+      3,
+      5
+    ],
+    "instagram": [
+      2,
+      3
+    ],
+    "facebook": [
+      2,
+      3
+    ],
+    "x": [
+      5,
+      8
+    ],
+    "threads": [
+      5,
+      8
+    ]
+  },
+  "public_upload_approved": {
+    "_note": "Flip youtube to true once Google approves the ClipOnce API project audit; until then extra brands hold YouTube uploads (they would be locked private).",
+    "youtube": false
+  }
+}

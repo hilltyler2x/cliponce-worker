@@ -1,0 +1,45 @@
+name: Clip action
+# The account page's Edit and Post buttons for one autopilot clip. Started by the ClipOnce site.
+on:
+  workflow_dispatch:
+    inputs:
+      id: { required: true, type: string }
+      edit: { required: false, type: string, default: "" }
+run-name: "Clip action ${{ inputs.id }}"
+permissions:
+  contents: write
+  id-token: write   # lets the worker prove to cliponce.vercel.app that it is this repo's run (brand list)
+concurrency:
+  group: state
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+      YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+      YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      IG_TOKEN: ${{ secrets.IG_TOKEN }}
+      IG_GRAPH_HOST: ${{ secrets.IG_GRAPH_HOST }}
+      THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      THREADS_TOKEN: ${{ secrets.THREADS_TOKEN }}
+      FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -q requests
+      - run: git config user.name "cliponce-bot" && git config user.email "cliponce-bot@users.noreply.github.com"
+      - name: Edit or post this clip
+        env:
+          CLIP_ID: ${{ inputs.id }}
+          CLIP_EDIT: ${{ inputs.edit }}
+        run: |
+          if [ -n "$CLIP_EDIT" ]; then python post_queue.py --id "$CLIP_ID" --edit "$CLIP_EDIT"; else python post_queue.py --id "$CLIP_ID"; fi
+      - name: Save state
+        if: always()
+        run: python sync_state.py "clip action $(date -u +%FT%H%M)"
