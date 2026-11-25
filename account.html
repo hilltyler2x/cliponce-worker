@@ -102,6 +102,28 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
 .sub{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:22px}
 .chk{display:flex;align-items:center;gap:10px;font:500 14px var(--body);color:var(--text);margin:0}
 .chk input{width:auto}
+.ask{border:1px solid var(--hair2);border-radius:14px;padding:14px;margin-bottom:16px;background:rgba(0,0,0,.22)}
+.ask .q{font:600 14px var(--body);color:var(--text);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{all:unset;cursor:pointer;padding:8px 13px;border-radius:99px;border:1px solid var(--hair2);font:600 13px var(--body);color:var(--dim)}
+.chip.on{color:var(--text);border-color:rgba(255,138,61,.75);background:linear-gradient(180deg,rgba(255,138,61,.18),rgba(255,61,139,.08))}
+.chip:focus-visible{outline:2px solid var(--sun2);outline-offset:2px}
+.perk{margin-top:12px;font-size:13px;color:var(--dim);line-height:1.5}
+.perk b{color:var(--text)}
+.invite{margin-bottom:16px;padding:12px 14px;border-radius:12px;border:1px solid rgba(93,242,164,.45);background:rgba(93,242,164,.07);font-size:13.5px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:var(--sunset);color:#16070f;font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.share{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:12px;margin-top:18px}
+.share .box2{border:1px solid var(--hair2);border-radius:14px;padding:14px;background:rgba(0,0,0,.28);display:grid;gap:8px;min-width:0}
+.share .box2 .k{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.share .box2 code{font:500 15px var(--mono);color:var(--text);overflow-wrap:anywhere}
+.share .box2 .big{font:400 34px/1 var(--display);letter-spacing:1px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:12px;margin-top:14px}
+.how div{border-left:2px solid var(--sun1);padding:4px 0 4px 12px;font-size:13px;color:var(--dim)}
+.how b{display:block;color:var(--text);font-size:14px;margin-bottom:2px}
+.mini{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.mini th{font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);text-align:left;padding:6px 8px;border-bottom:1px solid var(--hair2)}
+.mini td{padding:8px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums}
+.mini .n{text-align:right}
 @media (max-width:560px){nav.top .links{gap:14px}}
 </style>
 </head>
@@ -118,6 +140,22 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
     <div class="panel" style="margin-top:24px;max-width:460px">
       <div class="tabs" role="tablist"><button class="on" data-mode="signup" role="tab">Sign up</button><button data-mode="login" role="tab">Log in</button></div>
       <form id="authForm" novalidate>
+        <div class="invite" id="inviteBox" hidden></div>
+        <div class="ask" id="askBox">
+          <div class="q">First, are you a creator?</div>
+          <div class="chips" role="radiogroup" aria-label="Are you a creator?">
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="streamer">Streamer</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="youtuber">YouTuber</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="tiktoker">TikToker</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="other">Other creator</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="no">No, I just want clips</button>
+          </div>
+          <div id="creatorFields" hidden>
+            <p class="perk">Welcome to the <b>Creator Partner</b> program. You get <b>30% of every payment</b> from fans who join with your code, for their first 12 months, plus <b>100 bonus minutes</b> each time a fan subscribes and <b>60 minutes</b> right now to clip your own streams. Your fans get 60 bonus minutes and double minutes on their first paid month.</p>
+            <label style="margin-top:12px">Your channel (link or @handle)<input id="cChannel" maxlength="200" placeholder="twitch.tv/yourname"></label>
+            <label style="margin-bottom:0">Pick your code (optional)<input id="cCode" maxlength="20" placeholder="YOURNAME" autocapitalize="characters"></label>
+          </div>
+        </div>
         <label>Email<input id="email" type="email" autocomplete="email" required></label>
         <label>Password<input id="password" type="password" autocomplete="new-password" minlength="8" required></label>
         <button class="cta" id="authGo" type="submit">Create free account</button>
@@ -137,6 +175,7 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
       </div>
       <a class="cta" href="/app.html" style="margin-top:22px">Open the clipper</a>
     </div>
+    <div class="panel" id="partnerBox" style="margin-top:18px" hidden></div>
     <div class="panel brands" id="brandBox" style="margin-top:18px">
       <div class="row"><div><h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Brands</h3>
       <p class="note" id="brandNote" style="margin-top:6px">Run several pages from one login. Each brand has its own accounts, daily limits and schedule.</p></div></div>
@@ -301,8 +340,68 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
   });
   (function(){var u=new URLSearchParams(location.search),c=u.get('connected'),er=u.get('connect_error'),ad=u.get('brand_added');
     if(c||er||ad){history.replaceState(null,'','/account.html');setTimeout(function(){modal(c?'<h4>'+esc(c)+' connected</h4><p>This brand can now post there from the cloud.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>':ad?'<h4>Brand slot added</h4><p>Thanks. Tap "+ Add brand" to set up your new brand.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>':'<h4>Could not connect</h4><p>'+esc(er)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')},400)}})();
+  // ---------- Creator Partner ----------
+  var KIND='',REF='';
+  try{REF=(new URLSearchParams(location.search).get('ref')||localStorage.getItem('co_ref')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,20)}catch(e){}
+  if(REF){try{localStorage.setItem('co_ref',REF)}catch(e){}
+    fetch('/api/affiliate?action=check&code='+encodeURIComponent(REF)).then(function(r){return r.json()}).then(function(j){
+      if(!j.valid){REF='';return}
+      $('inviteBox').hidden=false;$('inviteBox').innerHTML='Invited by <b>'+esc(j.creator.name||j.creator.code)+'</b>. Sign up and you get <b>'+j.rules.fanSignupBonus+' bonus minutes</b>, plus double minutes on your first paid month.';
+      try{if(!sessionStorage.getItem('co_ref_click')){sessionStorage.setItem('co_ref_click','1');fetch('/api/affiliate?action=click',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:REF})})}}catch(e){}
+    }).catch(function(){})}
+  document.querySelectorAll('.chip[data-kind]').forEach(function(c){c.onclick=function(){
+    KIND=c.getAttribute('data-kind');document.querySelectorAll('.chip[data-kind]').forEach(function(x){var on=x===c;x.classList.toggle('on',on);x.setAttribute('aria-checked',on)});
+    $('creatorFields').hidden=KIND==='no';if(KIND!=='no')$('cChannel').focus();
+  }});
+  function money(c){c=c||0;return '$'+(c/100).toLocaleString('en-US',{minimumFractionDigits:c%100?2:0,maximumFractionDigits:2})}
+  function papi(action,body){
+    return fetch('/api/affiliate?action='+action,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin'})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})});
+  }
+  function loadPartner(){papi('me').then(drawPartner).catch(function(){})}
+  function joinForm(R){
+    return '<div class="bgrid" style="margin-top:14px"><label>I am a<select id="pKind"><option value="streamer">Streamer</option><option value="youtuber">YouTuber</option><option value="tiktoker">TikToker</option><option value="other">Other creator</option></select></label>'+
+      '<label>Your channel (link or @handle)<input id="pChannel" maxlength="200" placeholder="twitch.tv/yourname"></label>'+
+      '<label>Pick your code (optional)<input id="pCode" maxlength="20" placeholder="YOURNAME"></label></div>'+
+      '<div class="row" style="margin-top:14px"><div class="err" id="pErr" role="alert" style="margin:0"></div><button type="button" class="sbtn go" data-pjoin="1">Join the Creator Partner program</button></div>';
+  }
+  function howHtml(R){
+    return '<div class="how"><div><b>'+R.ratePct+'% for '+R.months+' months</b>Of every payment from each fan who joins with your link or code.</div>'+
+      '<div><b>+'+R.creatorPerPaid+' minutes per fan</b>Added to your account each time a fan becomes a paying subscriber.</div>'+
+      '<div><b>Your fans win too</b>'+R.fanSignupBonus+' bonus minutes at signup and double minutes on their first paid month.</div>'+
+      '<div><b>Paid monthly</b>By PayPal once you have '+money(R.minPayoutCents)+' ready. Each payment waits '+R.holdDays+' days in case of a refund.</div></div>';
+  }
+  function drawPartner(P){
+    var box=$('partnerBox'),R=P.rules;box.hidden=false;
+    var head='<h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Creator Partner</h3>';
+    if(!P.partner){box.innerHTML=head+'<p class="note" style="margin-top:6px">Are you a streamer, YouTuber or TikToker? Share ClipOnce with your audience and get paid every month.</p>'+howHtml(R)+joinForm(R);return}
+    var S=P.stats,link=location.origin+'/?ref='+P.code;
+    box.innerHTML='<div class="row"><div>'+head+'<p class="note" style="margin-top:6px">'+esc(P.kind)+' · '+esc(P.channel)+'</p></div><span class="badge">★ Creator Partner</span></div>'+
+      '<div class="share"><div class="box2"><span class="k">Your link</span><code id="pLink">'+esc(link)+'</code><button type="button" class="sbtn go" data-copy="pLink">Copy link</button></div>'+
+      '<div class="box2"><span class="k">Your code</span><span class="big" id="pCodeV">'+esc(P.code)+'</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="sbtn" data-copy="pCodeV">Copy code</button><button type="button" class="sbtn" data-pcode="1">Change code</button></div></div></div>'+
+      '<div class="stats" style="margin-top:20px">'+
+        '<div class="stat hot"><span class="k">Ready to pay out</span><span class="v">'+money(S.payable_cents)+'</span><span class="s">'+money(S.pending_cents)+' waiting the '+R.holdDays+'-day hold</span></div>'+
+        '<div class="stat"><span class="k">Earned so far</span><span class="v">'+money(S.earned_cents)+'</span><span class="s">'+money(S.paid_cents)+' paid to you</span></div>'+
+        '<div class="stat"><span class="k">Paying fans</span><span class="v">'+S.paying+'</span><span class="s">'+S.trials+' on a free trial</span></div>'+
+        '<div class="stat"><span class="k">Fans signed up</span><span class="v">'+S.signups+'</span><span class="s">'+S.clicks+' link visits</span></div></div>'+
+      '<div class="sub">Where should we pay you?</div><div class="bgrid" style="margin-top:10px"><label>PayPal email<input id="pPay" type="email" maxlength="200" value="'+esc(P.payoutEmail)+'" placeholder="you@example.com"></label>'+
+        '<div style="align-self:end;padding-bottom:2px"><button type="button" class="sbtn go" data-ppay="1">Save</button> <span class="note" id="pPayMsg"></span></div></div>'+
+      (P.recent.length?'<div class="sub">Recent commissions</div><div style="overflow-x:auto"><table class="mini"><thead><tr><th>Date</th><th class="n">Fan paid</th><th class="n">You earn</th><th>Status</th></tr></thead><tbody>'+
+        P.recent.map(function(c){var held=Date.now()-new Date(c.date).getTime()<R.holdDays*864e5;return '<tr><td>'+new Date(c.date).toLocaleDateString()+'</td><td class="n">'+money(c.amount_cents)+'</td><td class="n">'+money(c.commission_cents)+'</td><td>'+(c.status==='void'?'Refunded':held?'On hold':'Ready')+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
+      (P.payouts.length?'<div class="sub">Payouts</div><div style="overflow-x:auto"><table class="mini"><tbody>'+P.payouts.map(function(p){return '<tr><td>'+new Date(p.created_at).toLocaleDateString()+'</td><td class="n">'+money(p.amount_cents)+'</td><td>'+esc(p.method)+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
+      '<div class="sub">How it works</div>'+howHtml(R)+
+      '<p class="note" style="margin-top:12px">Tip: put your link in your stream panels, bio and video descriptions, and say your code on stream. Fans can also type it when they sign up.</p>';
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-pjoin],[data-ppay],[data-copy],[data-pcode],[data-m="pcode2"]');if(!t)return;
+    if(t.hasAttribute('data-copy')){var v=$(t.getAttribute('data-copy')).textContent;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){t.textContent='Copied'},function(){prompt('Copy this',v)});return}
+    if(t.hasAttribute('data-pjoin')){t.disabled=true;return papi('join',{kind:$('pKind').value,channel:$('pChannel').value,code:$('pCode').value}).then(function(P){drawPartner(P);api('me').then(function(j){if(j.user)showDash(j.user,true)})}).catch(function(err){t.disabled=false;$('pErr').textContent=err.message})}
+    if(t.hasAttribute('data-ppay')){t.disabled=true;return papi('payout',{email:$('pPay').value}).then(function(){t.disabled=false;$('pPayMsg').textContent='Saved.'}).catch(function(err){t.disabled=false;$('pPayMsg').textContent=err.message})}
+    if(t.hasAttribute('data-pcode'))return modal('<h4 id="mdlT">Change your code</h4><p>Links with your old code stop working, so update them wherever you shared them.</p><label>New code<input id="npCode" maxlength="20"></label><div class="err" id="npErr" role="alert"></div><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" class="go" data-m="pcode2">Save code</button></div>');
+    if(t.getAttribute('data-m')==='pcode2'){t.disabled=true;return papi('code',{code:$('npCode').value}).then(function(P){closeModal();drawPartner(P)}).catch(function(err){t.disabled=false;$('npErr').textContent=err.message})}
+  });
   function showAuth(){$('loading').hidden=true;$('dash').hidden=true;$('authBox').hidden=false}
-  function showDash(u){
+  function showDash(u,quiet){
     $('loading').hidden=true;$('authBox').hidden=true;$('dash').hidden=false;
     $('who').textContent=u.email;$('credits').textContent=u.credits;$('planMin').textContent=u.planMinutes;
     $('meter').style.width=Math.max(0,Math.min(100,u.credits/u.planMinutes*100))+'%';
@@ -310,19 +409,30 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
     $('planNote').textContent=u.plan==='owner'?'Full access to everything':u.plan==='free'?'Upgrade any time below':'Thanks for subscribing';
     $('reset').textContent=new Date(u.resetsAt).toLocaleDateString(undefined,{month:'short',day:'numeric'});
     $('upgrade').hidden=u.plan!=='free';
-    USER=u;loadBrands();
+    if(quiet){USER=u;return}
+    USER=u;loadBrands();loadPartner();
     if(u.plan==='owner'){$('earnBox').hidden=false;}
     document.querySelectorAll('[data-link]').forEach(function(a){a.href=a.dataset.link+'?prefilled_email='+encodeURIComponent(u.email)+'&client_reference_id='+encodeURIComponent(u.id)});
   }
   document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
     mode=b.dataset.mode;document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    $('askBox').hidden=mode!=='signup';$('inviteBox').style.display=mode==='signup'?'':'none';
     $('authGo').textContent=mode==='signup'?'Create free account':'Log in';
     $('password').autocomplete=mode==='signup'?'new-password':'current-password';$('authErr').textContent='';
   }});
   $('authForm').onsubmit=function(e){
-    e.preventDefault();$('authErr').textContent='';$('authGo').disabled=true;
-    api(mode,{email:$('email').value,password:$('password').value})
-      .then(function(j){showDash(j.user)})
+    e.preventDefault();$('authErr').textContent='';
+    var body={email:$('email').value,password:$('password').value};
+    if(mode==='signup'){
+      if(!KIND){$('authErr').textContent='Pick an answer to the first question: are you a creator?';return}
+      if(KIND!=='no'){if($('cChannel').value.trim().length<2){$('authErr').textContent='Add your channel link or handle.';$('cChannel').focus();return}body.creator={kind:KIND,channel:$('cChannel').value,code:$('cCode').value}}
+      if(REF)body.ref=REF;
+    }
+    $('authGo').disabled=true;
+    api(mode,body)
+      .then(function(j){if(j.referred||j.creator){try{localStorage.removeItem('co_ref')}catch(e){}}showDash(j.user);
+        if(j.creator)setTimeout(function(){modal('<h4 id="mdlT">You are a Creator Partner</h4><p>Your code is <b>'+esc(j.creator)+'</b> and we added 60 bonus minutes to your account. Your link and earnings are on this page.</p><div class="row2"><button type="button" class="go" data-m="close">Let\u2019s go</button></div>')},300);
+        else if(j.referred)setTimeout(function(){modal('<h4 id="mdlT">Bonus minutes added</h4><p>You joined with code <b>'+esc(j.referred)+'</b>, so we added 60 bonus minutes. Subscribe any time and your first paid month gets double minutes.</p><div class="row2"><button type="button" class="go" data-m="close">Nice</button></div>')},300)})
       .catch(function(err){$('authErr').textContent=err.message})
       .then(function(){$('authGo').disabled=false});
   };

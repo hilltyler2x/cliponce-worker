@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const q = require('../lib/db');
 const core = require('../lib/core');
 const brands = require('../lib/brands');
+const aff = require('../lib/affiliate');
 
 let pendingReady = false;
 const BY_AMOUNT = { 1900: 'creator', 3900: 'pro', 9900: 'agency' };
@@ -64,6 +65,8 @@ module.exports = async (req, res) => {
     await core.migrate(q);
     if (!pendingReady) { await q('create table if not exists co_pending_plan (customer text primary key, plan text not null, created_at timestamptz not null default now())'); pendingReady = true; }
     const o = ev.data && ev.data.object || {};
+    // Creator Partner commissions come from paid invoices; a quick re-sync picks them up (read-only Stripe key).
+    if (ev.type === 'invoice.paid' && (o.amount_paid || 0) > 0) { try { await aff.sync(q, true); } catch (e) { console.error('affiliate sync', e && e.message); } }
     await brands.migrate(q);
     if (ev.type === 'checkout.session.completed' && o.mode === 'subscription' && (o.amount_total === ADDON_AMOUNT || o.amount_subtotal === ADDON_AMOUNT || (o.metadata && o.metadata.addon === 'brand'))) {
       let uid = o.client_reference_id && /^[0-9a-f-]{36}$/i.test(o.client_reference_id) ? o.client_reference_id : null;

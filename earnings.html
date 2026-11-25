@@ -56,6 +56,9 @@ td.n,th.n{text-align:right}
 .links2 a:hover{border-color:var(--sun1)}
 .cta{display:inline-block;margin-top:14px;padding:13px 20px;border-radius:14px;background:var(--sunset);color:#16070f;font:400 19px var(--display);letter-spacing:.8px;text-transform:uppercase;text-decoration:none}
 .warn{border-color:rgba(255,138,61,.4)}
+.pbtn{all:unset;cursor:pointer;padding:7px 12px;border-radius:10px;background:var(--sunset);color:#16070f;font:600 12.5px var(--body)}
+.pbtn[disabled]{opacity:.45;cursor:default}
+td small{color:var(--faint)}
 </style>
 </head>
 <body>
@@ -92,6 +95,14 @@ td.n,th.n{text-align:right}
       <h2>First charges coming up</h2>
       <p class="note" style="margin-bottom:10px">Trials that turn into paid plans, if the customer keeps them.</p>
       <div class="scroll"><table><thead><tr><th>Date</th><th>Plan</th><th class="n">Amount</th></tr></thead><tbody id="upcoming"></tbody></table></div>
+    </section>
+
+    <section class="panel" id="cpBox">
+      <h2>Creator Partners</h2>
+      <p class="note" id="cpNote" style="margin-bottom:14px">Loading...</p>
+      <div class="stats" id="cpStats"></div>
+      <div class="scroll" style="margin-top:20px"><table><thead><tr><th>Creator</th><th class="n">Visits</th><th class="n">Signups</th><th class="n">Paying</th><th class="n">Fans paid</th><th class="n">Earned</th><th class="n">On hold</th><th class="n">Ready</th><th>Pay to</th><th></th></tr></thead><tbody id="cpList"></tbody></table></div>
+      <div id="cpPays"></div>
     </section>
 
     <section class="panel">
@@ -192,6 +203,35 @@ function renderPayouts(p) {
     <div class="meter"><i style="width:${have == null ? 0 : Math.min(100, have / need * 100)}%"></i></div>` : ''}
     <div class="note">${esc(what)}</div></div>`).join('');
 }
+
+function renderPartners(o) {
+  const R = o.rules, T = o.totals;
+  $('#cpNote').innerHTML = esc(`Creators get ${R.ratePct}% of what their fans pay for ${R.months} months. Commissions wait ${R.holdDays} days, then show as Ready once they reach ${usd(R.minPayoutCents)}. Send the money in PayPal, then tap Mark paid.`) + (o.syncNote ? `<br><span style="color:var(--bad)">Stripe sync: ${esc(o.syncNote)}</span>` : '');
+  $('#cpStats').innerHTML =
+    stat('Owed now', usd(T.payable_cents), `${usd(T.pending_cents)} still on hold`, true) +
+    stat('Revenue from partners', usd(T.revenue_cents), `${num(T.payingFans)} paying fans`) +
+    stat('Commission earned', usd(T.earned_cents), `${usd(T.paid_cents)} paid out`) +
+    stat('Partners', num(T.partners), `${num(T.signups)} signups from ${num(T.clicks)} visits`);
+  $('#cpList').innerHTML = o.partners.length ? o.partners.map(p => {
+    const ready = p.payable_cents >= R.minPayoutCents && p.payoutEmail;
+    return `<tr><td><b>${esc(p.code)}</b><br><small>${esc(p.kind)} · ${esc(p.channel)}</small></td><td class="n">${num(p.clicks)}</td><td class="n">${num(p.signups)}</td><td class="n">${num(p.payingFans)}</td>
+      <td class="n">${usd(p.revenue_cents)}</td><td class="n">${usd(p.earned_cents)}</td><td class="n">${usd(p.pending_cents)}</td><td class="n">${usd(p.payable_cents)}</td>
+      <td>${p.payoutEmail ? esc(p.payoutEmail) : '<small>no PayPal yet</small>'}</td>
+      <td><button class="pbtn" data-paid="${esc(p.id)}" data-amt="${p.payable_cents}" data-code="${esc(p.code)}" data-to="${esc(p.payoutEmail)}" ${p.payable_cents > 0 ? '' : 'disabled'} title="${ready ? '' : 'Below the minimum or no PayPal email yet'}">Mark paid</button></td></tr>`;
+  }).join('') : '<tr><td colspan="10" class="note">No creator partners yet. Creators join when they sign up, or from their account page.</td></tr>';
+  $('#cpPays').innerHTML = o.payouts.length ? `<h2 style="margin-top:24px;font-size:20px">Payouts sent</h2><div class="scroll"><table><tbody>${o.payouts.map(p => `<tr><td>${new Date(p.date).toLocaleDateString('en-US')}</td><td>${esc(p.code)}</td><td class="n">${usd(p.amount_cents)}</td><td>${esc(p.note)}</td></tr>`).join('')}</tbody></table></div>` : '';
+}
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-paid]'); if (!b) return;
+  const amt = Number(b.dataset.amt);
+  if (!confirm(`Record a payout of ${usd(amt)} to ${b.dataset.code}${b.dataset.to ? ' (' + b.dataset.to + ')' : ''}? Send it in PayPal first. This only records it.`)) return;
+  b.disabled = true;
+  const r = await fetch('/api/affiliate?action=paid', {method: 'POST', credentials: 'same-origin', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({id: b.dataset.paid, amount_cents: amt, note: 'PayPal ' + (b.dataset.to || '')})});
+  const j = await r.json();
+  if (!r.ok) { alert(j.error || 'Could not record it.'); b.disabled = false; return; }
+  renderPartners(j);
+});
+fetch('/api/affiliate?action=owner', {credentials: 'same-origin'}).then(r => r.ok ? r.json() : Promise.reject()).then(renderPartners).catch(() => { $('#cpNote').textContent = 'Creator Partner numbers could not load.'; });
 
 (async () => {
   const r = await fetch('/api/earnings', {credentials: 'same-origin'});

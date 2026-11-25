@@ -1,5 +1,6 @@
 const core = require('../lib/core');
 const q = require('../lib/db');
+const aff = require('../lib/affiliate');
 
 function send(res, status, body, cookie) {
   res.setHeader('Content-Type', 'application/json');
@@ -25,7 +26,10 @@ module.exports = async (req, res) => {
     if (action === 'signup') {
       const r = await core.signup(q, b.email, b.password);
       if (r.error) return send(res, r.status, { error: r.error });
-      return send(res, 200, { user: core.publicUser(r.user) }, core.sessionCookie(r.user.id));
+      let extra = {}, user = r.user;
+      // Creator Partner + referral codes. A problem here must never block the signup itself.
+      try { extra = await aff.onSignup(q, r.user, b); user = (await core.me(q, r.user.id)) || r.user; } catch (e) { console.error('affiliate signup', e && e.message); }
+      return send(res, 200, { user: core.publicUser(user), ...extra }, core.sessionCookie(r.user.id));
     }
     if (action === 'login') {
       const r = await core.login(q, b.email, b.password);
