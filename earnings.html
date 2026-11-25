@@ -214,7 +214,7 @@ function renderPartners(o) {
     stat('Partners', num(T.partners), `${num(T.signups)} signups from ${num(T.clicks)} visits`);
   $('#cpList').innerHTML = o.partners.length ? o.partners.map(p => {
     const ready = p.payable_cents >= R.minPayoutCents && p.payoutEmail;
-    return `<tr><td><b>${esc(p.code)}</b><br><small>${esc(p.kind)} · ${esc(p.channel)}</small></td><td class="n">${num(p.clicks)}</td><td class="n">${num(p.signups)}</td><td class="n">${num(p.payingFans)}</td>
+    return `<tr><td><b>${esc(p.code)}</b><br><small>${esc(p.kind)}${p.niche ? ' · ' + esc(p.niche) : ''} · ${esc(p.channel)}</small></td><td class="n">${num(p.clicks)}</td><td class="n">${num(p.signups)}</td><td class="n">${num(p.payingFans)}</td>
       <td class="n">${usd(p.revenue_cents)}</td><td class="n">${usd(p.earned_cents)}</td><td class="n">${usd(p.pending_cents)}</td><td class="n">${usd(p.payable_cents)}</td>
       <td>${p.payoutEmail ? esc(p.payoutEmail) : '<small>no PayPal yet</small>'}</td>
       <td><button class="pbtn" data-paid="${esc(p.id)}" data-amt="${p.payable_cents}" data-code="${esc(p.code)}" data-to="${esc(p.payoutEmail)}" ${p.payable_cents > 0 ? '' : 'disabled'} title="${ready ? '' : 'Below the minimum or no PayPal email yet'}">Mark paid</button></td></tr>`;

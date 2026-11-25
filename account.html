@@ -143,16 +143,20 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
         <div class="invite" id="inviteBox" hidden></div>
         <div class="ask" id="askBox">
           <div class="q">First, are you a creator?</div>
+          <p class="note" style="margin:-4px 0 10px">Any category counts: gaming, fitness, beauty, cooking, music, comedy, sports, education, business and more.</p>
           <div class="chips" role="radiogroup" aria-label="Are you a creator?">
             <button type="button" class="chip" role="radio" aria-checked="false" data-kind="streamer">Streamer</button>
             <button type="button" class="chip" role="radio" aria-checked="false" data-kind="youtuber">YouTuber</button>
             <button type="button" class="chip" role="radio" aria-checked="false" data-kind="tiktoker">TikToker</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="instagram">Instagram creator</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="podcaster">Podcaster</button>
             <button type="button" class="chip" role="radio" aria-checked="false" data-kind="other">Other creator</button>
             <button type="button" class="chip" role="radio" aria-checked="false" data-kind="no">No, I just want clips</button>
           </div>
           <div id="creatorFields" hidden>
-            <p class="perk">Welcome to the <b>Creator Partner</b> program. You get <b>30% of every payment</b> from fans who join with your code, for their first 12 months, plus <b>100 bonus minutes</b> each time a fan subscribes and <b>60 minutes</b> right now to clip your own streams. Your fans get 60 bonus minutes and double minutes on their first paid month.</p>
-            <label style="margin-top:12px">Your channel (link or @handle)<input id="cChannel" maxlength="200" placeholder="twitch.tv/yourname"></label>
+            <p class="perk">Welcome to the <b>Creator Partner</b> program. You get <b>30% of every payment</b> from fans who join with your code, for their first 12 months, plus <b>100 bonus minutes</b> each time a fan subscribes and <b>60 minutes</b> right now to clip your own videos. Your fans get 60 bonus minutes and double minutes on their first paid month.</p>
+            <label style="margin-top:12px">Your channel or page (link or @handle)<input id="cChannel" maxlength="200" placeholder="youtube.com/@yourname"></label>
+            <label>What do you make? (optional)<input id="cNiche" maxlength="60" placeholder="Fitness, cooking, gaming, comedy..."></label>
             <label style="margin-bottom:0">Pick your code (optional)<input id="cCode" maxlength="20" placeholder="YOURNAME" autocapitalize="characters"></label>
           </div>
         </div>
@@ -360,8 +364,9 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
   }
   function loadPartner(){papi('me').then(drawPartner).catch(function(){})}
   function joinForm(R){
-    return '<div class="bgrid" style="margin-top:14px"><label>I am a<select id="pKind"><option value="streamer">Streamer</option><option value="youtuber">YouTuber</option><option value="tiktoker">TikToker</option><option value="other">Other creator</option></select></label>'+
-      '<label>Your channel (link or @handle)<input id="pChannel" maxlength="200" placeholder="twitch.tv/yourname"></label>'+
+    return '<div class="bgrid" style="margin-top:14px"><label>I am a<select id="pKind"><option value="streamer">Streamer</option><option value="youtuber">YouTuber</option><option value="tiktoker">TikToker</option><option value="instagram">Instagram creator</option><option value="podcaster">Podcaster</option><option value="other">Other creator</option></select></label>'+
+      '<label>What do you make? (optional)<input id="pNiche" maxlength="60" placeholder="Fitness, cooking, gaming..."></label>'+
+      '<label>Your channel or page (link or @handle)<input id="pChannel" maxlength="200" placeholder="youtube.com/@yourname"></label>'+
       '<label>Pick your code (optional)<input id="pCode" maxlength="20" placeholder="YOURNAME"></label></div>'+
       '<div class="row" style="margin-top:14px"><div class="err" id="pErr" role="alert" style="margin:0"></div><button type="button" class="sbtn go" data-pjoin="1">Join the Creator Partner program</button></div>';
   }
@@ -374,9 +379,9 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
   function drawPartner(P){
     var box=$('partnerBox'),R=P.rules;box.hidden=false;
     var head='<h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Creator Partner</h3>';
-    if(!P.partner){box.innerHTML=head+'<p class="note" style="margin-top:6px">Are you a streamer, YouTuber or TikToker? Share ClipOnce with your audience and get paid every month.</p>'+howHtml(R)+joinForm(R);return}
+    if(!P.partner){box.innerHTML=head+'<p class="note" style="margin-top:6px">Make videos, streams or podcasts in any category? Share ClipOnce with your audience and get paid every month.</p>'+howHtml(R)+joinForm(R);return}
     var S=P.stats,link=location.origin+'/?ref='+P.code;
-    box.innerHTML='<div class="row"><div>'+head+'<p class="note" style="margin-top:6px">'+esc(P.kind)+' · '+esc(P.channel)+'</p></div><span class="badge">★ Creator Partner</span></div>'+
+    box.innerHTML='<div class="row"><div>'+head+'<p class="note" style="margin-top:6px">'+esc(P.kind)+(P.niche?' · '+esc(P.niche):'')+' · '+esc(P.channel)+'</p></div><span class="badge">★ Creator Partner</span></div>'+
       '<div class="share"><div class="box2"><span class="k">Your link</span><code id="pLink">'+esc(link)+'</code><button type="button" class="sbtn go" data-copy="pLink">Copy link</button></div>'+
       '<div class="box2"><span class="k">Your code</span><span class="big" id="pCodeV">'+esc(P.code)+'</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="sbtn" data-copy="pCodeV">Copy code</button><button type="button" class="sbtn" data-pcode="1">Change code</button></div></div></div>'+
       '<div class="stats" style="margin-top:20px">'+
@@ -390,12 +395,12 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
         P.recent.map(function(c){var held=Date.now()-new Date(c.date).getTime()<R.holdDays*864e5;return '<tr><td>'+new Date(c.date).toLocaleDateString()+'</td><td class="n">'+money(c.amount_cents)+'</td><td class="n">'+money(c.commission_cents)+'</td><td>'+(c.status==='void'?'Refunded':held?'On hold':'Ready')+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
       (P.payouts.length?'<div class="sub">Payouts</div><div style="overflow-x:auto"><table class="mini"><tbody>'+P.payouts.map(function(p){return '<tr><td>'+new Date(p.created_at).toLocaleDateString()+'</td><td class="n">'+money(p.amount_cents)+'</td><td>'+esc(p.method)+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
       '<div class="sub">How it works</div>'+howHtml(R)+
-      '<p class="note" style="margin-top:12px">Tip: put your link in your stream panels, bio and video descriptions, and say your code on stream. Fans can also type it when they sign up.</p>';
+      '<p class="note" style="margin-top:12px">Tip: put your link in your bio, video descriptions, stream panels or show notes, and say your code in your videos. Fans can also type it when they sign up.</p>';
   }
   document.addEventListener('click',function(e){
     var t=e.target.closest('[data-pjoin],[data-ppay],[data-copy],[data-pcode],[data-m="pcode2"]');if(!t)return;
     if(t.hasAttribute('data-copy')){var v=$(t.getAttribute('data-copy')).textContent;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){t.textContent='Copied'},function(){prompt('Copy this',v)});return}
-    if(t.hasAttribute('data-pjoin')){t.disabled=true;return papi('join',{kind:$('pKind').value,channel:$('pChannel').value,code:$('pCode').value}).then(function(P){drawPartner(P);api('me').then(function(j){if(j.user)showDash(j.user,true)})}).catch(function(err){t.disabled=false;$('pErr').textContent=err.message})}
+    if(t.hasAttribute('data-pjoin')){t.disabled=true;return papi('join',{kind:$('pKind').value,channel:$('pChannel').value,niche:$('pNiche').value,code:$('pCode').value}).then(function(P){drawPartner(P);api('me').then(function(j){if(j.user)showDash(j.user,true)})}).catch(function(err){t.disabled=false;$('pErr').textContent=err.message})}
     if(t.hasAttribute('data-ppay')){t.disabled=true;return papi('payout',{email:$('pPay').value}).then(function(){t.disabled=false;$('pPayMsg').textContent='Saved.'}).catch(function(err){t.disabled=false;$('pPayMsg').textContent=err.message})}
     if(t.hasAttribute('data-pcode'))return modal('<h4 id="mdlT">Change your code</h4><p>Links with your old code stop working, so update them wherever you shared them.</p><label>New code<input id="npCode" maxlength="20"></label><div class="err" id="npErr" role="alert"></div><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" class="go" data-m="pcode2">Save code</button></div>');
     if(t.getAttribute('data-m')==='pcode2'){t.disabled=true;return papi('code',{code:$('npCode').value}).then(function(P){closeModal();drawPartner(P)}).catch(function(err){t.disabled=false;$('npErr').textContent=err.message})}
@@ -425,7 +430,7 @@ select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:
     var body={email:$('email').value,password:$('password').value};
     if(mode==='signup'){
       if(!KIND){$('authErr').textContent='Pick an answer to the first question: are you a creator?';return}
-      if(KIND!=='no'){if($('cChannel').value.trim().length<2){$('authErr').textContent='Add your channel link or handle.';$('cChannel').focus();return}body.creator={kind:KIND,channel:$('cChannel').value,code:$('cCode').value}}
+      if(KIND!=='no'){if($('cChannel').value.trim().length<2){$('authErr').textContent='Add your channel link or handle.';$('cChannel').focus();return}body.creator={kind:KIND,channel:$('cChannel').value,niche:$('cNiche').value,code:$('cCode').value}}
       if(REF)body.ref=REF;
     }
     $('authGo').disabled=true;
