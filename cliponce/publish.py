@@ -260,9 +260,68 @@ def post_tiktok(item, cr=None):
         f.unlink(missing_ok=True)
 
 
+def post_x(item, cr=None):
+    """X (Twitter) video post with the official API v2: chunked media upload, then the post."""
+    cr = os.environ if cr is None else cr
+    h = {"Authorization": "Bearer " + cr["X_ACCESS_TOKEN"]}
+    api = "https://api.x.com/2"
+    f = fetch(item["url"])
+    try:
+        size = f.stat().st_size
+        init = requests.post(api + "/media/upload/initialize", headers=h, json={
+            "media_type": "video/mp4", "total_bytes": size, "media_category": "tweet_video"}, timeout=60)
+        if init.status_code in (401, 403):
+            raise SignInProblem(f"X sign-in or plan problem: {init.status_code} {init.text[:300]}")
+        if init.status_code == 429:
+            raise CapReached(init.text[:300])
+        init.raise_for_status()
+        mid = init.json()["data"]["id"]
+        with open(f, "rb") as fh:
+            i = 0
+            while True:
+                chunk = fh.read(4 << 20)
+                if not chunk:
+                    break
+                r = requests.post(f"{api}/media/upload/{mid}/append", headers=h, files={"media": ("clip.mp4", chunk, "application/octet-stream")},
+                                  data={"segment_index": str(i)}, timeout=300)
+                if r.status_code >= 300:
+                    raise RuntimeError(f"X append {r.status_code}: {r.text[:300]}")
+                i += 1
+        fin = requests.post(f"{api}/media/upload/{mid}/finalize", headers=h, timeout=60)
+        if fin.status_code >= 300:
+            raise RuntimeError(f"X finalize {fin.status_code}: {fin.text[:300]}")
+        info = (fin.json().get("data") or {}).get("processing_info")
+        for _ in range(60):
+            if not info or info.get("state") == "succeeded":
+                break
+            if info.get("state") == "failed":
+                raise RuntimeError(f"X processing failed: {info}")
+            time.sleep(max(2, int(info.get("check_after_secs", 5))))
+            st = requests.get(api + "/media/upload", headers=h, params={"command": "STATUS", "media_id": mid}, timeout=30).json()
+            info = (st.get("data") or {}).get("processing_info")
+        lines = [l for l in item["caption"].split("\n") if l.strip()]
+        text = lines[0] if lines else item.get("title", "")
+        credit = next((l for l in lines if "Credit" in l), "")
+        tags = next((l for l in reversed(lines) if l.startswith("#")), "")
+        for extra in (credit, tags):
+            if extra and len(text) + 1 + len(extra) <= 280:
+                text += "\n" + extra
+        t = requests.post(api + "/tweets", headers=h, json={"text": text[:280], "media": {"media_ids": [mid]}}, timeout=60)
+        if t.status_code == 429:
+            raise CapReached(t.text[:300])
+        if t.status_code in (401, 403):
+            raise SignInProblem(f"X post refused: {t.text[:300]}")
+        if t.status_code >= 300:
+            raise RuntimeError(f"X post {t.status_code}: {t.text[:300]}")
+        return "https://x.com/i/status/" + t.json()["data"]["id"]
+    finally:
+        f.unlink(missing_ok=True)
+
+
 PLATFORMS = {
     "youtube": (("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"), post_youtube),
     "tiktok": (("TIKTOK_ACCESS_TOKEN",), post_tiktok),
+    "x": (("X_ACCESS_TOKEN",), post_x),
     "instagram": (("IG_TOKEN",), post_instagram),
     "threads": (("THREADS_TOKEN",), post_threads),
     "facebook": (("IG_TOKEN",) if not os.environ.get("FB_PAGE_TOKEN") else ("FB_PAGE_TOKEN",), post_facebook),

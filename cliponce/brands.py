@@ -78,6 +78,8 @@ def creds_for(b, plat):
         return {"IG_TOKEN": l["token"], "IG_USER_ID": meta.get("ig_user_id", "")}
     if plat == "facebook":
         return {"FB_PAGE_TOKEN": l["token"], "FB_PAGE_ID": meta.get("page_id", "")}
+    if plat == "x":
+        return {"X_ACCESS_TOKEN": l["token"]}
     if plat == "threads":
         return {"THREADS_TOKEN": l["token"], "THREADS_USER_ID": meta.get("user_id", "")}
     return None
