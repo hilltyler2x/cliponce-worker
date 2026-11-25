@@ -27,9 +27,8 @@ async function start(res, p, state) {
   if (p === 'tiktok') return go(res, 'https://www.tiktok.com/v2/auth/authorize/?' + new URLSearchParams({ client_key: e.TIKTOK_CLIENT_KEY, redirect_uri: REDIRECT,
     response_type: 'code', scope: 'user.info.basic,video.publish,video.upload', state }));
   if (p === 'instagram' || p === 'facebook') return go(res, 'https://www.facebook.com/v21.0/dialog/oauth?' + new URLSearchParams({ client_id: brands.META_APP_ID,
-    redirect_uri: REDIRECT, response_type: 'code', state,
-    scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,instagram_basic,instagram_content_publish,business_management' }));
-  if (p === 'threads') return go(res, 'https://threads.net/oauth/authorize?' + new URLSearchParams({ client_id: e.THREADS_APP_ID, redirect_uri: REDIRECT,
+    redirect_uri: REDIRECT, response_type: 'code', state, config_id: brands.META_CONFIG_ID }));
+  if (p === 'threads') return go(res, 'https://threads.net/oauth/authorize?' + new URLSearchParams({ client_id: brands.THREADS_APP_ID, redirect_uri: REDIRECT,
     response_type: 'code', scope: 'threads_basic,threads_content_publish', state }));
   if (p === 'x') {
     const verifier = b64url(crypto.randomBytes(32));
@@ -81,7 +80,7 @@ async function finish(req, res, p, b, code) {
     return back(res, done.join(' and '), true);
   }
   if (p === 'threads') {
-    const t = await form('https://graph.threads.net/oauth/access_token', { client_id: e.THREADS_APP_ID, client_secret: e.THREADS_APP_SECRET, grant_type: 'authorization_code', redirect_uri: REDIRECT, code });
+    const t = await form('https://graph.threads.net/oauth/access_token', { client_id: brands.THREADS_APP_ID, client_secret: e.THREADS_APP_SECRET, grant_type: 'authorization_code', redirect_uri: REDIRECT, code });
     if (!t.access_token) return back(res, 'Threads did not accept the sign-in. Try again.');
     const ll = await getJ('https://graph.threads.net/access_token?' + new URLSearchParams({ grant_type: 'th_exchange_token', client_secret: e.THREADS_APP_SECRET, access_token: t.access_token }));
     const tok = ll.access_token || t.access_token;
