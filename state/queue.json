@@ -2083,10 +2083,13 @@
     "made_at": 1795560383,
     "fresh": true,
     "hook": "What did Ramez05 just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18058394990820560"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Ramez05_TangibleBumblingDoge_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Ramez05_TangibleBumblingDoge.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "b778a1ff5cf7b9564e39e11da8ce0768865f23f2"
   },
   {
     "id": "2026-11-24_tw_KaiCenat_BitterStylishLemurSS",
