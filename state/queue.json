@@ -2162,10 +2162,13 @@
     "made_at": 1795571807,
     "fresh": true,
     "hook": "What did Jynxzi just do?",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 17919572595554205"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_Jynxzi_LittleBombasticPango_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_Jynxzi_LittleBombasticPango.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "6ea995f757c0ad5288809c0d7813ecbf337c2d00"
   },
   {
     "id": "2026-11-25_tw_lilypichu_RelievedTolerantMeta",
