@@ -1885,7 +1885,9 @@
     "made_at": 1795478041,
     "fresh": true,
     "hook": "Raw Phil did what?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18149102317581568"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_raw_phil_SullenHelplessSamosa_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_raw_phil_SullenHelplessSamosa.mp4",
     "namehook": true,
