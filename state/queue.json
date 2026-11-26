@@ -1908,7 +1908,9 @@
     "made_at": 1795479793,
     "fresh": true,
     "hook": "What did Joe Bartolozzi just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18025917986957017"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Joe_Bartolozzi_HomelyHotAnacondaCei_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Joe_Bartolozzi_HomelyHotAnacondaCei.mp4",
     "namehook": true,
