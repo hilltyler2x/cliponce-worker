@@ -22,11 +22,15 @@ module.exports = async (req, res) => {
     const u = await core.me(q, s.uid);
     if (!u) return send(res, 401, { error: 'Log in first.', login: true });
     if (req.method === 'GET' && action === 'list') return send(res, 200, await brands.list(q, u));
+    if (req.method === 'GET' && action === 'tiktok') {
+      const r = await brands.tiktokInfo(q, u, { id: req.query.id });
+      return send(res, r.status, r.error ? { error: r.error } : { creator: r.creator, saved: r.saved });
+    }
     if (req.method !== 'POST') return send(res, 405, { error: 'Method not allowed' });
     const origin = req.headers.origin || '';
     if (origin) { let h = ''; try { h = new URL(origin).host; } catch (e) {} if (h !== req.headers.host) return send(res, 403, { error: 'Bad origin' }); }
     const b = typeof req.body === 'object' && req.body ? req.body : {};
-    const fn = { create: brands.create, update: brands.update, delete: brands.remove, switch: brands.setActive, disconnect: brands.disconnect }[action];
+    const fn = { create: brands.create, update: brands.update, delete: brands.remove, switch: brands.setActive, disconnect: brands.disconnect, tiktok_save: brands.tiktokSave }[action];
     if (!fn) return send(res, 404, { error: 'Unknown action' });
     const r = await fn(q, u, b);
     if (r.error) return send(res, r.status, { error: r.error, needAddon: r.needAddon });

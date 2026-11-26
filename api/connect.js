@@ -53,9 +53,9 @@ async function finish(req, res, p, b, code) {
   if (p === 'tiktok') {
     const t = await form('https://open.tiktokapis.com/v2/oauth/token/', { client_key: e.TIKTOK_CLIENT_KEY, client_secret: e.TIKTOK_CLIENT_SECRET, code, grant_type: 'authorization_code', redirect_uri: REDIRECT });
     if (!t.access_token) return back(res, 'TikTok did not accept the sign-in. Try again.');
-    const me = await getJ('https://open.tiktokapis.com/v2/user/info/?fields=open_id,display_name,username', { Authorization: 'Bearer ' + t.access_token });
+    const me = await getJ('https://open.tiktokapis.com/v2/user/info/?fields=open_id,display_name,avatar_url', { Authorization: 'Bearer ' + t.access_token });
     const info = (me.data && me.data.user) || {};
-    await brands.saveLink(q, b.id, 'tiktok', { handle: info.username ? '@' + info.username : (info.display_name || 'TikTok'), token: t.access_token, refresh: t.refresh_token, expiresIn: t.expires_in, meta: { open_id: t.open_id } });
+    await brands.saveLink(q, b.id, 'tiktok', { handle: info.display_name || 'TikTok', token: t.access_token, refresh: t.refresh_token, expiresIn: t.expires_in, meta: { open_id: t.open_id } });
     return back(res, 'TikTok', true);
   }
   if (p === 'instagram' || p === 'facebook') {
