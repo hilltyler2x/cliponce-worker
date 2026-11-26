@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><meta name="theme-color" content="#07060b">
+<title>ClipOnce Account</title>
+<meta name="description" content="Sign up or log in to ClipOnce to see your plan and minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#07060b;--glass:rgba(22,19,32,.62);--hair:rgba(255,255,255,.08);--hair2:rgba(255,255,255,.14);--text:#f6f2ff;--dim:#9d96b3;--faint:#6b6582;--sun1:#ff3d8b;--sun2:#ff8a3d;--sun3:#ffd23d;--ok:#5df2a4;--bad:#ff6b7d;--sunset:linear-gradient(100deg,var(--sun1),var(--sun2) 55%,var(--sun3));--r:18px;--display:'Anton',Impact,'Arial Narrow',sans-serif;--body:'Inter Tight',system-ui,'Segoe UI',sans-serif;--mono:'JetBrains Mono',Consolas,monospace;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+body{background:var(--ink);color:var(--text);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(900px 520px at 85% -10%,rgba(255,61,139,.22),transparent 60%),radial-gradient(700px 500px at -10% 110%,rgba(61,224,255,.12),transparent 60%)}
+.wrap{max-width:980px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-right,0px)) 80px max(20px,env(safe-area-inset-left,0px));display:grid;gap:30px}
+.wrap>*{min-width:0}
+nav.top{display:flex;align-items:center;gap:16px;padding:22px 0;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.mark{font:400 26px/1 var(--display);text-transform:uppercase;letter-spacing:.5px;color:var(--text);text-decoration:none}
+.mark{display:inline-flex;align-items:center;gap:10px}.mark .logo{width:30px;height:30px;flex:none;border-radius:8px;box-shadow:0 6px 18px -6px rgba(255,61,139,.6)}
+.mark .wm span{background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav.top .links{margin-left:auto;display:flex;gap:22px}
+nav.top a.l{color:var(--dim);text-decoration:none;font-weight:600;font-size:14px}
+nav.top a.l:hover{color:var(--text)}
+h1{font:400 clamp(40px,7vw,72px)/.92 var(--display);text-transform:uppercase;letter-spacing:.4px;margin-top:10px;overflow-wrap:anywhere}
+h1 em{font-style:normal;background:var(--sunset);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{font:500 11px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sun2)}
+.panel{background:var(--glass);border:1px solid var(--hair);border-radius:var(--r);padding:26px;backdrop-filter:blur(22px)}
+.tabs{display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:13px;background:rgba(0,0,0,.35);border:1px solid var(--hair);margin-bottom:20px}
+.tabs button{all:unset;cursor:pointer;text-align:center;padding:11px;border-radius:10px;font:600 14px var(--body);color:var(--dim)}
+.tabs button.on{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05));color:var(--text)}
+.tabs button:focus-visible{outline:2px solid var(--sun2)}
+label{display:grid;gap:6px;font:600 12px var(--body);color:var(--dim);letter-spacing:.04em;margin-bottom:14px}
+input{padding:13px 14px;border-radius:12px;border:1px solid var(--hair2);background:rgba(0,0,0,.35);color:var(--text);font:500 15px var(--body);outline:none;width:100%}
+input:focus{border-color:var(--sun1)}
+.cta{all:unset;cursor:pointer;display:block;text-align:center;width:100%;box-sizing:border-box;margin-top:8px;padding:15px;border-radius:14px;background:var(--sunset);color:#16070f;font:400 21px var(--display);letter-spacing:.8px;text-transform:uppercase}
+.cta:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.cta[disabled]{filter:grayscale(.7) brightness(.6);cursor:wait}
+.ghost{all:unset;cursor:pointer;color:var(--dim);font-weight:600;font-size:14px}
+.ghost:hover{color:var(--text)}
+.err{color:var(--bad);font-size:14px;min-height:1.4em;margin-top:10px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:16px}
+.stat{border-top:2px solid var(--hair2);padding-top:12px;display:grid;gap:2px}
+.stat.hot{border-top-color:var(--sun1)}
+.stat .k{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.stat .v{font:400 44px/1 var(--display)}
+.stat .s{color:var(--dim);font-size:13px}
+.meter{height:6px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--sunset)}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:12px;margin-top:18px}
+.plan{border:1px solid var(--hair);border-radius:14px;padding:16px;display:grid;gap:6px;background:rgba(0,0,0,.25)}
+.plan b{font:400 26px var(--display);text-transform:uppercase}
+.plan span{color:var(--dim);font-size:13px}
+.plan a{margin-top:6px;text-align:center;text-decoration:none;padding:10px;border-radius:11px;background:var(--sunset);color:#16070f;font:400 16px var(--display);letter-spacing:.6px;text-transform:uppercase}
+.note{font-size:13px;color:var(--faint)}
+.row{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(190px,100%),1fr));gap:14px;margin-top:16px}
+.ac{display:grid;gap:6px;font-size:12.5px;color:var(--dim);min-width:0}
+.ac video{width:100%;aspect-ratio:9/16;border-radius:12px;background:#000;border:1px solid var(--hair);object-fit:cover}
+.ac b{color:var(--text);font-size:13px}
+.ac .tags{display:flex;gap:6px;flex-wrap:wrap}
+.ac .tags span,.ac .tags a{font:500 10.5px var(--mono);padding:3px 7px;border-radius:99px;border:1px solid var(--hair2)}
+.ac .tags .ok{border-color:rgba(93,242,164,.5);color:var(--ok)}
+.ac a{color:var(--sun2);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ac .acts{display:flex;gap:8px}
+.ac .acts button{all:unset;cursor:pointer;flex:1;text-align:center;padding:8px 0;border-radius:10px;border:1px solid var(--hair2);font:600 12.5px var(--body);color:var(--text)}
+.ac .acts button.go{background:var(--sunset);border-color:transparent;color:#16070f}
+.ac .acts button:focus-visible,.mdl button:focus-visible{outline:2px solid var(--sun2);outline-offset:2px}
+.alert{margin-top:10px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,138,61,.5);background:rgba(255,138,61,.08);color:var(--text);font-size:13px}
+.mdl{position:fixed;inset:0;background:rgba(5,5,10,.72);display:grid;place-items:center;padding:20px;z-index:50}
+.mdl[hidden]{display:none}
+.mdl .box{width:min(460px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#14141c;border:1px solid var(--hair2);border-radius:18px;padding:22px;display:grid;gap:12px}
+.mdl h4{margin:0;font:600 17px var(--body);color:var(--text)}
+.mdl p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.5}
+.mdl label{display:grid;gap:6px;font-size:12.5px;color:var(--dim)}
+.mdl input,.mdl textarea,.mdl select{font:14px var(--body);color:var(--text);background:#0c0c12;border:1px solid var(--hair2);border-radius:10px;padding:10px;box-sizing:border-box;width:100%}
+.mdl textarea{min-height:120px;resize:vertical}
+.mdl .row2{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.mdl .row2 button{all:unset;cursor:pointer;padding:10px 16px;border-radius:10px;border:1px solid var(--hair2);font:600 13.5px var(--body);color:var(--text)}
+.mdl .row2 button.go{background:var(--sunset);border-color:transparent;color:#16070f}
+.brands .pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.brands .pill{all:unset;cursor:pointer;padding:9px 14px;border-radius:99px;border:1px solid var(--hair2);font:600 13.5px var(--body);color:var(--dim)}
+.brands .pill.on{background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05));color:var(--text);border-color:rgba(255,138,61,.6)}
+.brands .pill.add{border-style:dashed;color:var(--sun2)}
+.brands .pill:focus-visible,.brands button:focus-visible{outline:2px solid var(--sun2);outline-offset:2px}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:14px;margin-top:18px}
+.bgrid label{margin-bottom:0}
+.conns{display:grid;gap:8px;margin-top:18px}
+.conn{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:11px 14px;border:1px solid var(--hair);border-radius:12px;background:rgba(0,0,0,.25);flex-wrap:wrap}
+.conn b{font:600 14px var(--body)}
+.conn .st{font-size:12.5px;color:var(--faint);flex:1;min-width:140px}
+.conn .st.ok{color:var(--ok)}
+.conn .st.warn{color:var(--sun2)}
+.ttwho{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--hair);border-radius:12px;margin:6px 0 14px}
+.ttwho img{border-radius:50%;flex:none}
+.ttwho b{display:block;font:600 14px var(--body)}
+.ttwho small,.ck small{display:block;font:500 12px var(--body);color:var(--faint);letter-spacing:0;text-transform:none}
+.ckgrp{display:grid;gap:6px;margin:12px 0}
+.ckgrp .k{font:600 12px var(--body);color:var(--faint)}
+.ckgrp.sub{padding-left:24px}
+.mdl label.ck{display:flex;gap:10px;align-items:flex-start;font:500 13.5px var(--body);color:var(--text);text-transform:none;letter-spacing:0;margin:6px 0}
+.mdl label.ck input{width:auto;margin-top:3px;flex:none}
+.mdl label.consent{margin-top:14px}
+.mdl label.ck a{color:var(--sun2)}
+.mdl select{width:100%}
+.sbtn{all:unset;cursor:pointer;padding:8px 14px;border-radius:10px;border:1px solid var(--hair2);font:600 12.5px var(--body);color:var(--text);text-align:center}
+.sbtn.go{background:var(--sunset);border-color:transparent;color:#16070f}
+.sbtn[disabled]{opacity:.5;cursor:default}
+.caps{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:10px;margin-top:10px}
+.caps label{margin:0;font-size:12px}
+.caps input{padding:9px 10px}
+.caps small{font:500 11px var(--body);color:var(--faint);letter-spacing:0}
+.caps small.warn{color:var(--sun2)}
+select{padding:12px;border-radius:12px;border:1px solid var(--hair2);background:rgba(0,0,0,.35);color:var(--text);font:500 15px var(--body);width:100%}
+.sub{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:22px}
+.chk{display:flex;align-items:center;gap:10px;font:500 14px var(--body);color:var(--text);margin:0}
+.chk input{width:auto}
+.ask{border:1px solid var(--hair2);border-radius:14px;padding:14px;margin-bottom:16px;background:rgba(0,0,0,.22)}
+.ask .q{font:600 14px var(--body);color:var(--text);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{all:unset;cursor:pointer;padding:8px 13px;border-radius:99px;border:1px solid var(--hair2);font:600 13px var(--body);color:var(--dim)}
+.chip.on{color:var(--text);border-color:rgba(255,138,61,.75);background:linear-gradient(180deg,rgba(255,138,61,.18),rgba(255,61,139,.08))}
+.chip:focus-visible{outline:2px solid var(--sun2);outline-offset:2px}
+.perk{margin-top:12px;font-size:13px;color:var(--dim);line-height:1.5}
+.perk b{color:var(--text)}
+.invite{margin-bottom:16px;padding:12px 14px;border-radius:12px;border:1px solid rgba(93,242,164,.45);background:rgba(93,242,164,.07);font-size:13.5px}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:var(--sunset);color:#16070f;font:700 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.share{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:12px;margin-top:18px}
+.share .box2{border:1px solid var(--hair2);border-radius:14px;padding:14px;background:rgba(0,0,0,.28);display:grid;gap:8px;min-width:0}
+.share .box2 .k{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.share .box2 code{font:500 15px var(--mono);color:var(--text);overflow-wrap:anywhere}
+.share .box2 .big{font:400 34px/1 var(--display);letter-spacing:1px}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:12px;margin-top:14px}
+.how div{border-left:2px solid var(--sun1);padding:4px 0 4px 12px;font-size:13px;color:var(--dim)}
+.how b{display:block;color:var(--text);font-size:14px;margin-bottom:2px}
+.mini{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px}
+.mini th{font:500 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);text-align:left;padding:6px 8px;border-bottom:1px solid var(--hair2)}
+.mini td{padding:8px;border-bottom:1px solid var(--hair);font-variant-numeric:tabular-nums}
+.mini .n{text-align:right}
+@media (max-width:560px){nav.top .links{gap:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="top" aria-label="Main">
+    <a class="mark" href="/"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3d8b"/><stop offset=".55" stop-color="#ff8a3d"/><stop offset="1" stop-color="#ffd23d"/></linearGradient></defs><rect width="64" height="64" rx="15" fill="url(#lg)"/><path d="M45.5 21.5A16 16 0 1 0 45.5 42.5" fill="none" stroke="#16070f" stroke-width="7.5" stroke-linecap="round"/><path d="M28 24.5v15l12-7.5z" fill="#16070f"/></svg><span class="wm">Clip<span>Once</span></span></a>
+    <div class="links"><a class="l" href="/app.html">Clipper</a><a class="l" href="/#plans">Plans</a></div>
+  </nav>
+
+  <section id="authBox" hidden>
+    <div class="eyebrow">Your account</div>
+    <h1>Clip once.<br><em>Keep your minutes.</em></h1>
+    <div class="panel" style="margin-top:24px;max-width:460px">
+      <div class="tabs" role="tablist"><button class="on" data-mode="signup" role="tab">Sign up</button><button data-mode="login" role="tab">Log in</button></div>
+      <form id="authForm" novalidate>
+        <div class="invite" id="inviteBox" hidden></div>
+        <div class="ask" id="askBox">
+          <div class="q">First, are you a creator?</div>
+          <p class="note" style="margin:-4px 0 10px">Any category counts: gaming, fitness, beauty, cooking, music, comedy, sports, education, business and more.</p>
+          <div class="chips" role="radiogroup" aria-label="Are you a creator?">
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="streamer">Streamer</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="youtuber">YouTuber</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="tiktoker">TikToker</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="instagram">Instagram creator</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="podcaster">Podcaster</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="other">Other creator</button>
+            <button type="button" class="chip" role="radio" aria-checked="false" data-kind="no">No, I just want clips</button>
+          </div>
+          <div id="creatorFields" hidden>
+            <p class="perk">Welcome to the <b>Creator Partner</b> program. You get <b>30% of every payment</b> from fans who join with your code, for their first 12 months, plus <b>100 bonus minutes</b> each time a fan subscribes and <b>60 minutes</b> right now to clip your own videos. Your fans get 60 bonus minutes and double minutes on their first paid month.</p>
+            <label style="margin-top:12px">Your channel or page (link or @handle)<input id="cChannel" maxlength="200" placeholder="youtube.com/@yourname"></label>
+            <label>What do you make? (optional)<input id="cNiche" maxlength="60" placeholder="Fitness, cooking, gaming, comedy..."></label>
+            <label style="margin-bottom:0">Pick your code (optional)<input id="cCode" maxlength="20" placeholder="YOURNAME" autocapitalize="characters"></label>
+          </div>
+        </div>
+        <label>Email<input id="email" type="email" autocomplete="email" required></label>
+        <label>Password<input id="password" type="password" autocomplete="new-password" minlength="8" required></label>
+        <button class="cta" id="authGo" type="submit">Create free account</button>
+        <div class="err" id="authErr" role="alert"></div>
+      </form>
+      <p class="note">Free accounts get 30 minutes a month. Only upload videos you own or have permission to use.</p>
+    </div>
+  </section>
+
+  <section id="dash" hidden>
+    <div class="row"><div><div class="eyebrow">Signed in as <span id="who"></span></div><h1>Your <em>minutes.</em></h1></div><button class="ghost" id="logout">Log out</button></div>
+    <div class="panel" style="margin-top:24px">
+      <div class="stats">
+        <div class="stat hot"><span class="k">Minutes left</span><span class="v" id="credits">0</span><span class="s">of <span id="planMin">0</span> this month</span><div class="meter"><i id="meter" style="width:0"></i></div></div>
+        <div class="stat"><span class="k">Plan</span><span class="v" id="planName">Free</span><span class="s" id="planNote"></span></div>
+        <div class="stat"><span class="k">Minutes refill</span><span class="v" id="reset" style="font-size:32px">-</span><span class="s">every 30 days</span></div>
+      </div>
+      <a class="cta" href="/app.html" style="margin-top:22px">Open the clipper</a>
+    </div>
+    <div class="panel" id="partnerBox" style="margin-top:18px" hidden></div>
+    <div class="panel brands" id="brandBox" style="margin-top:18px">
+      <div class="row"><div><h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Brands</h3>
+      <p class="note" id="brandNote" style="margin-top:6px">Run several pages from one login. Each brand has its own accounts, daily limits and schedule.</p></div></div>
+      <div class="pills" id="brandPills" role="tablist" aria-label="Your brands"></div>
+      <div id="brandEdit"></div>
+    </div>
+    <div class="panel" id="earnBox" style="margin-top:18px" hidden>
+      <div class="row"><div><h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Earnings</h3>
+      <p class="note" style="margin-top:6px">ClipOnce subscriptions and DailyGTA6Info page growth. Only you can see this.</p></div>
+      <a class="cta" href="/earnings.html" style="width:auto;margin-top:0;padding:13px 22px">See earnings</a></div>
+    </div>
+    <div class="panel" id="autoBox" style="margin-top:18px" hidden>
+      <h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Autopilot clips</h3>
+      <p class="note" id="autoNote" style="margin-top:6px">Loading...</p>
+      <div class="alert" id="autoAlert" hidden></div>
+      <div class="auto" id="autoList"></div>
+    </div>
+    <div class="panel" id="upgrade" style="margin-top:18px">
+      <h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Get more minutes</h3>
+      <p class="note" style="margin-top:6px">Every paid plan starts with 30 days free. Use the same email so we can match your subscription to this account.</p>
+      <div class="plans">
+        <div class="plan"><b>Creator</b><span>$19 a month, 200 min</span><a data-link="https://buy.stripe.com/bJecN74HH193cZh2ptcAo00">Start free month</a></div>
+        <div class="plan"><b>Pro</b><span>$39 a month, 500 min</span><a data-link="https://buy.stripe.com/14A14p1vv5pj0cvc03cAo02">Start free month</a></div>
+        <div class="plan"><b>Agency</b><span>$99 a month, 1,500 min</span><a data-link="https://buy.stripe.com/6oUdRbb657xr5wPfcfcAo01">Start free month</a></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="note" id="loading">Loading your account...</p>
+</div>
+<div class="mdl" id="mdl" hidden role="dialog" aria-modal="true" aria-labelledby="mdlT"><div class="box" id="mdlBox"></div></div>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var mode='signup';
+  function api(action,body){
+    return fetch('/api/auth?action='+action,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin'})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})});
+  }
+  var WORKER='hilltyler2x/cliponce-worker';
+  function esc(t){return String(t||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var AUTO={};
+  var NAMES={kaicenat:'Kai Cenat',caseoh:'CaseOh',ohnepixel:'ohnePixel',xqc:'xQc',lacy:'Lacy',tfue:'Tfue',jasontheween:'Jason The Ween'};
+  function plainName(n){n=String(n||'').replace(/^@/,'').replace(/_+$/,'');if(NAMES[n.toLowerCase()])return NAMES[n.toLowerCase()];n=n.replace(/_/g,' ');return /[A-Z]/.test(n)?n:n.replace(/\b[a-z]/g,function(x){return x.toUpperCase()})}
+  var WARN='ClipOnce already has videos scheduled to post. Posting or changing clips by hand adds to that schedule and could affect your social media page: too many posts in a day can lower your reach or look like spam. ClipOnce never posts the same video twice, even if your PC is off or a post was already made.';
+  function modal(html){$('mdlBox').innerHTML=html;$('mdl').hidden=false;var f=$('mdlBox').querySelector('input,textarea,button.go');if(f)f.focus()}
+  function closeModal(){$('mdl').hidden=true}
+  function clipAction(body,done){
+    fetch('/api/clip?action=autopost',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})})
+      .then(function(){modal('<h4>On its way</h4><p>'+esc(done)+' The cloud picks it up within a few minutes, and this page shows where it was posted once it is live.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')})
+      .catch(function(e){modal('<h4>Could not do that</h4><p>'+esc(e.message)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')});
+  }
+  function warnThen(act,id){
+    modal('<h4 id="mdlT">Heads up before you '+(act==='post'?'post':'edit')+'</h4><p>'+WARN+'</p><div class="row2"><button type="button" data-m="close">Keep the schedule</button><button type="button" class="go" data-m="'+act+'2" data-id="'+esc(id)+'">Continue</button></div>');
+  }
+  function editForm(id){
+    var c=AUTO[id]||{};
+    modal('<h4 id="mdlT">Edit this clip</h4><label>Title<input id="edTitle" maxlength="120" value="'+esc(c.hook||c.title||'')+'"></label><label>Caption<textarea id="edCap" maxlength="2200">'+esc(c.caption||'')+'</textarea></label><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" data-m="save" data-id="'+esc(id)+'">Save</button><button type="button" class="go" data-m="savepost" data-id="'+esc(id)+'">Save and post</button></div>');
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-act],[data-m]');if(!b)return;
+    var id=b.getAttribute('data-id'),a=b.getAttribute('data-act')||b.getAttribute('data-m');
+    if(a==='edit'||a==='post')return warnThen(a,id);
+    if(a==='close')return closeModal();
+    if(a==='edit2')return editForm(id);
+    if(a==='post2'){b.disabled=true;return clipAction({id:id},'Posting this clip now.')}
+    if(a==='save'||a==='savepost'){b.disabled=true;return clipAction({id:id,edit:{title:$('edTitle').value,caption:$('edCap').value,post:a==='savepost'}},a==='savepost'?'Saving your changes and posting.':'Saving your changes.')}
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('mdl').hidden)closeModal()});
+  $('mdl').addEventListener('click',function(e){if(e.target===$('mdl'))closeModal()});
+  function showAlerts(){
+    fetch('https://raw.githubusercontent.com/'+WORKER+'/main/state/alerts.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():{}}).then(function(a){
+      if(a&&a.meta_blocked){$('autoAlert').hidden=false;$('autoAlert').textContent=a.meta_blocked.message+' Paused since '+new Date(a.meta_blocked.since*1000).toLocaleString()+'.'}
+    }).catch(function(){});
+  }
+  function showAuto(){
+    $('autoBox').hidden=false;showAlerts();
+    fetch('https://raw.githubusercontent.com/'+WORKER+'/main/state/queue.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
+      // Held-back clips (skipped on every platform) never show here.
+      var ab=activeBrand();list=list.filter(function(c){var p=c.posted||{};return !(p.youtube==='skip'&&p.instagram==='skip'&&p.threads==='skip')&&!c.held&&(ab?(c.brand?c.brand===ab.id:ab.legacy):true)});
+      list.sort(function(a,b){return (b.made_at||0)-(a.made_at||0)||String(b.created||'').localeCompare(String(a.created||''))});
+      list=list.slice(0,24);AUTO={};list.forEach(function(c){AUTO[c.id]=c});
+      var gm=(ab&&ab.game)||'GTA 6';$('autoNote').textContent=list.length?'Clips for '+(ab?ab.name:'this brand')+'. The cloud checks for fresh '+gm+' moments every 30 minutes, with your PC off. Newest first.':(ab&&!ab.legacy&&!ab.game&&!ab.creators?'Add a game or creators above and the cloud starts making clips for this brand.':'Clips for this brand show up here after the next cloud run.');
+      $('autoList').innerHTML=list.map(function(c){var p=c.posted||{};
+        var done=['youtube','tiktok','instagram','threads','facebook'].filter(function(k){return p[k]&&p[k]!=='skip'});
+        var tags=done.length?done.map(function(k){var v=p[k];return /^https?:/.test(v)?'<a class="ok" href="'+esc(v)+'" target="_blank" rel="noopener">'+k+' \u2713</a>':'<span class="ok">'+k+' \u2713</span>'}).join(''):'<span>Not posted yet</span>';
+        var cap=String(c.caption||'').split('\n');
+        var quote=(cap.filter(function(l){return /^\u201c/.test(l)})[0]||'').replace(/^\u201c|\u201d$/g,'');
+        var hook=c.hook||(quote&&quote.length<=70?quote:'')||cap[0]||c.kind;
+        hook=String(hook).replace(/[^\x20-\u2FFF]/g,'').trim();
+        var poster=c.thumb?' poster="'+esc(c.thumb)+'"':'';
+        var src=esc(c.url)+(c.thumb?'':'#t=2');
+        return '<div class="ac">'+(c.url?'<video src="'+src+'"'+poster+' controls playsinline preload="'+(c.thumb?'none':'metadata')+'"></video>':'')+'<b>'+esc(hook)+'</b><span>'+esc(c.kind)+' from '+esc(plainName(c.creator||c.handle))+'\u2019s stream</span><a href="'+esc(c.source)+'" target="_blank" rel="noopener">Watch the original</a><div class="tags">'+tags+'</div><div class="acts"><button type="button" data-act="edit" data-id="'+esc(c.id)+'">Edit</button><button type="button" class="go" data-act="post" data-id="'+esc(c.id)+'"'+(done.length>=3?' disabled':'')+'>Post</button></div></div>'}).join('');
+    }).catch(function(){$('autoNote').textContent='The cloud autopilot is not connected yet. Once it is, its clips and where they were posted show up here.'});
+  }
+  // ---------- brands ----------
+  var BR=null,USER=null,ADDON='';
+  var HOURS=[];for(var h=0;h<=24;h++)HOURS.push(h);
+  function hourLabel(h){if(h===0||h===24)return h===0?'12 AM':'Midnight';return (h%12||12)+(h<12?' AM':' PM')}
+  function bapi(action,body){
+    return fetch('/api/brands?action='+action,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin'})
+      .then(function(r){return r.json().then(function(j){if(!r.ok){var e=new Error(j.error||'Something went wrong.');e.needAddon=j.needAddon;throw e}return j})});
+  }
+  function activeBrand(){return BR&&BR.brands.filter(function(b){return b.id===BR.active})[0]}
+  function loadBrands(){bapi('list').then(function(j){BR=j;drawBrands();if(USER&&USER.plan==='owner')showAuto()}).catch(function(e){$('brandNote').textContent=e.message})}
+  function addonLink(){var A=(BR&&BR.limits.addonLink)||ADDON;return A?A+'?prefilled_email='+encodeURIComponent(USER.email)+'&client_reference_id='+encodeURIComponent(USER.id):''}
+  function drawBrands(){
+    var L=BR.limits,n=BR.brands.length;
+    $('brandNote').textContent='Run several pages from one login. Each brand has its own accounts, daily limits and schedule. You are using '+n+' of '+L.max+' brand'+(L.max===1?'':'s')+(L.extra?' ('+L.included+' included plus '+L.extra+' extra)':'')+'.';
+    $('brandPills').innerHTML=BR.brands.map(function(b){return '<button type="button" role="tab" class="pill'+(b.id===BR.active?' on':'')+'" aria-selected="'+(b.id===BR.active)+'" data-brand="'+b.id+'">'+esc(b.name)+(b.paused?' (paused)':'')+'</button>'}).join('')+'<button type="button" class="pill add" data-badd="1">+ Add brand</button>';
+    var b=activeBrand();if(!b){$('brandEdit').innerHTML='';return}
+    var rec=BR.recommended,lab=BR.labels;
+    var conns=BR.platforms.map(function(p){var c=b.connections[p]||{},st,btn='';
+      if(c.state==='cloud'){st='<span class="st ok">'+esc(c.handle)+' ✓ '+esc(c.note)+'</span>'}
+      else if(c.state==='connected'){st='<span class="st ok">'+esc(c.handle)+' ✓ Connected'+(p==='tiktok'?(c.settings?'. Posts visible to: '+esc(TTP[c.privacy]||c.privacy):'</span><span class="st warn">Choose your TikTok post settings before ClipOnce can post'):'')+'</span>';btn=(p==='tiktok'?'<button type="button" class="sbtn'+(c.settings?'':' go')+'" data-tt="1">Post settings</button>':'')+'<button type="button" class="sbtn" data-disc="'+p+'">Disconnect</button>'}
+      else if(c.state==='connect'){st='<span class="st">Not connected'+(c.note?'. '+esc(c.note):'')+'</span>';btn='<a class="sbtn go" href="/api/connect?p='+p+'&brand='+b.id+'">Connect</a>'}
+      else{st='<span class="st">Not connected</span>';btn='<button type="button" class="sbtn go" data-setup="'+p+'">Connect</button>'}
+      return '<div class="conn"><b>'+esc(lab[p])+'</b>'+st+btn+'</div>'}).join('');
+    var caps=BR.platforms.map(function(p){var v=b.caps[p]||0,r=rec[p];return '<label>'+esc(lab[p])+'<input type="number" min="0" max="20" inputmode="numeric" data-cap="'+p+'" value="'+v+'"><small data-capnote="'+p+'"'+(v>r[1]?' class="warn"':'')+'>'+(v>r[1]?'Above the safe '+r[0]+' to '+r[1]+' a day':'Recommended '+r[0]+' to '+r[1]+' a day')+'</small></label>'}).join('');
+    var hrs=function(id,val){return '<select id="'+id+'">'+HOURS.map(function(h){return '<option value="'+h+'"'+(h===val?' selected':'')+'>'+hourLabel(h)+'</option>'}).join('')+'</select>'};
+    $('brandEdit').innerHTML='<div class="bgrid"><label>Brand name<input id="bName" maxlength="40" value="'+esc(b.name)+'"></label>'+
+      '<label>Game to clip (Twitch category)<input id="bGame" maxlength="80" placeholder="Grand Theft Auto VI" value="'+esc(b.game)+'"></label>'+
+      '<label>Creators to follow (Twitch names, comma separated)<input id="bCreators" maxlength="400" placeholder="kaicenat, caseoh_, your own channel" value="'+esc(b.creators)+'"></label></div>'+
+      '<div class="sub">Accounts for this brand</div><div class="conns">'+conns+'</div>'+
+      '<div class="sub">Posts per day</div><div class="caps">'+caps+'</div>'+
+      '<p class="note" id="capWarn" style="margin-top:8px"></p>'+
+      '<div class="sub">Posting hours (New York time)</div><div class="bgrid"><label>From'+hrs('bStart',b.postStart)+'</label><label>Until'+hrs('bEnd',b.postEnd)+'</label>'+
+      '<label class="chk" style="align-self:end;padding-bottom:12px"><input type="checkbox" id="bPaused"'+(b.paused?' checked':'')+'> Pause posting for this brand</label></div>'+
+      '<div class="row" style="margin-top:20px"><div class="err" id="bErr" role="alert" style="margin:0"></div><div style="display:flex;gap:10px;flex-wrap:wrap">'+
+      (b.legacy?'':'<button type="button" class="sbtn" data-bdel="1">Delete brand</button>')+'<button type="button" class="sbtn go" data-bsave="1">Save brand</button></div></div>'+
+      '<p class="note" style="margin-top:10px">Everything runs in the cloud on its own, with your PC off. ClipOnce never posts the same video twice to the same account.</p>';
+    capWarn();
+  }
+  function capWarn(){
+    var over=[];document.querySelectorAll('[data-cap]').forEach(function(i){var p=i.getAttribute('data-cap'),r=BR.recommended[p],v=parseInt(i.value,10)||0,n=document.querySelector('[data-capnote="'+p+'"]');
+      n.className=v>r[1]?'warn':'';n.textContent=v>r[1]?'Above the safe '+r[0]+' to '+r[1]+' a day':'Recommended '+r[0]+' to '+r[1]+' a day';if(v>r[1])over.push(BR.labels[p])});
+    $('capWarn').textContent=over.length?'Heads up: posting more than the recommended amount on '+over.join(', ')+' can lower your reach or look like spam to the platform. It is your call, and ClipOnce will post what you set.':'';
+  }
+  function addBrandModal(){
+    var L=BR.limits;
+    if(BR.brands.length>=L.max){
+      if(USER.plan==='free')return modal('<h4 id="mdlT">Add another brand</h4><p>Free accounts have one brand. Pro includes 2 brands, so you can run your gaming channel and your clip page on one login. Extra brands are $9 a month each.</p><div class="row2"><button type="button" data-m="close">Not now</button><a class="sbtn go" href="/#plans">See plans</a></div>');
+      var link=addonLink();
+      return modal('<h4 id="mdlT">Add another brand</h4><p>Your plan includes '+L.max+' brand'+(L.max===1?'':'s')+'. Each extra brand is $9 a month and comes with its own accounts, limits and schedule. Cancel any time.</p><div class="row2"><button type="button" data-m="close">Not now</button>'+(link?'<a class="sbtn go" href="'+esc(link)+'">Add a brand for $9 a month</a>':'<button type="button" class="sbtn" disabled>Opening soon</button>')+'</div>');
+    }
+    modal('<h4 id="mdlT">Add a brand</h4><p>A brand is one set of social accounts, like your gaming channel or a clip page.</p><label>Brand name<input id="nbName" maxlength="40" placeholder="My gaming page"></label><label>Game to clip (optional)<input id="nbGame" maxlength="80" placeholder="Fortnite"></label><div class="err" id="nbErr" role="alert"></div><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" class="go" data-m="bcreate">Add brand</button></div>');
+  }
+  var TTP={PUBLIC_TO_EVERYONE:'Everyone',MUTUAL_FOLLOW_FRIENDS:'Friends',FOLLOWER_OF_CREATOR:'Followers',SELF_ONLY:'Only me'};
+  function ttModal(){var b=activeBrand();if(!b)return;
+    modal('<h4 id="mdlT">TikTok post settings</h4><p class="note">Loading your TikTok account...</p>');
+    bapi('tiktok&id='+encodeURIComponent(b.id)).then(function(j){var c=j.creator,s=j.saved||{};
+      var opts='<option value="">Choose who can see your posts</option>'+c.privacy.map(function(o){return '<option value="'+esc(o.v)+'"'+(s.privacy===o.v?' selected':'')+'>'+esc(o.label)+'</option>'}).join('');
+      function box(k,label,off){return '<label class="ck"><input type="checkbox" id="tt_'+k+'"'+(off?' disabled':'')+(s[k]&&!off?' checked':'')+'> '+label+(off?' <small>(turned off in your TikTok settings)</small>':'')+'</label>'}
+      var disc=!!(s.brand_organic||s.brand_content);
+      modal('<h4 id="mdlT">TikTok post settings</h4>'+
+        '<div class="ttwho">'+(c.avatar?'<img src="'+esc(c.avatar)+'" alt="" width="40" height="40">':'')+'<div><b>Posting as '+esc(c.nickname||c.username||'your TikTok account')+'</b><small>ClipOnce posts clips for '+esc(b.name)+' to this account on your schedule.</small></div></div>'+
+        '<label>Who can see these posts<select id="tt_privacy">'+opts+'</select></label>'+
+        '<div class="ckgrp"><span class="k">Let viewers</span>'+box('comment','Comment',c.commentOff)+box('duet','Duet',c.duetOff)+box('stitch','Stitch',c.stitchOff)+'</div>'+
+        '<label class="ck"><input type="checkbox" id="tt_disc"'+(disc?' checked':'')+'> These videos promote a brand, product or service</label>'+
+        '<div id="tt_discBox"'+(disc?'':' hidden')+' class="ckgrp sub">'+
+          '<label class="ck"><input type="checkbox" id="tt_yourBrand"'+(s.brand_organic?' checked':'')+'> <span>Your brand<small>You are promoting yourself or your own business. Videos get a "Promotional content" label.</small></span></label>'+
+          '<label class="ck"><input type="checkbox" id="tt_branded"'+(s.brand_content?' checked':'')+'> <span>Branded content<small>You are promoting another brand or a third party. Videos get a "Paid partnership" label.</small></span></label></div>'+
+        (c.maxSec?'<p class="note">TikTok lets this account post videos up to '+(c.maxSec%60?Math.floor(c.maxSec/60)+' min '+(c.maxSec%60)+' s':(c.maxSec/60)+' minutes')+' long. ClipOnce clips are shorter.</p>':'')+
+        '<label class="ck consent"><input type="checkbox" id="tt_consent"> <span id="tt_consentTxt"></span></label>'+
+        '<p class="note">After each post, TikTok can take a few minutes to process the video before it shows on your profile.</p>'+
+        '<div class="err" id="ttErr" role="alert"></div><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" class="go" data-ttsave="1">Save settings</button></div>');
+      ttConsent();
+    }).catch(function(err){modal('<h4 id="mdlT">TikTok post settings</h4><p>'+esc(err.message)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')})}
+  function ttConsent(){var el=$('tt_consentTxt');if(!el)return;var br=$('tt_disc').checked&&$('tt_branded').checked;
+    el.innerHTML='By letting ClipOnce post, you agree to TikTok\'s '+(br?'<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a> and ':'')+'<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a>.';
+    var priv=$('tt_privacy'),self=priv.querySelector('option[value="SELF_ONLY"]');if(self){self.disabled=br;if(br&&priv.value==='SELF_ONLY')priv.value=''}}
+  document.addEventListener('change',function(e){if(e.target.id==='tt_disc'){$('tt_discBox').hidden=!e.target.checked;ttConsent()}if(e.target.id==='tt_branded')ttConsent()});
+  document.addEventListener('click',function(e){var t=e.target.closest('[data-tt],[data-ttsave]');if(!t)return;
+    if(t.hasAttribute('data-tt'))return ttModal();
+    var b=activeBrand(),g=function(id){var x=$(id);return !!(x&&x.checked&&!x.disabled)};$('ttErr').textContent='';t.disabled=true;
+    bapi('tiktok_save',{id:b.id,privacy:$('tt_privacy').value,comment:g('tt_comment'),duet:g('tt_duet'),stitch:g('tt_stitch'),disclose:g('tt_disc'),yourBrand:g('tt_yourBrand'),brandedContent:g('tt_branded'),consent:g('tt_consent')})
+      .then(function(j){var a=BR.active;BR=j;BR.active=a;drawBrands();modal('<h4 id="mdlT">TikTok settings saved</h4><p>ClipOnce will post to TikTok for '+esc(b.name)+' with these settings. You can change them any time.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')})
+      .catch(function(err){t.disabled=false;$('ttErr').textContent=err.message})});
+  document.addEventListener('input',function(e){if(e.target.matches('[data-cap]'))capWarn()});
+  document.addEventListener('click',function(e){
+    var su=e.target.closest('[data-setup]');if(su){var sp=su.getAttribute('data-setup'),sc=(activeBrand().connections[sp]||{});
+      return modal(USER&&USER.plan==='owner'?'<h4 id="mdlT">One step to switch on '+esc(BR.labels[sp])+'</h4><p>'+esc(sc.setup||'')+' Once it is saved, this button signs you in right away. The setup doc has the exact clicks.</p><div class="row2"><button type="button" data-m="close">OK</button><a class="sbtn go" href="https://claude.ai/artifact/3Wxg4JDmzggetZ1yP7qT1b" target="_blank" rel="noopener">Open setup steps</a></div>'
+        :'<h4 id="mdlT">'+esc(BR.labels[sp])+' sign-in is almost ready</h4><p>We are finishing the official connection with '+esc(BR.labels[sp])+'. Your brand settings are saved, and this button will sign you in as soon as it opens.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')}
+    var t=e.target.closest('[data-brand],[data-badd],[data-bsave],[data-bdel],[data-disc],[data-m="bcreate"],[data-m="bdel2"]');if(!t)return;
+    if(t.hasAttribute('data-brand')){var id=t.getAttribute('data-brand');if(id===BR.active)return;BR.active=id;drawBrands();showAuto();bapi('switch',{id:id}).catch(function(){});return}
+    if(t.hasAttribute('data-badd'))return addBrandModal();
+    if(t.getAttribute('data-m')==='bcreate'){t.disabled=true;return bapi('create',{name:$('nbName').value,game:$('nbGame').value}).then(function(j){BR=j;BR.active=j.id;closeModal();drawBrands();showAuto()}).catch(function(err){t.disabled=false;if(err.needAddon){closeModal();loadBrands();return addBrandModal()}$('nbErr').textContent=err.message})}
+    var b=activeBrand();if(!b)return;
+    if(t.hasAttribute('data-bsave')){var caps={};document.querySelectorAll('[data-cap]').forEach(function(i){caps[i.getAttribute('data-cap')]=i.value});t.disabled=true;$('bErr').textContent='';
+      return bapi('update',{id:b.id,name:$('bName').value,game:$('bGame').value,creators:$('bCreators').value,caps:caps,postStart:$('bStart').value,postEnd:$('bEnd').value,paused:$('bPaused').checked})
+        .then(function(j){var a=BR.active;BR=j;BR.active=a;drawBrands();$('bErr').style.color='var(--ok)';$('bErr').textContent='Saved.'}).catch(function(err){t.disabled=false;$('bErr').style.color='';$('bErr').textContent=err.message})}
+    if(t.hasAttribute('data-bdel'))return modal('<h4 id="mdlT">Delete '+esc(b.name)+'?</h4><p>Its sign-ins, limits and schedule are removed and it stops posting. Clips already posted stay on your accounts.</p><div class="row2"><button type="button" data-m="close">Keep it</button><button type="button" class="go" data-m="bdel2">Delete brand</button></div>');
+    if(t.getAttribute('data-m')==='bdel2')return bapi('delete',{id:b.id}).then(function(j){BR=j;closeModal();drawBrands();showAuto()}).catch(function(err){modal('<h4>Could not delete</h4><p>'+esc(err.message)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')});
+    if(t.hasAttribute('data-disc'))return bapi('disconnect',{id:b.id,platform:t.getAttribute('data-disc')}).then(function(j){var a=BR.active;BR=j;BR.active=a;drawBrands()});
+  });
+  (function(){var u=new URLSearchParams(location.search),c=u.get('connected'),er=u.get('connect_error'),ad=u.get('brand_added');
+    if(c==='TikTok'){history.replaceState(null,'','/account.html');var w=setInterval(function(){if(BR){clearInterval(w);ttModal()}},300);return}
+    if(c||er||ad){history.replaceState(null,'','/account.html');setTimeout(function(){modal(c?'<h4>'+esc(c)+' connected</h4><p>This brand can now post there from the cloud.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>':ad?'<h4>Brand slot added</h4><p>Thanks. Tap "+ Add brand" to set up your new brand.</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>':'<h4>Could not connect</h4><p>'+esc(er)+'</p><div class="row2"><button type="button" class="go" data-m="close">OK</button></div>')},400)}})();
+  // ---------- Creator Partner ----------
+  var KIND='',REF='';
+  try{REF=(new URLSearchParams(location.search).get('ref')||localStorage.getItem('co_ref')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,20)}catch(e){}
+  if(REF){try{localStorage.setItem('co_ref',REF)}catch(e){}
+    fetch('/api/affiliate?action=check&code='+encodeURIComponent(REF)).then(function(r){return r.json()}).then(function(j){
+      if(!j.valid){REF='';return}
+      $('inviteBox').hidden=false;$('inviteBox').innerHTML='Invited by <b>'+esc(j.creator.name||j.creator.code)+'</b>. Sign up and you get <b>'+j.rules.fanSignupBonus+' bonus minutes</b>, plus double minutes on your first paid month.';
+      try{if(!sessionStorage.getItem('co_ref_click')){sessionStorage.setItem('co_ref_click','1');fetch('/api/affiliate?action=click',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:REF})})}}catch(e){}
+    }).catch(function(){})}
+  document.querySelectorAll('.chip[data-kind]').forEach(function(c){c.onclick=function(){
+    KIND=c.getAttribute('data-kind');document.querySelectorAll('.chip[data-kind]').forEach(function(x){var on=x===c;x.classList.toggle('on',on);x.setAttribute('aria-checked',on)});
+    $('creatorFields').hidden=KIND==='no';if(KIND!=='no')$('cChannel').focus();
+  }});
+  function money(c){c=c||0;return '$'+(c/100).toLocaleString('en-US',{minimumFractionDigits:c%100?2:0,maximumFractionDigits:2})}
+  function papi(action,body){
+    return fetch('/api/affiliate?action='+action,{method:body?'POST':'GET',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,credentials:'same-origin'})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'Something went wrong.');return j})});
+  }
+  function loadPartner(){papi('me').then(drawPartner).catch(function(){})}
+  function joinForm(R){
+    return '<div class="bgrid" style="margin-top:14px"><label>I am a<select id="pKind"><option value="streamer">Streamer</option><option value="youtuber">YouTuber</option><option value="tiktoker">TikToker</option><option value="instagram">Instagram creator</option><option value="podcaster">Podcaster</option><option value="other">Other creator</option></select></label>'+
+      '<label>What do you make? (optional)<input id="pNiche" maxlength="60" placeholder="Fitness, cooking, gaming..."></label>'+
+      '<label>Your channel or page (link or @handle)<input id="pChannel" maxlength="200" placeholder="youtube.com/@yourname"></label>'+
+      '<label>Pick your code (optional)<input id="pCode" maxlength="20" placeholder="YOURNAME"></label></div>'+
+      '<div class="row" style="margin-top:14px"><div class="err" id="pErr" role="alert" style="margin:0"></div><button type="button" class="sbtn go" data-pjoin="1">Join the Creator Partner program</button></div>';
+  }
+  function howHtml(R){
+    return '<div class="how"><div><b>'+R.ratePct+'% for '+R.months+' months</b>Of every payment from each fan who joins with your link or code.</div>'+
+      '<div><b>+'+R.creatorPerPaid+' minutes per fan</b>Added to your account each time a fan becomes a paying subscriber.</div>'+
+      '<div><b>Your fans win too</b>'+R.fanSignupBonus+' bonus minutes at signup and double minutes on their first paid month.</div>'+
+      '<div><b>Paid monthly</b>By PayPal once you have '+money(R.minPayoutCents)+' ready. Each payment waits '+R.holdDays+' days in case of a refund.</div></div>';
+  }
+  function drawPartner(P){
+    var box=$('partnerBox'),R=P.rules;box.hidden=false;
+    var head='<h3 style="font:600 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)">Creator Partner</h3>';
+    if(!P.partner){box.innerHTML=head+'<p class="note" style="margin-top:6px">Make videos, streams or podcasts in any category? Share ClipOnce with your audience and get paid every month.</p>'+howHtml(R)+joinForm(R);return}
+    var S=P.stats,link=location.origin+'/?ref='+P.code;
+    box.innerHTML='<div class="row"><div>'+head+'<p class="note" style="margin-top:6px">'+esc(P.kind)+(P.niche?' · '+esc(P.niche):'')+' · '+esc(P.channel)+'</p></div><span class="badge">★ Creator Partner</span></div>'+
+      '<div class="share"><div class="box2"><span class="k">Your link</span><code id="pLink">'+esc(link)+'</code><button type="button" class="sbtn go" data-copy="pLink">Copy link</button></div>'+
+      '<div class="box2"><span class="k">Your code</span><span class="big" id="pCodeV">'+esc(P.code)+'</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="sbtn" data-copy="pCodeV">Copy code</button><button type="button" class="sbtn" data-pcode="1">Change code</button></div></div></div>'+
+      '<div class="stats" style="margin-top:20px">'+
+        '<div class="stat hot"><span class="k">Ready to pay out</span><span class="v">'+money(S.payable_cents)+'</span><span class="s">'+money(S.pending_cents)+' waiting the '+R.holdDays+'-day hold</span></div>'+
+        '<div class="stat"><span class="k">Earned so far</span><span class="v">'+money(S.earned_cents)+'</span><span class="s">'+money(S.paid_cents)+' paid to you</span></div>'+
+        '<div class="stat"><span class="k">Paying fans</span><span class="v">'+S.paying+'</span><span class="s">'+S.trials+' on a free trial</span></div>'+
+        '<div class="stat"><span class="k">Fans signed up</span><span class="v">'+S.signups+'</span><span class="s">'+S.clicks+' link visits</span></div></div>'+
+      '<div class="sub">Where should we pay you?</div><div class="bgrid" style="margin-top:10px"><label>PayPal email<input id="pPay" type="email" maxlength="200" value="'+esc(P.payoutEmail)+'" placeholder="you@example.com"></label>'+
+        '<div style="align-self:end;padding-bottom:2px"><button type="button" class="sbtn go" data-ppay="1">Save</button> <span class="note" id="pPayMsg"></span></div></div>'+
+      (P.recent.length?'<div class="sub">Recent commissions</div><div style="overflow-x:auto"><table class="mini"><thead><tr><th>Date</th><th class="n">Fan paid</th><th class="n">You earn</th><th>Status</th></tr></thead><tbody>'+
+        P.recent.map(function(c){var held=Date.now()-new Date(c.date).getTime()<R.holdDays*864e5;return '<tr><td>'+new Date(c.date).toLocaleDateString()+'</td><td class="n">'+money(c.amount_cents)+'</td><td class="n">'+money(c.commission_cents)+'</td><td>'+(c.status==='void'?'Refunded':held?'On hold':'Ready')+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
+      (P.payouts.length?'<div class="sub">Payouts</div><div style="overflow-x:auto"><table class="mini"><tbody>'+P.payouts.map(function(p){return '<tr><td>'+new Date(p.created_at).toLocaleDateString()+'</td><td class="n">'+money(p.amount_cents)+'</td><td>'+esc(p.method)+'</td></tr>'}).join('')+'</tbody></table></div>':'')+
+      '<div class="sub">How it works</div>'+howHtml(R)+
+      '<p class="note" style="margin-top:12px">Tip: put your link in your bio, video descriptions, stream panels or show notes, and say your code in your videos. Fans can also type it when they sign up.</p>';
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-pjoin],[data-ppay],[data-copy],[data-pcode],[data-m="pcode2"]');if(!t)return;
+    if(t.hasAttribute('data-copy')){var v=$(t.getAttribute('data-copy')).textContent;(navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(function(){t.textContent='Copied'},function(){prompt('Copy this',v)});return}
+    if(t.hasAttribute('data-pjoin')){t.disabled=true;return papi('join',{kind:$('pKind').value,channel:$('pChannel').value,niche:$('pNiche').value,code:$('pCode').value}).then(function(P){drawPartner(P);api('me').then(function(j){if(j.user)showDash(j.user,true)})}).catch(function(err){t.disabled=false;$('pErr').textContent=err.message})}
+    if(t.hasAttribute('data-ppay')){t.disabled=true;return papi('payout',{email:$('pPay').value}).then(function(){t.disabled=false;$('pPayMsg').textContent='Saved.'}).catch(function(err){t.disabled=false;$('pPayMsg').textContent=err.message})}
+    if(t.hasAttribute('data-pcode'))return modal('<h4 id="mdlT">Change your code</h4><p>Links with your old code stop working, so update them wherever you shared them.</p><label>New code<input id="npCode" maxlength="20"></label><div class="err" id="npErr" role="alert"></div><div class="row2"><button type="button" data-m="close">Cancel</button><button type="button" class="go" data-m="pcode2">Save code</button></div>');
+    if(t.getAttribute('data-m')==='pcode2'){t.disabled=true;return papi('code',{code:$('npCode').value}).then(function(P){closeModal();drawPartner(P)}).catch(function(err){t.disabled=false;$('npErr').textContent=err.message})}
+  });
+  function showAuth(){$('loading').hidden=true;$('dash').hidden=true;$('authBox').hidden=false}
+  function showDash(u,quiet){
+    $('loading').hidden=true;$('authBox').hidden=true;$('dash').hidden=false;
+    $('who').textContent=u.email;$('credits').textContent=u.credits;$('planMin').textContent=u.planMinutes;
+    $('meter').style.width=Math.max(0,Math.min(100,u.credits/u.planMinutes*100))+'%';
+    $('planName').textContent=u.planName;
+    $('planNote').textContent=u.plan==='owner'?'Full access to everything':u.plan==='free'?'Upgrade any time below':'Thanks for subscribing';
+    $('reset').textContent=new Date(u.resetsAt).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+    $('upgrade').hidden=u.plan!=='free';
+    if(quiet){USER=u;return}
+    USER=u;loadBrands();loadPartner();
+    if(u.plan==='owner'){$('earnBox').hidden=false;}
+    document.querySelectorAll('[data-link]').forEach(function(a){a.href=a.dataset.link+'?prefilled_email='+encodeURIComponent(u.email)+'&client_reference_id='+encodeURIComponent(u.id)});
+  }
+  document.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
+    mode=b.dataset.mode;document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    $('askBox').hidden=mode!=='signup';$('inviteBox').style.display=mode==='signup'?'':'none';
+    $('authGo').textContent=mode==='signup'?'Create free account':'Log in';
+    $('password').autocomplete=mode==='signup'?'new-password':'current-password';$('authErr').textContent='';
+  }});
+  $('authForm').onsubmit=function(e){
+    e.preventDefault();$('authErr').textContent='';
+    var body={email:$('email').value,password:$('password').value};
+    if(mode==='signup'){
+      if(!KIND){$('authErr').textContent='Pick an answer to the first question: are you a creator?';return}
+      if(KIND!=='no'){if($('cChannel').value.trim().length<2){$('authErr').textContent='Add your channel link or handle.';$('cChannel').focus();return}body.creator={kind:KIND,channel:$('cChannel').value,niche:$('cNiche').value,code:$('cCode').value}}
+      if(REF)body.ref=REF;
+    }
+    $('authGo').disabled=true;
+    api(mode,body)
+      .then(function(j){if(j.referred||j.creator){try{localStorage.removeItem('co_ref')}catch(e){}}showDash(j.user);
+        if(j.creator)setTimeout(function(){modal('<h4 id="mdlT">You are a Creator Partner</h4><p>Your code is <b>'+esc(j.creator)+'</b> and we added 60 bonus minutes to your account. Your link and earnings are on this page.</p><div class="row2"><button type="button" class="go" data-m="close">Let\u2019s go</button></div>')},300);
+        else if(j.referred)setTimeout(function(){modal('<h4 id="mdlT">Bonus minutes added</h4><p>You joined with code <b>'+esc(j.referred)+'</b>, so we added 60 bonus minutes. Subscribe any time and your first paid month gets double minutes.</p><div class="row2"><button type="button" class="go" data-m="close">Nice</button></div>')},300)})
+      .catch(function(err){$('authErr').textContent=err.message})
+      .then(function(){$('authGo').disabled=false});
+  };
+  $('logout').onclick=function(){api('logout',{}).then(showAuth,showAuth)};
+  api('me').then(function(j){j.user?showDash(j.user):showAuth()},showAuth);
+})();
+</script>
+</body>
+</html>
