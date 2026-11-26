@@ -1,11 +1,11 @@
 {
-  "date": "2026-11-24",
-  "taken_at": "2026-11-24T21:55:22Z",
+  "date": "2026-11-26",
+  "taken_at": "2026-11-26T14:37:51Z",
   "platforms": {
     "instagram": {
       "handle": "@dailygta6info",
       "followers": 0,
-      "posts": 38
+      "posts": 44
     },
     "facebook": {
       "handle": "Dailygta6Info",
@@ -15,7 +15,7 @@
     "threads": {
       "handle": "@dailygta6info",
       "followers": 0,
-      "views_24h": 25,
+      "views_24h": 21,
       "likes_24h": 0
     },
     "youtube": {
@@ -25,7 +25,7 @@
       "handle": "@dailygta6info6",
       "followers": 0,
       "likes": 12,
-      "posts": 35
+      "posts": 41
     },
     "x": {
       "handle": "@DailyGTA6Info",
@@ -47,9 +47,19 @@
     "2026-11-22": {},
     "2026-11-23": {},
     "2026-11-24": {
+      "instagram": 3,
+      "facebook": 3,
+      "threads": 5
+    },
+    "2026-11-25": {
+      "threads": 4,
       "instagram": 2,
-      "facebook": 2,
-      "threads": 3
+      "facebook": 2
+    },
+    "2026-11-26": {
+      "threads": 2,
+      "instagram": 1,
+      "facebook": 1
     }
   }
 }
