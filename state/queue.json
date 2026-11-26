@@ -2272,10 +2272,13 @@
     "made_at": 1795669992,
     "fresh": true,
     "hook": "Bender1101 can't believe this",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18222653620357041"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-26/2026-11-26_tw_bender1101_DarlingDifficultLard_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-26/2026-11-26_tw_bender1101_DarlingDifficultLard.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "80c9ff0074e627f694671411dc825e87cec8a42d"
   },
   {
     "id": "2026-11-26_tw_TheBurntPeanut_IronicAntsyMeerkatHo",
