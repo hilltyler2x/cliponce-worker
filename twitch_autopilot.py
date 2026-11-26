@@ -87,7 +87,7 @@ def run_brand(brand, seen, queue):
     # Runs every 30 minutes. Goal: be FIRST. Only moments from the last few hours, ranked by how fast
     # viewers are piling onto them (views per hour), big creators first, a couple per run.
     todays = [q for q in queue if q.get("created") == today() and str(q.get("id", "")).find("_tw_") > 0 and (q.get("brand") or "default") == bid]
-    per_day = CONFIG.get("clips_per_day", 10) if legacy else max(list((brand.get("caps") or {}).values()) + [1]) + 2
+    per_day = CONFIG.get("twitch_clips_per_day", CONFIG.get("clips_per_day", 10)) if legacy else max(list((brand.get("caps") or {}).values()) + [1]) + 2
     target = max(0, min(CONFIG.get("fresh_per_run", 2), per_day - len(todays)))
     made = 0
     per_streamer, min_views = CONFIG.get("twitch_per_streamer", 2), CONFIG.get("twitch_min_views", 80)

@@ -80,5 +80,7 @@
   "public_upload_approved": {
     "_note": "Flip youtube to true once Google approves the ClipOnce API project audit; until then extra brands hold YouTube uploads (they would be locked private).",
     "youtube": false
-  }
+  },
+  "streamer_clips_per_day": 1,
+  "twitch_clips_per_day": 2
 }
