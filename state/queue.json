@@ -1862,7 +1862,9 @@
     "made_at": 1795477969,
     "fresh": true,
     "hook": "What did AvoidingThePuddle just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 17916245721475743"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_AvoidingThePuddle_EmpathicLitigiousTur_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_AvoidingThePuddle_EmpathicLitigiousTur.mp4",
     "namehook": true,
