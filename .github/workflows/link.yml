@@ -1,0 +1,28 @@
+name: Website link job
+on:
+  workflow_dispatch:
+    inputs:
+      job_id: { required: true, type: string }
+      url: { required: true, type: string }
+      count: { required: false, type: string, default: "3" }
+run-name: "Link job ${{ inputs.job_id }}"
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      EXTRA_PIP: faster-whisper
+      TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+      TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+      JOB_ID: ${{ inputs.job_id }}
+      JOB_URL: ${{ inputs.url }}
+      JOB_COUNT: ${{ inputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: bash .github/workflows/setup.sh
+      - run: python link_job.py

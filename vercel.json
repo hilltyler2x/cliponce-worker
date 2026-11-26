@@ -1,5 +1,0 @@
-{
-  "headers": [
-    { "source": "/cliponce-icon.jpg", "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }] }
-  ]
-}
