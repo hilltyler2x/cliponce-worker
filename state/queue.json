@@ -2294,9 +2294,12 @@
     "made_at": 1795677440,
     "fresh": true,
     "hook": "TheBurntPeanut did what?",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 18649350118034636"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-26/2026-11-26_tw_TheBurntPeanut_IronicAntsyMeerkatHo_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-26/2026-11-26_tw_TheBurntPeanut_IronicAntsyMeerkatHo.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "1c35baf81111dc7cb7a2f58399ed5816c1db5e71"
   }
 ]
