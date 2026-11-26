@@ -25,7 +25,7 @@ async function start(res, p, state) {
     response_type: 'code', access_type: 'offline', prompt: 'consent select_account', include_granted_scopes: 'true',
     scope: 'https://www.googleapis.com/auth/youtube.upload https://www.googleapis.com/auth/youtube.readonly', state }));
   if (p === 'tiktok') return go(res, 'https://www.tiktok.com/v2/auth/authorize/?' + new URLSearchParams({ client_key: e.TIKTOK_CLIENT_KEY, redirect_uri: REDIRECT,
-    response_type: 'code', scope: 'user.info.basic,video.publish,video.upload', state }));
+    response_type: 'code', scope: 'user.info.basic,video.publish', state }));
   if (p === 'instagram' || p === 'facebook') return go(res, 'https://www.facebook.com/v21.0/dialog/oauth?' + new URLSearchParams({ client_id: brands.META_APP_ID,
     redirect_uri: REDIRECT, response_type: 'code', state, config_id: brands.META_CONFIG_ID }));
   if (p === 'threads') return go(res, 'https://threads.net/oauth/authorize?' + new URLSearchParams({ client_id: brands.THREADS_APP_ID, redirect_uri: REDIRECT,
