@@ -20,6 +20,14 @@ META = ("instagram", "facebook", "threads")
 BLOCK_HOURS = 12  # when Meta blocks API access, stop knocking for this long instead of retrying every run
 
 
+
+TIP_KINDS = {"Easter egg", "Hidden secret", "Hidden detail", "Glitch", "Trick", "Hack", "Rare find", "Tip", "Hidden spot"}
+
+
+def is_tip(item):
+    """A tips / hidden spots / easter egg clip (the page's lead lane), as opposed to a streamer reaction moment."""
+    return item.get("lane") == "tips" or (item.get("kind") in TIP_KINDS and "_tw_" not in str(item.get("id", "")))
+
 def remote_json(name, default):
     """Latest copy from the repo (other runs and the PC may have written since this run started)."""
     if not os.environ.get("GITHUB_ACTIONS"):
@@ -138,10 +146,15 @@ def scheduled(queue, counts, ledger, alerts, brands):
                 log(f"{name} {plat}: last post was under {gap // 60} minutes ago, spacing posts out")
                 continue
             done = 0
-            # Freshest first: a moment is worth most before anyone else posts it.
-            for item in sorted(items, key=lambda q: (q.get("made_at") or 0, q.get("created") or ""), reverse=True):
+            # Tips and hidden spots lead (Tyler, 2026-11-26); streamer moments are an extra, at most
+            # streamer_clips_per_day per platform. Freshest first inside each group.
+            scap = CONFIG.get("streamer_clips_per_day") if brand.get("legacy") else None
+            sk = ck + ":streamer"
+            for item in sorted(items, key=lambda q: (is_tip(q), q.get("made_at") or 0, q.get("created") or ""), reverse=True):
                 if done >= per_run or day.get(ck, 0) >= cap:
                     break
+                if scap is not None and not is_tip(item) and day.get(sk, 0) >= int(scap):
+                    continue
                 st = item.setdefault("posted", {})
                 held = item.get("held") or all(st.get(k) == "skip" for k in ("youtube", "instagram", "threads"))
                 if held or plat in st or not item.get("url") or st.get(plat + "_fails", 0) >= 3:
@@ -150,6 +163,8 @@ def scheduled(queue, counts, ledger, alerts, brands):
                     link = post_one(item, plat, fn, ledger, "cloud schedule", alerts, brand, cr)
                     if link:
                         day[ck] = day.get(ck, 0) + 1
+                        if not is_tip(item):
+                            day[sk] = day.get(sk, 0) + 1
                         last[ck] = int(time.time())
                         done += 1
                         log(f"{name} {plat}: posted {item['id']} -> {link}")

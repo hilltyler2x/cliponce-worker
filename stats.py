@@ -144,7 +144,7 @@ def main():
     # Posts made by the cloud worker yesterday and today, from its own counter.
     try:
         counts = json.loads((STATE / "post_counts.json").read_text(encoding="utf-8"))
-        snap["cloud_posts"] = {d: v for d, v in counts.items() if d != "_last"}
+        snap["cloud_posts"] = {d: {p: n for p, n in v.items() if not p.endswith(":streamer")} for d, v in counts.items() if d != "_last" and isinstance(v, dict)}
     except Exception:
         pass
     d = STATE / "stats"

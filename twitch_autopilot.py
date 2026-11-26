@@ -14,6 +14,34 @@ HYPE_KIND = [("😂", "Funny moment"), ("🤣", "Funny moment"), ("💀", "Funny
              ("crazy", "Insane moment"), ("wtf", "Insane moment"), ("no way", "Insane moment")]
 
 
+SWEAR = re.compile(r"\b(fuck\w*|shit\w*|bitch\w*|ass(hole)?|damn|dick|pussy|nigg\w*|cunt)\b", re.I)
+
+
+def clean_quote(cues):
+    """Best spoken line for the caption: a full thought (5+ words), no swearing (Instagram and
+    TikTok hold back captions with profanity from recommendations). Empty when nothing qualifies."""
+    lines = sorted((x[2].strip() for x in cues), key=len, reverse=True)
+    for t in lines:
+        if len(t.split()) >= 5 and not SWEAR.search(t):
+            return t[:90].rsplit(" ", 1)[0] if len(t) > 90 else t
+    return ""
+
+
+def fresh_hook(who, kind, cid, queue):
+    """Same curiosity style, but never a headline used in the last 12 clips: a feed of 15
+    identical 'X did what?' posts reads as spam to viewers and to the platforms."""
+    recent = {(q.get("hook") or "").lower() for q in queue[-12:]}
+    for i in range(12):
+        h = thumb.name_hook(who, kind, cid + str(i) if i else cid)
+        if h.lower() not in recent:
+            return h
+    for k in ("Funny moment", "Insane moment", "Glitch", "Hidden secret", "First ever"):
+        h = thumb.name_hook(who, k, cid)
+        if h.lower() not in recent:
+            return h
+    return thumb.name_hook(who, kind, cid)
+
+
 def kind_for(title):
     t = (title or "").lower()
     for k, label in HYPE_KIND:
@@ -59,7 +87,7 @@ def run_brand(brand, seen, queue):
     # Runs every 30 minutes. Goal: be FIRST. Only moments from the last few hours, ranked by how fast
     # viewers are piling onto them (views per hour), big creators first, a couple per run.
     todays = [q for q in queue if q.get("created") == today() and str(q.get("id", "")).find("_tw_") > 0 and (q.get("brand") or "default") == bid]
-    per_day = CONFIG.get("clips_per_day", 10) if legacy else max(list((brand.get("caps") or {}).values()) + [1]) + 2
+    per_day = CONFIG.get("twitch_clips_per_day", CONFIG.get("clips_per_day", 10)) if legacy else max(list((brand.get("caps") or {}).values()) + [1]) + 2
     target = max(0, min(CONFIG.get("fresh_per_run", 2), per_day - len(todays)))
     made = 0
     per_streamer, min_views = CONFIG.get("twitch_per_streamer", 2), CONFIG.get("twitch_min_views", 80)
@@ -128,8 +156,8 @@ def run_brand(brand, seen, queue):
                 log("skipped, adult or unsafe talk in the clip:", title)
                 continue
             kind = kind_for(title + " " + " ".join(x[2] for x in cues))
-            quote = max((x[2] for x in cues), key=len, default="")[:90]
-            pname, hook = thumb.pretty_name(who), thumb.name_hook(who, kind, cid)
+            quote = clean_quote(cues)
+            pname, hook = thumb.pretty_name(who), fresh_hook(who, kind, cid, queue)
             if not legacy:
                 hook = hook.replace("GTA 6", game)
             ass = work / (name + ".ass")
@@ -138,9 +166,11 @@ def run_brand(brand, seen, queue):
         except Exception as e:
             log("twitch render failed:", e)
             continue
-        quote = max((x[2] for x in cues), key=len, default="")[:90]
-        cap = "\n".join(x for x in [f"{hook} {EMOJI.get(kind, '🎮')}", f"“{quote}”" if quote else f"“{title}”",
-                                   f"🎥 Credit: {pname} (twitch.tv/{handle.lower()})", ("#GTA6 #GTAVI #Twitch #Gaming" if legacy else f"{tag} #Twitch #Gaming")] if x)
+        ctag = "#" + re.sub(r"[^A-Za-z0-9]", "", pname)
+        tags = (f"#GTA6 #GTAVI #GTA6Clips {ctag} #Gaming" if legacy else f"{tag} {ctag} #Twitch #Gaming")
+        cap = "\n".join(x for x in [f"{hook} {EMOJI.get(kind, '🎮')}", f"“{quote}”" if quote else "",
+                                   f"🎥 Credit: {pname} (twitch.tv/{handle.lower()})",
+                                   "Follow for the best GTA 6 moments every day 🔔" if legacy else "", tags] if x)
         meta = {"id": name, "video_id": c.get("video_id"), "source": src_url, "creator": who, "handle": handle,
                 "start": start, "end": end, "kind": kind, "score": c.get("view_count"),
                 "why": f"{c.get('view_count')} views in {c['_age_h']:.1f} h on the Twitch clip of this moment: {title}"[:160],
