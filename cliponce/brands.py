@@ -73,7 +73,8 @@ def creds_for(b, plat):
     if plat == "youtube":
         return {"YT_ACCESS_TOKEN": l["token"]}
     if plat == "tiktok":
-        return {"TIKTOK_ACCESS_TOKEN": l["token"]}
+        # The creator's own post settings, chosen on the account page (TikTok requires the user to pick them).
+        return {"TIKTOK_ACCESS_TOKEN": l["token"], "TIKTOK_SETTINGS": meta.get("tt") or {}}
     if plat == "instagram":
         return {"IG_TOKEN": l["token"], "IG_USER_ID": meta.get("ig_user_id", "")}
     if plat == "facebook":

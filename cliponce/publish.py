@@ -225,15 +225,32 @@ def post_tiktok(item, cr=None):
     info = requests.post("https://open.tiktokapis.com/v2/post/publish/creator_info/query/", headers=h, timeout=30).json()
     if (info.get("error") or {}).get("code") not in (None, "ok"):
         raise SignInProblem(f"TikTok sign-in problem: {info.get('error')}")
-    opts = (info.get("data") or {}).get("privacy_level_options") or []
-    if "PUBLIC_TO_EVERYONE" not in opts:
-        raise SignInProblem(f"TikTok will not allow public posts for this account yet (options: {opts})")
+    data = info.get("data") or {}
+    opts = data.get("privacy_level_options") or []
+    tt = cr.get("TIKTOK_SETTINGS")
+    if tt is None:  # the original page's own env keys: keep its public posting
+        tt = {"privacy": "PUBLIC_TO_EVERYONE", "comment": True, "duet": True, "stitch": True}
+    if not tt.get("privacy") or not tt.get("consent_at", True):
+        raise SignInProblem("Choose your TikTok post settings on the ClipOnce account page before ClipOnce can post")
+    if tt["privacy"] not in opts:
+        raise SignInProblem(f"TikTok does not allow '{tt['privacy']}' posts for this account right now (allowed: {opts}). "
+                            "Pick another option in your TikTok post settings")
+    dur = item.get("duration") or 0
+    if data.get("max_video_post_duration_sec") and dur and dur > data["max_video_post_duration_sec"]:
+        raise RuntimeError(f"Clip is {dur}s, longer than TikTok allows for this account ({data['max_video_post_duration_sec']}s)")
+    post_info = {"title": item["caption"][:2100], "privacy_level": tt["privacy"], "is_aigc": False,
+                 "disable_comment": bool(data.get("comment_disabled")) or not tt.get("comment"),
+                 "disable_duet": bool(data.get("duet_disabled")) or not tt.get("duet"),
+                 "disable_stitch": bool(data.get("stitch_disabled")) or not tt.get("stitch")}
+    if tt.get("brand_organic"):
+        post_info["brand_organic_toggle"] = True
+    if tt.get("brand_content"):
+        post_info["brand_content_toggle"] = True
     f = fetch(item["url"])
     try:
         size = f.stat().st_size
         init = requests.post(api + "/video/init/", headers=h, json={
-            "post_info": {"title": item["caption"][:2100], "privacy_level": "PUBLIC_TO_EVERYONE",
-                          "disable_comment": False, "disable_duet": False, "disable_stitch": False, "is_aigc": False},
+            "post_info": post_info,
             "source_info": {"source": "FILE_UPLOAD", "video_size": size, "chunk_size": size, "total_chunk_count": 1}}, timeout=60).json()
         err = init.get("error") or {}
         if err.get("code") not in (None, "ok"):
