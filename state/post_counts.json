@@ -5,9 +5,9 @@
     "facebook": 1
   },
   "_last": {
-    "instagram": 1795618876,
-    "threads": 1795618915,
-    "facebook": 1795618954
+    "instagram": 1795658483,
+    "threads": 1795654902,
+    "facebook": 1795658527
   },
   "2026-11-20": {
     "threads": 1,
@@ -23,7 +23,12 @@
     "threads": 5
   },
   "2026-11-25": {
-    "threads": 2,
+    "threads": 4,
+    "instagram": 2,
+    "facebook": 2
+  },
+  "2026-11-26": {
+    "threads": 1,
     "instagram": 1,
     "facebook": 1
   }

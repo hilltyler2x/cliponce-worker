@@ -1908,7 +1908,9 @@
     "made_at": 1795479793,
     "fresh": true,
     "hook": "What did Joe Bartolozzi just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18025917986957017"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Joe_Bartolozzi_HomelyHotAnacondaCei_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Joe_Bartolozzi_HomelyHotAnacondaCei.mp4",
     "namehook": true,
@@ -1931,7 +1933,9 @@
     "made_at": 1795488784,
     "fresh": true,
     "hook": "What did Jynxzi just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18109710605319988"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Jynxzi_SparklingDeliciousEl_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Jynxzi_SparklingDeliciousEl.mp4",
     "namehook": true,
@@ -2084,7 +2088,9 @@
     "fresh": true,
     "hook": "What did Ramez05 just do?",
     "posted": {
-      "threads": "threads post 18058394990820560"
+      "threads": "threads post 18058394990820560",
+      "instagram": "instagram media 18081039257423928",
+      "facebook": "https://www.facebook.com/reel/1625397495565496"
     },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Ramez05_TangibleBumblingDoge_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-24/2026-11-24_tw_Ramez05_TangibleBumblingDoge.mp4",
@@ -2162,10 +2168,15 @@
     "made_at": 1795571807,
     "fresh": true,
     "hook": "What did Jynxzi just do?",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 17919572595554205",
+      "threads": "threads post 18136448128760294",
+      "facebook": "https://www.facebook.com/reel/1127144736691334"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_Jynxzi_LittleBombasticPango_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_Jynxzi_LittleBombasticPango.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "6ea995f757c0ad5288809c0d7813ecbf337c2d00"
   },
   {
     "id": "2026-11-25_tw_lilypichu_RelievedTolerantMeta",
@@ -2184,10 +2195,15 @@
     "made_at": 1795580812,
     "fresh": true,
     "hook": "What did Lilypichu just do?",
-    "posted": {},
+    "posted": {
+      "instagram": "instagram media 18081199193485612",
+      "threads": "threads post 18206485075331060",
+      "facebook": "https://www.facebook.com/reel/919668097802448"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_lilypichu_RelievedTolerantMeta_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-25/2026-11-25_tw_lilypichu_RelievedTolerantMeta.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "7d8ca2b9926fc96631ace5eec3b567876a4b6b8c"
   },
   {
     "id": "2026-11-25_tw_TheBurntPeanut_GloriousShortRamenAN",
