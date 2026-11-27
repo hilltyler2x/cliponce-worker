@@ -2372,10 +2372,13 @@
     "made_at": 1795731445,
     "fresh": true,
     "hook": "What did Joe Bartolozzi just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18224548147347224"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-26/2026-11-26_tw_Joe_Bartolozzi_CloudyBeautifulSageA_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-26/2026-11-26_tw_Joe_Bartolozzi_CloudyBeautifulSageA.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "f439f06fa0a64622e643badfa6b7b160d01a62eb"
   },
   {
     "id": "2026-11-27_tw_NickEh30_PleasantDirtyWallaby",
