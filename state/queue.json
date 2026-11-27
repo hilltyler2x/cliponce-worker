@@ -1840,10 +1840,13 @@
     "made_at": 1795463870,
     "fresh": true,
     "hook": "LIRIK did what?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18345637615258411"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_LIRIK_PlainDiligentOstrich_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-23/2026-11-23_tw_LIRIK_PlainDiligentOstrich.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "0b54d0677fcde416ce84bb5cf4069dee5177cf79"
   },
   {
     "id": "2026-11-23_tw_AvoidingThePuddle_EmpathicLitigiousTur",
