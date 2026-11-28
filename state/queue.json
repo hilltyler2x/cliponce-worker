@@ -2486,9 +2486,12 @@
     "made_at": 1795872295,
     "fresh": true,
     "hook": "What did Saber2080 just do?",
-    "posted": {},
+    "posted": {
+      "threads": "threads post 18476749075190940"
+    },
     "thumb": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-28/2026-11-28_tw_saber2080_IncredulousBloodyCra_cover.jpg",
     "url": "https://github.com/hilltyler2x/cliponce-worker/releases/download/clips-2026-11-28/2026-11-28_tw_saber2080_IncredulousBloodyCra.mp4",
-    "namehook": true
+    "namehook": true,
+    "sha1": "70afb9b95869f67b86421cb1eb6c5075d34f4cbc"
   }
 ]
