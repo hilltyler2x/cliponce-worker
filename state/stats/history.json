@@ -159,5 +159,27 @@
       "posts": 42
     },
     "x": {}
+  },
+  "2026-11-28": {
+    "instagram": {
+      "followers": 0,
+      "posts": 49
+    },
+    "facebook": {
+      "followers": 0,
+      "likes": 0
+    },
+    "threads": {
+      "followers": 0,
+      "views_24h": 10,
+      "likes_24h": 0
+    },
+    "youtube": {},
+    "tiktok": {
+      "followers": 0,
+      "likes": 12,
+      "posts": 45
+    },
+    "x": {}
   }
 }
